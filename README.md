@@ -4,6 +4,8 @@ Index
 
 ### Chapter 1:  Beginning
 
+link: [Slides](https://docs.google.com/presentation/d/1_rArI2Ro6haGHQuuA6y3_WkAPkO5wssrKCCqw2o5oWo/edit?usp=sharing)
+
  - Async programming/Event Loop/Non-blocking
  - Node versions (LTS, etc)
  - Use cases
