@@ -5,7 +5,6 @@ var router = new express.Router();
 var logger = require('./logger').Logger;
 
 
-
 router.use(function timeLog(req, res, next){
   logger.info('This is a Test');
   next()
