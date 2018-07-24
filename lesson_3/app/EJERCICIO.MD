@@ -1,6 +1,6 @@
 ![Alt text](https://cdn-images-1.medium.com/max/1200/1*9bVaonlM0iP8mSu45GzIeg.png "Title")
 # Lesson 3 - Ejercicio
-Express / RestAPI / Redix
+Express / RestAPI / Redis
 
 # Descripcion
 Nuestro nuevo objetivo es completar un endpoint en nodejs, el cual sea fuente de cache de promociones
