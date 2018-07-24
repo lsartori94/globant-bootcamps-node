@@ -1,0 +1,24 @@
+{
+  "name": "node_redis_example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -L app/bin/www"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.1",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "debug": "^3.1.0",
+    "express": "^4.16.3",
+    "hjs": "0.0.6",
+    "mongoose": "^5.2.4",
+    "mongoose-bcrypt": "^1.5.1",
+    "mongoose-string-query": "^0.2.5",
+    "morgan": "^1.9.0",
+    "serve-favicon": "^2.5.0"
+  }
+}
