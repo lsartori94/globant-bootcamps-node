@@ -2,7 +2,7 @@ version: "2"
 services:
   node_web:
     build: .
-    container_name: "node_web_4"
+    container_name: "node_web_5"
     volumes:
       - "./app:/src/app"
     ports:
@@ -13,7 +13,7 @@ services:
       - mongo_db
 
   mongo_db:
-    container_name: "mongodb_4"
+    container_name: "mongodb_5"
     image: mongo
     ports:
       - "27017:27017"
