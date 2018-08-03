@@ -1,0 +1,19 @@
+version: "2"
+services:
+  node_web:
+    build: .
+    container_name: "node_web_5"
+    volumes:
+      - "./app:/src/app"
+    ports:
+      - "3030:3000"
+    links:
+      - "mongo_db:mongo"
+    depends_on:
+      - mongo_db
+
+  mongo_db:
+    container_name: "mongodb_5"
+    image: mongo
+    ports:
+      - "27017:27017"

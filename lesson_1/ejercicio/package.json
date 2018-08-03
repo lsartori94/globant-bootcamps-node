@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio1",
+  "version": "1.0.0",
+  "description": "El ejercicio consistira en crear un logger al cual se le proveeran los datos a loggear por  argumentos de consola.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
