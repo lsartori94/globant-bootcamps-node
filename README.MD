@@ -50,8 +50,8 @@ exercises.
 
 10. [Learning Days](#learning-days)
 
-  - 10.1 [Week 1: Node 101](#week-1-node-101)
-  - 10.2 [Week 2: Knowing your Node](#week-2-knowing-your-node)
+  - 10.1 [Week 1: Knowing your Node](#week-1-knowing-your-node)
+  - 10.2 [Week 2: _Js_es and _Node_s](#week-2-jses-and-nodes)
   - 10.3 [Week 3: From REST to TEST](#week-3-from-rest-to-test)
   - 10.4 [Week 4: Store and Deploy](#week-4-store-and-deploy)
 
@@ -183,8 +183,8 @@ You will commit all your code on a daily basis, when you finish your practice. T
 
 _Now let's get down to business_
 
-## Week 1: Node 101
-### Chapter 1:  Intro
+## Week 1: Knowing your Node
+### Chapter 1: Intro
 So you want to learn Node.js? Cool, I guess you already know JS, why would you be here if not?
 Ok, you can always refresh some stuff [here](https://github.com/globant-ui/angular-bootcamp#day-3---5-hello-javascript)
 
@@ -200,50 +200,42 @@ Yes, that's it. It uses Google's engine, (yes, Javascript runs on an engine) cal
  - [What is Node.js](https://medium.freecodecamp.org/what-exactly-is-node-js-ae36e97449f5)
  - [Node versions](https://nodesource.com/blog/understanding-how-node-js-release-lines-work/)
  - [REPL](https://hackernoon.com/know-node-repl-better-dbd15bca0af6)
- - [Scope & Closures](https://hackernoon.com/javascript-variable-scope-closures-a-primer-ace00b362eae)
-
-#### ~~Not so~~ optional reading
-- [Async programming](https://eloquentjavascript.net/11_async.html#h_HH3wvnWMnd)
 
 ### Chapter 2:  Basics
 FPO: let's add something here
 
 #### Reading:
- - NPM & NVM
- - Scaffolding
- - Logs
+ - [NPM](https://docs.npmjs.com/about-npm)
+ - [NVM](https://github.com/creationix/nvm)
+ - [Modules](https://www.nodebeginner.org/blog/post/nodejs-tutorial-what-are-node.js-modules/)
+ - [Debugging](https://www.nodebeginner.org/blog/post/nodejs-tutorial-what-are-node.js-modules/)
+ - [Debugging on VS-Code](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)
 
-#### ~Not so~ optional reading
-- [FPO]()
-
-### Excercise:
+#### Excercise:
 If guess you've noticed, but there's a folder called exercises. _Yes, you need to do them_
 
-Go to [chapter_1](/exercises/chapter_2) and follow the instructions.
+Go to [chapter_2](/exercises/chapter_2) and follow the instructions.
 
  → [index](#index)
 
-## Week 2: Knowing your Node
-### Chapter 3: Modules & Debugging
+## Week 2: _Js_es and _Node_s
+### Chapter 3: All JS
+ - [Scope & Closures](https://hackernoon.com/javascript-variable-scope-closures-a-primer-ace00b362eae)
+ - [Callbacks](https://medium.freecodecamp.org/javascript-callbacks-explained-using-minions-da272f4d9bcd)
+ - [Promises](https://hackernoon.com/understanding-promises-in-javascript-13d99df067c1)
+ - [Async/Await](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9)
 
- - Modules
- - Internal Modules
- - ES Lint
- - Debugging
+ → [index](#index)
 
-### Exercise:
+#### Excercise:
 _You'd better have done the previous excercise_
 
 Go to [chapter_3](/exercises/chapter_3) and follow the instructions.
 
-### Chapter 4: Calling
+#### ~Not so~ optional reading
+- [Async programming & More](https://eloquentjavascript.net/11_async.html#h_HH3wvnWMnd)
 
- - Callback Scheme
- - Callback Hell
- - Promises
- - Async/Await
-
- → [index](#index)
+### Chapter 4: FPO
 
 ## Week 3: From REST to TEST
 ### Chapter 5:  Getting
@@ -254,20 +246,19 @@ Go to [chapter_3](/exercises/chapter_3) and follow the instructions.
  - Validations
 
 ### Chapter 6: Testing
-
  - Generating Mock Responses
  - Testing
 
 → [index](#index)
 
 ## Week 4: Store and Deploy
-### Chapter 7: Storing
+### Chapter 6: Storing
 
  - SQL Databases
  - Postgres
  - Sequelize
 
-### Chapter 8: Preparing for Production
+### Chapter 7: Preparing for Production
 
  - Docker
  - Dotenv

@@ -3,7 +3,7 @@
 ### What to do?
 Remeber the previous chapter? Well, take that _logger_ and let's do some refactor.
 
-- You should output the log to a file called `log.json`
+- You should output the log to a file called `log.json` (remove the call to `console.log`)
 - If the file exists, do an append, if not, create it
 - You can add any NPM package you want ([](https://www.npmjs.com/package/yargs) for example) _remember to [create a package.json file](https://docs.npmjs.com/cli/init))
 - You should separate the logger to a standalone file, then import and use it in `app.js`
