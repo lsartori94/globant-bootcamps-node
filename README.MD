@@ -50,10 +50,10 @@ exercises.
 
 10. [Learning Days](#learning-days)
 
-  - 10.1 [Week 1: ](#week-1-)
-  - 10.2 [Week 2: ](#week-2-)
-  - 10.3 [Week 3: ](#week-3-)
-  - 10.4 [Week 4: ](#week-4-)
+  - 10.1 [Week 1: Node 101](#week-1-node-101)
+  - 10.2 [Week 2: Knowing your Node](#week-2-knowing-your-node)
+  - 10.3 [Week 3: From REST to TEST](#week-3-from-rest-to-test)
+  - 10.4 [Week 4: Store and Deploy](#week-4-store-and-deploy)
 
 ### Objective
 
@@ -122,7 +122,7 @@ account. Also you can read further about Git in
 
 The Bootcamp is organized in the following way:
 
-![Calendar](assets/calendar-new.png)
+![Calendar](assets/calendar.png)
 
 TBD
 
@@ -170,7 +170,7 @@ You will commit all your code on a daily basis, when you finish your practice. T
   need to do.
 
   - All `.js` code can be opened directly on the console. You can start a node process with `node PATH_TO_FILE`
-  
+
   - A `start` script will be needed for processes. That should be used as `npm start`
 
   - [Basic GIT concepts](http://rogerdudler.github.io/git-guide/)
@@ -183,31 +183,58 @@ You will commit all your code on a daily basis, when you finish your practice. T
 
 _Now let's get down to business_
 
-
+## Week 1: Node 101
 ### Chapter 1:  Intro
+So you want to learn Node.js? Cool, I guess you already know JS, why would you be here if not?
+Ok, you can always refresh some stuff [here](https://github.com/globant-ui/angular-bootcamp#day-3---5-hello-javascript)
 
-link: [Slides](https://docs.google.com/presentation/d/1_rArI2Ro6haGHQuuA6y3_WkAPkO5wssrKCCqw2o5oWo/edit?usp=sharing)
+So, now that we are on the same page let's start with the basics
 
- - Async programming/Event Loop/Non-blocking
- - Node versions (LTS, etc)
- - Use cases
- - Scope & Closures
+>_Node.js is Javascript that runs on the server_
 
+![What?](./assets/what.gif)
+
+Yes, that's it. It uses Google's engine, (yes, Javascript runs on an engine) called [__V8__](https://v8.dev/) and you don't need a browser to use it.
+
+#### Reading:
+ - [What is Node.js](https://medium.freecodecamp.org/what-exactly-is-node-js-ae36e97449f5)
+ - [Node versions](https://nodesource.com/blog/understanding-how-node-js-release-lines-work/)
+ - [REPL](https://hackernoon.com/know-node-repl-better-dbd15bca0af6)
+ - [Scope & Closures](https://hackernoon.com/javascript-variable-scope-closures-a-primer-ace00b362eae)
+
+#### ~~Not so~~ optional reading
+- [Async programming](https://eloquentjavascript.net/11_async.html#h_HH3wvnWMnd)
 
 ### Chapter 2:  Basics
+FPO: let's add something here
 
+#### Reading:
  - NPM & NVM
- - GIT
- - Hello World
  - Scaffolding
  - Logs
 
+#### ~Not so~ optional reading
+- [FPO]()
+
+### Excercise:
+If guess you've noticed, but there's a folder called exercises. _Yes, you need to do them_
+
+Go to [chapter_1](/exercises/chapter_2) and follow the instructions.
+
+ → [index](#index)
+
+## Week 2: Knowing your Node
 ### Chapter 3: Modules & Debugging
 
  - Modules
  - Internal Modules
  - ES Lint
  - Debugging
+
+### Exercise:
+_You'd better have done the previous excercise_
+
+Go to [chapter_3](/exercises/chapter_3) and follow the instructions.
 
 ### Chapter 4: Calling
 
@@ -216,6 +243,9 @@ link: [Slides](https://docs.google.com/presentation/d/1_rArI2Ro6haGHQuuA6y3_WkAP
  - Promises
  - Async/Await
 
+ → [index](#index)
+
+## Week 3: From REST to TEST
 ### Chapter 5:  Getting
 
  - REST
@@ -228,7 +258,9 @@ link: [Slides](https://docs.google.com/presentation/d/1_rArI2Ro6haGHQuuA6y3_WkAP
  - Generating Mock Responses
  - Testing
 
+→ [index](#index)
 
+## Week 4: Store and Deploy
 ### Chapter 7: Storing
 
  - SQL Databases
@@ -241,9 +273,11 @@ link: [Slides](https://docs.google.com/presentation/d/1_rArI2Ro6haGHQuuA6y3_WkAP
  - Dotenv
  - JWT
 
+ → [index](#index)
+
 ### Exercise:
 
-![Show Me What You Got](assets/SMWYG.gif)
+![Show Me What You Got](assets/challenge-accepted.gif)
 
 #### _It's time to make an app from scratch_
 
@@ -278,7 +312,7 @@ Kudos and keep ~~failing~~ learning!
 
 So... you've got your `Node` going, you read a **LOT** of stuff. So... What's next?
 
-![Homer Scholar](assets/homerSquareRoot.gif)
+![Homer Scholar](assets/nerd.gif)
 
 There're still a lot of stuff to read, some of them really work better under specific conditions or requirements. Remember:
 
