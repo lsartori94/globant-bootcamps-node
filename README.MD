@@ -1,5 +1,5 @@
 # UI Bootcamps
-## Node.JS
+## Node.JS (yes, we are keeping it JS)
 
 ![Globant](assets/globant.jpg)
 
@@ -58,7 +58,7 @@ exercises.
 
 ### Objective
 
-We will teach you the basics of Web development using JavaScript and [Single Page Applications](https://medium.com/@NeotericEU/single-page-application-vs-multiple-page-application-2591588efe58) with `React`.
+We will teach you the basics of REST API development and Node.Js development.
 
 → [index](#index)
 
@@ -103,7 +103,7 @@ exercises as wanted.
 
 ### Materials
 
-1. You will need to install [Node.JS](https://nodejs.org/en/) (Version 6) (NVM is strongly recommended - [Unix](https://github.com/creationix/nvm#installation)/[Windows](https://github.com/coreybutler/nvm-windows))
+1. You will need to install [Node.JS](https://nodejs.org/en/) (Version 10) (NVM is strongly recommended - [Unix](https://github.com/creationix/nvm#installation)/[Windows](https://github.com/coreybutler/nvm-windows))
 
 2. The recommended IDE is [Visual Studio Code](https://code.visualstudio.com/). However, you can use any IDE of your preference.
 
@@ -161,7 +161,7 @@ following practice.
 You will implement the previously gathered knowledge in simple coding activities.
 
 3. **Commit:**
-You will commit all your code on a daily basis, when you finish your practice. This will not apply for code of Week 3 and 4.
+You will commit all your code on a daily basis, when you finish your practice. This will not apply for code of Week 4.
 
 → [index](#index)
 
@@ -170,9 +170,9 @@ You will commit all your code on a daily basis, when you finish your practice. T
   - This repository contains inside the `src` directory the project structure for all exercises/challenges that you will
   need to do.
 
-  - All `.js` code can be opened directly on the console. You can start a node process with `npm start`
-
-  - Once the process is running, all the modifications you make will be automagically synced and the app will reload.
+  - All `.js` code can be opened directly on the console. You can start a node process with `node PATH_TO_FILE`
+  
+  - A `start` script will be needed for processes. That should be used as `npm start`
 
   - [Basic GIT concepts](http://rogerdudler.github.io/git-guide/)
 
@@ -289,6 +289,8 @@ If there's a more advanced or complicated way to get to a solution it doesn't al
 
 With that in mind, here are some more advanced _(or not, this **whole** beatifull mess was made by a bored developer on a few days span)_ features that every one should know, and at least being able to explain them.
 
-FPO: LIST OF TOPICS
+- [Socket IO](https://socket.io/)
+- [No SQL Databases](https://www.mongodb.com/nosql-explained)
+- [Caching](https://medium.com/@danielsternlicht/caching-like-a-boss-in-nodejs-9bccbbc71b9b)
 
 Hey, If you need a place to kill time try [Medium](medium.com), there's a lot to read about pretty much anything (specially development related topics).
