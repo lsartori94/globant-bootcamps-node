@@ -1,5 +1,4 @@
-# UI Bootcamps
-## Node.JS (yes, we are keeping it JS)
+# UI Bootcamps - Node.Js
 
 ![Globant](assets/globant.jpg)
 
