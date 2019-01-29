@@ -51,7 +51,7 @@ exercises.
 10. [Learning Days](#learning-days)
 
   - 10.1 [Week 1: Knowing your Node](#week-1-knowing-your-node)
-  - 10.2 [Week 2: _Js_es and _Node_s](#week-2-jses-and-nodes)
+  - 10.2 [Week 2: Js and Node: Brothers in arms](#week-2-js-and-node-brothers-in-arms)
   - 10.3 [Week 3: From REST to TEST](#week-3-from-rest-to-test)
   - 10.4 [Week 4: Store and Deploy](#week-4-store-and-deploy)
 
@@ -221,7 +221,7 @@ Go to [chapter_2](/exercises/chapter_2) and follow the instructions.
 
  → [index](#index)
 
-## Week 2: _Js_es and _Node_s
+## Week 2: Js and Node: Brothers in arms
 ### Chapter 3: All JS
 Remember we talked about how Node runs Javascript? Well there's some __KEY__ JS concepts you need to master in order to
 make real Node apps.
