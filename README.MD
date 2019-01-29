@@ -55,6 +55,8 @@ exercises.
   - 10.3 [Week 3: From REST to TEST](#week-3-from-rest-to-test)
   - 10.4 [Week 4: Store and Deploy](#week-4-store-and-deploy)
 
+11. [Final Project](#final-project)
+
 ### Objective
 
 We will teach you the basics of REST API development and Node.Js development.
@@ -250,7 +252,7 @@ Go to [chapter_3](/exercises/chapter_3) and follow the instructions.
 ![Ninja](./assets/ninja.gif)
 
 ## Week 3: From REST to TEST
-### Chapter 5:  Getting
+### Chapter 5: Getting
 
  - REST
  - Express
@@ -293,10 +295,39 @@ You should have a test project done, right? Well go to [chapter_6](/exercises/ch
  - Sequelize
 
 ### Chapter 8: Preparing for Production
+Knowledge? _CHECK_
 
- - Docker
- - Dotenv
- - JWT
+App? _CHECK_
+
+Test? _CHECK_
+
+Is the app production ready?
+
+![Confused](./assets/confused.gif)
+
+An app is production ready when you are able to provide a working instance that complies with the requirements of the problem.
+
+_Can't I just take the folder where the development work was made and use that?_
+
+__NO!__ Well... yes, _but that's not the correct way to do that._
+
+Modern apps should behave as [SaaS](https://azure.microsoft.com/en-in/overview/what-is-saas/) and the best way to do that is being compliant with [The Twelve-Factor App](https://12factor.net/).
+
+Yes, I know that 12 steps sounds like _a lot_ but it's not that complicated. We are going to concentrate on the basic tools to make your Node app _production ready_
+
+#### Reading:
+ - [What is Docker](https://medium.com/pintail-labs/docker-series-what-is-docker-9eddca88f434)
+ - [Dockerfile](https://medium.com/pintail-labs/docker-series-creating-your-first-dockerfile-573bfea4991)
+ - [Docker Image](https://medium.com/pintail-labs/docker-series-building-your-first-image-8a6f051ae637)
+ - [Docker Compose](https://medium.com/pintail-labs/docker-series-moving-past-one-container-bf32b45831d3)
+ - [Dotenv](https://medium.com/@thejasonfile/using-dotenv-package-to-create-environment-variables-33da4ac4ea8f)
+
+#### ~~Not so~~ optional reading
+ - [AWS - ECS](https://aws.amazon.com/ecs/)
+ - [Docker Swarm](https://medium.freecodecamp.org/how-to-manage-more-containers-with-docker-swarm-332b5fc4c346)
+
+#### Excercise:
+There is no excercise for this class, you should be focusing on the [Final Project](#final-project). Remember, you should apply all the knowledge from this and previous chapters on it.
 
  → [index](#index)
 
@@ -333,7 +364,7 @@ Kudos and keep ~~failing~~ learning!
 
 So... you've got your `Node` going, you read a **LOT** of stuff. So... What's next?
 
-![Homer Scholar](assets/nerd.gif)
+![Nerd](assets/nerd.gif)
 
 There're still a lot of stuff to read, some of them really work better under specific conditions or requirements. Remember:
 
@@ -347,4 +378,4 @@ With that in mind, here are some more advanced _(or not, this **whole** beatiful
 - [No SQL Databases](https://www.mongodb.com/nosql-explained)
 - [Caching](https://medium.com/@danielsternlicht/caching-like-a-boss-in-nodejs-9bccbbc71b9b)
 
-Hey, If you need a place to kill time try [Medium](medium.com), there's a lot to read about pretty much anything (specially development related topics).
+Hey, If you need a place to kill time try [Medium](https://medium.com), there's a lot to read about pretty much anything (specially development related topics).
