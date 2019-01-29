@@ -28,7 +28,7 @@ Please, use this repository as a base for all your work. The idea is to
 fork this project so everyone uses the same folder structure for the
 exercises.
 
-#### Index
+### Index
 
 1. [Objective](#objective)
 
@@ -164,7 +164,7 @@ You will commit all your code on a daily basis, when you finish your practice. T
 
 → [index](#index)
 
-# Introduction
+## Introduction
 
   - This repository contains inside the `src` directory the project structure for all exercises/challenges that you will
   need to do.
