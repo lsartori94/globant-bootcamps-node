@@ -258,8 +258,30 @@ Go to [chapter_3](/exercises/chapter_3) and follow the instructions.
  - Validations
 
 ### Chapter 6: Testing
- - Generating Mock Responses
- - Testing
+You've been doing apps, exercises, REST APIs. But how can you make sure that what you did will actually work on every scenario?
+
+_It works if I use `1`, but if I input `-1` it breaks_
+
+What about `0`? and `---1`?
+
+It's pretty annoing having to run the app for each case. Now imagine you are working on a team, 5 or 10 people, each of you adding new code and removing old. How can you make sure that everything is still working as expected? I guess you see the problem.
+
+But don't panic, here comes Unit Testing to the rescue
+
+![Unit Test](./assets/unit-test.gif)
+
+#### Reading:
+ - [Testing in Node](https://hackernoon.com/a-crash-course-on-testing-with-node-js-6c7428d3da02)
+ - [Mocks vs Stubs vs Shims](https://hackernoon.com/mocks-stubs-or-shims-f22164422020)
+ - [How to mock in Node](https://itnext.io/how-to-mock-dependency-in-a-node-js-and-why-2ad4386f6587)
+
+#### ~~Not so~~ optional reading:
+ - [Sinon vs Rewire](https://joost.vunderink.net/blog/2016/03/27/sinon-vs-rewire-when-do-i-use-which/)
+ - [Code Coverage](https://medium.com/walkme-engineering/measure-your-nodejs-code-coverage-using-istanbul-82b129c81ae9)
+
+#### Excercise:
+Remember the first reading material, [Testing in Node](https://hackernoon.com/a-crash-course-on-testing-with-node-js-6c7428d3da02)?
+You should have a test project done, right? Well go to [chapter_6](/exercises/chapter_6) and follow the instructions.
 
 → [index](#index)
 
@@ -278,26 +300,22 @@ Go to [chapter_3](/exercises/chapter_3) and follow the instructions.
 
  → [index](#index)
 
-### Exercise:
+## Final Project:
 
 ![Show Me What You Got](assets/challenge-accepted.gif)
 
-#### _It's time to make an app from scratch_
+**_It's time to make an app from scratch_**
 
 TBD
 
-**_Hey, don't panic. This excercise is for this week and on..._**
+**_Hey, don't panic. This excercise is for week 4 and on..._**
 
-You have until the last day of this week to keep pushing changes. After that you can keep workin on the app, but please create a new branch for it:
+You have until the last day of week 4 to keep pushing changes. After that you can keep workin on the app, but please create a new branch for it:
 ```
-luca.sartori@AR-IT12688:~/bootcamps/ui/week4$ git checkout -b 'post-bootcamp'
+luca.sartori@AR-IT12688:~/bootcamp-node/final-project$ git checkout -b 'post-bootcamp'
 
-luca.sartori@AR-IT12688:~/bootcamps/ui/week4$ git push origin post-bootcamp
+luca.sartori@AR-IT12688:~/bootcamp-node/final-project$ git push origin post-bootcamp
 ```
-
-Your app should look something like this:
-
-TBD
 
 **Some advices**
 - Dont't get scared. Even the most successfull Software Engineers and Architects forget things sometimes.
