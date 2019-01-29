@@ -202,7 +202,10 @@ Yes, that's it. It uses Google's engine, (yes, Javascript runs on an engine) cal
  - [REPL](https://hackernoon.com/know-node-repl-better-dbd15bca0af6)
 
 ### Chapter 2:  Basics
-FPO: let's add something here
+Let's talk shop.
+
+Node just runs Javascript, but you actually need more than that to make an app. You need some kind of code modularization,
+some kind of debugging tool and, of course, other people's code :grimacing:.
 
 #### Reading:
  - [NPM](https://docs.npmjs.com/about-npm)
@@ -220,6 +223,13 @@ Go to [chapter_2](/exercises/chapter_2) and follow the instructions.
 
 ## Week 2: _Js_es and _Node_s
 ### Chapter 3: All JS
+Remember we talked about how Node runs Javascript? Well there's some __KEY__ JS concepts you need to master in order to
+make real Node apps.
+
+
+![Study](./assets/study.gif)
+
+#### Reading:
  - [Scope & Closures](https://hackernoon.com/javascript-variable-scope-closures-a-primer-ace00b362eae)
  - [Callbacks](https://medium.freecodecamp.org/javascript-callbacks-explained-using-minions-da272f4d9bcd)
  - [Promises](https://hackernoon.com/understanding-promises-in-javascript-13d99df067c1)
@@ -235,7 +245,9 @@ Go to [chapter_3](/exercises/chapter_3) and follow the instructions.
 #### ~Not so~ optional reading
 - [Async programming & More](https://eloquentjavascript.net/11_async.html#h_HH3wvnWMnd)
 
-### Chapter 4: FPO
+### Chapter 4: Node Ninja
+
+![Ninja](./assets/ninja.gif)
 
 ## Week 3: From REST to TEST
 ### Chapter 5:  Getting
@@ -252,13 +264,13 @@ Go to [chapter_3](/exercises/chapter_3) and follow the instructions.
 → [index](#index)
 
 ## Week 4: Store and Deploy
-### Chapter 6: Storing
+### Chapter 7: Storing
 
  - SQL Databases
  - Postgres
  - Sequelize
 
-### Chapter 7: Preparing for Production
+### Chapter 8: Preparing for Production
 
  - Docker
  - Dotenv
