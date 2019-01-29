@@ -231,6 +231,7 @@ make real Node apps.
 
 #### Reading:
  - [Scope & Closures](https://hackernoon.com/javascript-variable-scope-closures-a-primer-ace00b362eae)
+ - [Event Driven Architecture](https://medium.freecodecamp.org/understanding-node-js-event-driven-architecture-223292fcbc2d)
  - [Callbacks](https://medium.freecodecamp.org/javascript-callbacks-explained-using-minions-da272f4d9bcd)
  - [Promises](https://hackernoon.com/understanding-promises-in-javascript-13d99df067c1)
  - [Async/Await](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9)
@@ -246,8 +247,19 @@ Go to [chapter_3](/exercises/chapter_3) and follow the instructions.
 - [Async programming & More](https://eloquentjavascript.net/11_async.html#h_HH3wvnWMnd)
 
 ### Chapter 4: Node Ninja
+If you want to be a real nodejs developer, you need to know this.
 
 ![Ninja](./assets/ninja.gif)
+
+#### Reading:
+- [What’s New in Node 10](https://levelup.gitconnected.com/whats-new-in-node-10-ad360ae55ee4)
+- [Bluebird vs ES6 Promises](https://medium.com/@housecor/5-reasons-to-keep-using-bluebird-for-promises-a4f59c8a5d69)
+- [Node uses a single thread?](https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea)
+- [Clustering](https://medium.com/tech-tajawal/clustering-in-nodejs-utilizing-multiple-processor-cores-75d78aeb0f4f)
+- [Threads](https://medium.com/tech-tajawal/threading-in-nodejs-5d966a3b9858)
+
+#### ~Not so~ optional reading
+TBD
 
 ## Week 3: From REST to TEST
 ### Chapter 5:  Getting
