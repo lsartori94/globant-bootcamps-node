@@ -257,6 +257,11 @@ If you want to be a real nodejs developer, you need to know this.
 - [Clustering](https://medium.com/tech-tajawal/clustering-in-nodejs-utilizing-multiple-processor-cores-75d78aeb0f4f)
 - [Threads](https://medium.com/tech-tajawal/threading-in-nodejs-5d966a3b9858)
 
+#### Excercise:
+_It's time, let's do it_
+
+Go to [chapter_4](/exercises/chapter_4) and follow the instructions.
+
 #### ~Not so~ optional reading
 - [JWT](https://jwt.io/introduction/)
 - [What’s New in Node 10](https://levelup.gitconnected.com/whats-new-in-node-10-ad360ae55ee4)
