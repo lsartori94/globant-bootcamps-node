@@ -252,14 +252,14 @@ If you want to be a real nodejs developer, you need to know this.
 ![Ninja](./assets/ninja.gif)
 
 #### Reading:
-- [What’s New in Node 10](https://levelup.gitconnected.com/whats-new-in-node-10-ad360ae55ee4)
 - [Bluebird vs ES6 Promises](https://medium.com/@housecor/5-reasons-to-keep-using-bluebird-for-promises-a4f59c8a5d69)
 - [Node uses a single thread?](https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea)
 - [Clustering](https://medium.com/tech-tajawal/clustering-in-nodejs-utilizing-multiple-processor-cores-75d78aeb0f4f)
 - [Threads](https://medium.com/tech-tajawal/threading-in-nodejs-5d966a3b9858)
 
 #### ~Not so~ optional reading
-TBD
+- [JWT](https://jwt.io/introduction/)
+- [What’s New in Node 10](https://levelup.gitconnected.com/whats-new-in-node-10-ad360ae55ee4)
 
 ## Week 3: From REST to TEST
 ### Chapter 5:  Getting
