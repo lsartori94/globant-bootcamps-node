@@ -351,6 +351,841 @@ Sequelize
 
 Sequelize is a promise-based ORM for Node.js and io.js. It supports the dialects PostgreSQL, MySQL, MariaDB, SQLite and MSSQL and features solid transaction support, relations, read replication and more.
 
+
+
+##### Model definition
+
+- [Model definition](http://docs.sequelizejs.com/manual/tutorial/models-definition.html)
+
+To define mappings between a model and a table, use the ** define method.
+
+```
+const Project = sequelize.define('project', {
+  title: Sequelize.STRING,
+  description: Sequelize.TEXT
+})
+
+const Task = sequelize.define('task', {
+  title: Sequelize.STRING,
+  description: Sequelize.TEXT,
+  deadline: Sequelize.DATE
+})
+
+```
+
+##### Data types
+
+Below are some of the datatypes supported by sequelize. For a full and updated list, see DataTypes.
+- [DataTypes ](http://docs.sequelizejs.com/variable/index.html#static-variable-DataTypes)
+
+```
+Sequelize.STRING                      // VARCHAR(255)
+Sequelize.STRING(1234)                // VARCHAR(1234)
+Sequelize.STRING.BINARY               // VARCHAR BINARY
+Sequelize.TEXT                        // TEXT
+Sequelize.TEXT('tiny')                // TINYTEXT
+
+Sequelize.INTEGER                     // INTEGER
+Sequelize.BIGINT                      // BIGINT
+Sequelize.BIGINT(11)                  // BIGINT(11)
+
+Sequelize.FLOAT                       // FLOAT
+Sequelize.FLOAT(11)                   // FLOAT(11)
+Sequelize.FLOAT(11, 12)               // FLOAT(11,12)
+
+Sequelize.REAL                        // REAL        PostgreSQL only.
+Sequelize.REAL(11)                    // REAL(11)    PostgreSQL only.
+Sequelize.REAL(11, 12)                // REAL(11,12) PostgreSQL only.
+
+Sequelize.DOUBLE                      // DOUBLE
+Sequelize.DOUBLE(11)                  // DOUBLE(11)
+Sequelize.DOUBLE(11, 12)              // DOUBLE(11,12)
+
+Sequelize.DECIMAL                     // DECIMAL
+Sequelize.DECIMAL(10, 2)              // DECIMAL(10,2)
+
+Sequelize.DATE                        // DATETIME for mysql / sqlite, TIMESTAMP WITH TIME ZONE for postgres
+Sequelize.DATE(6)                     // DATETIME(6) for mysql 5.6.4+. Fractional seconds support with up to 6 digits of precision
+Sequelize.DATEONLY                    // DATE without time.
+Sequelize.BOOLEAN                     // TINYINT(1)
+
+Sequelize.ENUM('value 1', 'value 2')  // An ENUM with allowed values 'value 1' and 'value 2'
+Sequelize.ARRAY(Sequelize.TEXT)       // Defines an array. PostgreSQL only.
+Sequelize.ARRAY(Sequelize.ENUM)       // Defines an array of ENUM. PostgreSQL only.
+
+Sequelize.JSON                        // JSON column. PostgreSQL, SQLite and MySQL only.
+Sequelize.JSONB                       // JSONB column. PostgreSQL only.
+
+Sequelize.BLOB                        // BLOB (bytea for PostgreSQL)
+Sequelize.BLOB('tiny')                // TINYBLOB (bytea for PostgreSQL. Other options are medium and long)
+
+Sequelize.UUID                        // UUID datatype for PostgreSQL and SQLite, CHAR(36) BINARY for MySQL (use defaultValue: Sequelize.UUIDV1 or Sequelize.UUIDV4 to make sequelize generate the ids automatically)
+
+Sequelize.CIDR                        // CIDR datatype for PostgreSQL
+Sequelize.INET                        // INET datatype for PostgreSQL
+Sequelize.MACADDR                     // MACADDR datatype for PostgreSQL
+
+Sequelize.RANGE(Sequelize.INTEGER)    // Defines int4range range. PostgreSQL only.
+Sequelize.RANGE(Sequelize.BIGINT)     // Defined int8range range. PostgreSQL only.
+Sequelize.RANGE(Sequelize.DATE)       // Defines tstzrange range. PostgreSQL only.
+Sequelize.RANGE(Sequelize.DATEONLY)   // Defines daterange range. PostgreSQL only.
+Sequelize.RANGE(Sequelize.DECIMAL)    // Defines numrange range. PostgreSQL only.
+
+Sequelize.ARRAY(Sequelize.RANGE(Sequelize.DATE)) // Defines array of tstzrange ranges. PostgreSQL only.
+
+Sequelize.GEOMETRY                    // Spatial column.  PostgreSQL (with PostGIS) or MySQL only.
+Sequelize.GEOMETRY('POINT')           // Spatial column with geometry type. PostgreSQL (with PostGIS) or MySQL only.
+Sequelize.GEOMETRY('POINT', 4326)     // Spatial column with geometry type and SRID.  PostgreSQL (with PostGIS) or MySQL only.
+
+```
+
+In addition to the type mentioned above, integer, bigint, float and double also support unsigned and zerofill properties, which can be combined in any order: Be aware that this does not apply for PostgreSQL!
+
+```
+Sequelize.INTEGER.UNSIGNED              // INTEGER UNSIGNED
+Sequelize.INTEGER(11).UNSIGNED          // INTEGER(11) UNSIGNED
+Sequelize.INTEGER(11).ZEROFILL          // INTEGER(11) ZEROFILL
+Sequelize.INTEGER(11).ZEROFILL.UNSIGNED // INTEGER(11) UNSIGNED ZEROFILL
+Sequelize.INTEGER(11).UNSIGNED.ZEROFILL // INTEGER(11) UNSIGNED ZEROFILL
+
+```
+
+##### Database synchronization
+
+When starting a new project you won't have a database structure and using Sequelize you won't need to. Just specify your model structures and let the library do the rest. Currently supported is the creation and deletion of tables:
+
+```
+// Create the tables:
+Project.sync()
+Task.sync()
+
+// Force the creation!
+Project.sync({force: true}) // this will drop the table first and re-create it afterwards
+
+// drop the tables:
+Project.drop()
+Task.drop()
+
+// event handling:
+Project.[sync|drop]().then(() => {
+  // ok ... everything is nice!
+}).catch(error => {
+  // oooh, did you enter wrong database credentials?
+})
+
+```
+
+Because synchronizing and dropping all of your tables might be a lot of lines to write, you can also let Sequelize do the work for you:
+
+```
+
+// Sync all models that aren't already in the database
+sequelize.sync()
+
+// Force sync all models
+sequelize.sync({force: true})
+
+// Drop all tables
+sequelize.drop()
+
+// emit handling:
+sequelize.[sync|drop]().then(() => {
+  // woot woot
+}).catch(error => {
+  // whooops
+})
+
+```
+
+Because .sync({ force: true }) is destructive operation, you can use match option as an additional safety check. match option tells sequelize to match a regex against the database name before syncing - a safety check for cases where force: true is used in tests but not live code.
+
+```
+// This will run .sync() only if database name ends with '_test'
+sequelize.sync({ force: true, match: /_test$/ });
+```
+
+### Model usage
+
+##### Data retrieval / Finders
+
+Finder methods are intended to query data from the database. They do not return plain objects but instead return model instances. Because finder methods return model instances you can call any model instance member on the result as described in the documentation for instances.
+
+ - [Instances](http://docs.sequelizejs.com/manual/tutorial/instances.html)
+
+In this document we'll explore what finder methods can do:
+
+###### find - Search for one specific element in the database
+
+```
+// search for known ids
+Project.findById(123).then(project => {
+  // project will be an instance of Project and stores the content of the table entry
+  // with id 123. if such an entry is not defined you will get null
+})
+```
+
+##### findOrCreate - Search for a specific element or create it if not available
+
+The method findOrCreate can be used to check if a certain element already exists in the database. If that is the case the method will result in a respective instance. If the element does not yet exist, it will be created.
+
+##### findAndCountAll - Search for multiple elements in the database, returns both data and total count
+This is a convenience method that combinesfindAll and count (see below) this is useful when dealing with queries related to pagination where you want to retrieve data with a limit and offset but also need to know the total number of records that match the query:
+
+The success handler will always receive an object with two properties:
+
+count - an integer, total number records matching the where clause and other filters due to associations
+rows - an array of objects, the records matching the where clause and other filters due to associations, within the limit and offset range
+
+##### findAll - Búsqueda de múltiples elementos en la base de datos.
+
+```
+// find multiple entries
+Project.findAll().then(projects => {
+  // projects will be an array of all Project instances
+})
+
+// also possible:
+Project.all().then(projects => {
+  // projects will be an array of all Project instances
+})
+```
+
+##### Manipulating the dataset with limit, offset, order and group
+To get more relevant data, you can use limit, offset, order and grouping:
+
+```
+// limit the results of the query
+Project.findAll({ limit: 10 })
+
+// step over the first 10 elements
+Project.findAll({ offset: 10 })
+
+// step over the first 10 elements, and take 2
+Project.findAll({ offset: 10, limit: 2 })
+The syntax for grouping and ordering are equal, so below it is only explained with a single example for group, and the rest for order. Everything you see below can also be done for group
+
+Project.findAll({order: 'title DESC'})
+// yields ORDER BY title DESC
+
+Project.findAll({group: 'name'})
+// yields GROUP BY name
+
+```
+
+Notice how in the two examples above, the string provided is inserted verbatim into the query, i.e. column names are not escaped. When you provide a string to order/group, this will always be the case. If you want to escape column names, you should provide an array of arguments, even though you only want to order/group by a single column
+
+```
+something.findOne({
+  order: [
+    // will return `name`
+    ['name'],
+    // will return `username` DESC
+    ['username', 'DESC'],
+    // will return max(`age`)
+    sequelize.fn('max', sequelize.col('age')),
+    // will return max(`age`) DESC
+    [sequelize.fn('max', sequelize.col('age')), 'DESC'],
+    // will return otherfunction(`col1`, 12, 'lalala') DESC
+    [sequelize.fn('otherfunction', sequelize.col('col1'), 12, 'lalala'), 'DESC'],
+    // will return otherfunction(awesomefunction(`col`)) DESC, This nesting is potentially infinite!
+    [sequelize.fn('otherfunction', sequelize.fn('awesomefunction', sequelize.col('col'))), 'DESC']
+  ]
+})
+```
+
+To recap, the elements of the order/group array can be the following:
+
+* String - will be quoted
+* Array - first element will be quoted, second will be appended verbatim
+* Object -
+    * Raw will be added verbatim without quoting
+    * Everything else is ignored, and if raw is not set, the query will fail
+* __Sequelize.fn__ and __Sequelize.col__ returns functions and quoted column names
+
+##### Raw queries
+
+Sometimes you might be expecting a massive dataset that you just want to display, without manipulation. For each row you select, Sequelize creates an instance with functions for update, delete, get associations etc. If you have thousands of rows, this might take some time. If you only need the raw data and don't want to update anything, you can do like this to get the raw data.
+
+```
+// Are you expecting a massive dataset from the DB,
+// and don't want to spend the time building DAOs for each entry?
+// You can pass an extra query option to get the raw data instead:
+Project.findAll({ where: { ... }, raw: true })
+```
+##### count - Count the occurrences of elements in the database
+There is also a method for counting database objects:
+
+```
+Project.count().then(c => {
+  console.log("There are " + c + " projects!")
+})
+```
+
+##### max - Get the greatest value of a specific attribute within a specific table
+And here is a method for getting the max value of an attribute:f
+
+```
+/*
+  Let's assume 3 person objects with an attribute age.
+  The first one is 10 years old,
+  the second one is 5 years old,
+  the third one is 40 years old.
+*/
+Project.max('age').then(max => {
+  // this will return 40
+})
+```
+
+##### min - Get the least value of a specific attribute within a specific table
+And here is a method for getting the min value of an attribute:
+
+```
+/*
+  Let's assume 3 person objects with an attribute age.
+  The first one is 10 years old,
+  the second one is 5 years old,
+  the third one is 40 years old.
+*/
+Project.min('age').then(min => {
+  // this will return 5
+})
+```
+
+##### sum - Sum the value of specific attributes
+
+In order to calculate the sum over a specific column of a table, you can use the sum method.
+
+```
+/*
+  Let's assume 3 person objects with an attribute age.
+  The first one is 10 years old,
+  the second one is 5 years old,
+  the third one is 40 years old.
+*/
+Project.sum('age').then(sum => {
+  // this will return 55
+})
+```
+
+#### Querying
+ 
+ - [Querying](http://docs.sequelizejs.com/manual/tutorial/querying.html)
+
+##### Attributes
+
+To select only some attributes, you can use the __attributes__ option. Most often, you pass an array:
+
+```
+Model.findAll({
+  attributes: ['foo', 'bar']
+});
+SELECT foo, bar ...
+Attributes can be renamed using a nested array:
+
+Model.findAll({
+  attributes: ['foo', ['bar', 'baz']]
+});
+
+SELECT foo, bar AS baz ...
+```
+
+You can use __sequelize.fn__ to do aggregations:
+
+```
+
+Model.findAll({
+  attributes: [[sequelize.fn('COUNT', sequelize.col('hats')), 'no_hats']]
+});
+
+SELECT COUNT(hats) AS no_hats ...
+
+```
+
+When using aggregation function, you must give it an alias to be able to access it from the model. In the example above you can get the number of hats with __instance.get('no_hats')__.
+
+Sometimes it may be tiresome to list all the attributes of the model if you only want to add an aggregation:
+
+```
+// This is a tiresome way of getting the number of hats...
+Model.findAll({
+  attributes: ['id', 'foo', 'bar', 'baz', 'quz', [sequelize.fn('COUNT', sequelize.col('hats')), 'no_hats']]
+});
+
+// This is shorter, and less error prone because it still works if you add / remove attributes
+Model.findAll({
+  attributes: { include: [[sequelize.fn('COUNT', sequelize.col('hats')), 'no_hats']] }
+});
+SELECT id, foo, bar, baz, quz, COUNT(hats) AS no_hats ...
+```
+Similarly, it's also possible to remove a selected few attributes:
+
+```
+Model.findAll({
+  attributes: { exclude: ['baz'] }
+});
+SELECT id, foo, bar, quz ...
+```
+
+#### Where
+
+Whether you are querying with findAll/find or doing bulk updates/destroys you can pass a ```where``` object to filter the query.
+
+```where``` generally takes an object from attribute:value pairs, where value can be primitives for equality matches or keyed objects for other operators.
+
+It's also possible to generate complex AND/OR conditions by nesting sets of ```or``` and ```and``` ```Operators```.
+
+##### Basics
+
+```
+const Op = Sequelize.Op;
+
+Post.findAll({
+  where: {
+    authorId: 2
+  }
+});
+// SELECT * FROM post WHERE authorId = 2
+
+Post.findAll({
+  where: {
+    authorId: 12,
+    status: 'active'
+  }
+});
+// SELECT * FROM post WHERE authorId = 12 AND status = 'active';
+
+Post.findAll({
+  where: {
+    [Op.or]: [{authorId: 12}, {authorId: 13}]
+  }
+});
+// SELECT * FROM post WHERE authorId = 12 OR authorId = 13;
+
+Post.findAll({
+  where: {
+    authorId: {
+      [Op.or]: [12, 13]
+    }
+  }
+});
+// SELECT * FROM post WHERE authorId = 12 OR authorId = 13;
+
+Post.destroy({
+  where: {
+    status: 'inactive'
+  }
+});
+// DELETE FROM post WHERE status = 'inactive';
+
+Post.update({
+  updatedAt: null,
+}, {
+  where: {
+    deletedAt: {
+      [Op.ne]: null
+    }
+  }
+});
+// UPDATE post SET updatedAt = null WHERE deletedAt NOT NULL;
+
+Post.findAll({
+  where: sequelize.where(sequelize.fn('char_length', sequelize.col('status')), 6)
+});
+// SELECT * FROM post WHERE char_length(status) = 6;
+```
+
+##### Operators
+
+Sequelize exposes symbol operators that can be used for to create more complex comparisons -
+
+```
+const Op = Sequelize.Op
+
+[Op.and]: {a: 5}           // AND (a = 5)
+[Op.or]: [{a: 5}, {a: 6}]  // (a = 5 OR a = 6)
+[Op.gt]: 6,                // > 6
+[Op.gte]: 6,               // >= 6
+[Op.lt]: 10,               // < 10
+[Op.lte]: 10,              // <= 10
+[Op.ne]: 20,               // != 20
+[Op.eq]: 3,                // = 3
+[Op.not]: true,            // IS NOT TRUE
+[Op.between]: [6, 10],     // BETWEEN 6 AND 10
+[Op.notBetween]: [11, 15], // NOT BETWEEN 11 AND 15
+[Op.in]: [1, 2],           // IN [1, 2]
+[Op.notIn]: [1, 2],        // NOT IN [1, 2]
+[Op.like]: '%hat',         // LIKE '%hat'
+[Op.notLike]: '%hat'       // NOT LIKE '%hat'
+[Op.iLike]: '%hat'         // ILIKE '%hat' (case insensitive) (PG only)
+[Op.notILike]: '%hat'      // NOT ILIKE '%hat'  (PG only)
+[Op.regexp]: '^[h|a|t]'    // REGEXP/~ '^[h|a|t]' (MySQL/PG only)
+[Op.notRegexp]: '^[h|a|t]' // NOT REGEXP/!~ '^[h|a|t]' (MySQL/PG only)
+[Op.iRegexp]: '^[h|a|t]'    // ~* '^[h|a|t]' (PG only)
+[Op.notIRegexp]: '^[h|a|t]' // !~* '^[h|a|t]' (PG only)
+[Op.like]: { [Op.any]: ['cat', 'hat']}
+                       // LIKE ANY ARRAY['cat', 'hat'] - also works for iLike and notLike
+[Op.overlap]: [1, 2]       // && [1, 2] (PG array overlap operator)
+[Op.contains]: [1, 2]      // @> [1, 2] (PG array contains operator)
+[Op.contained]: [1, 2]     // <@ [1, 2] (PG array contained by operator)
+[Op.any]: [2,3]            // ANY ARRAY[2, 3]::INTEGER (PG only)
+
+[Op.col]: 'user.organization_id' // = "user"."organization_id", with dialect specific column identifiers, PG in this example
+
+```
+
+##### Range Operators
+
+Range types can be queried with all supported operators.
+
+Keep in mind, the provided range value can define the bound inclusion/exclusion as well.
+
+```
+// All the above equality and inequality operators plus the following:
+
+[Op.contains]: 2           // @> '2'::integer (PG range contains element operator)
+[Op.contains]: [1, 2]      // @> [1, 2) (PG range contains range operator)
+[Op.contained]: [1, 2]     // <@ [1, 2) (PG range is contained by operator)
+[Op.overlap]: [1, 2]       // && [1, 2) (PG range overlap (have points in common) operator)
+[Op.adjacent]: [1, 2]      // -|- [1, 2) (PG range is adjacent to operator)
+[Op.strictLeft]: [1, 2]    // << [1, 2) (PG range strictly left of operator)
+[Op.strictRight]: [1, 2]   // >> [1, 2) (PG range strictly right of operator)
+[Op.noExtendRight]: [1, 2] // &< [1, 2) (PG range does not extend to the right of operator)
+[Op.noExtendLeft]: [1, 2]  // &> [1, 2) (PG range does not extend to the left of operator)
+
+```
+
+##### Combinations
+
+```
+const Op = Sequelize.Op;
+
+{
+  rank: {
+    [Op.or]: {
+      [Op.lt]: 1000,
+      [Op.eq]: null
+    }
+  }
+}
+// rank < 1000 OR rank IS NULL
+
+{
+  createdAt: {
+    [Op.lt]: new Date(),
+    [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000)
+  }
+}
+// createdAt < [timestamp] AND createdAt > [timestamp]
+
+{
+  [Op.or]: [
+    {
+      title: {
+        [Op.like]: 'Boat%'
+      }
+    },
+    {
+      description: {
+        [Op.like]: '%boat%'
+      }
+    }
+  ]
+}
+// title LIKE 'Boat%' OR description LIKE '%boat%'
+
+```
+
+##### Pagination / Limiting
+
+```
+// Fetch 10 instances/rows
+Project.findAll({ limit: 10 })
+
+// Skip 8 instances/rows
+Project.findAll({ offset: 8 })
+
+// Skip 5 instances and fetch the 5 after that
+Project.findAll({ offset: 5, limit: 5 })
+```
+
+##### Ordering
+
+```order``` takes an array of items to order the query by or a sequelize method. Generally you will want to use a tuple/array of either attribute, direction or just direction to ensure proper escaping.
+
+```
+Subtask.findAll({
+  order: [
+    // Will escape title and validate DESC against a list of valid direction parameters
+    ['title', 'DESC'],
+
+    // Will order by max(age)
+    sequelize.fn('max', sequelize.col('age')),
+
+    // Will order by max(age) DESC
+    [sequelize.fn('max', sequelize.col('age')), 'DESC'],
+
+    // Will order by  otherfunction(`col1`, 12, 'lalala') DESC
+    [sequelize.fn('otherfunction', sequelize.col('col1'), 12, 'lalala'), 'DESC'],
+
+    // Will order an associated model's created_at using the model name as the association's name.
+    [Task, 'createdAt', 'DESC'],
+
+    // Will order through an associated model's created_at using the model names as the associations' names.
+    [Task, Project, 'createdAt', 'DESC'],
+
+    // Will order by an associated model's created_at using the name of the association.
+    ['Task', 'createdAt', 'DESC'],
+
+    // Will order by a nested associated model's created_at using the names of the associations.
+    ['Task', 'Project', 'createdAt', 'DESC'],
+
+    // Will order by an associated model's created_at using an association object. (preferred method)
+    [Subtask.associations.Task, 'createdAt', 'DESC'],
+
+    // Will order by a nested associated model's created_at using association objects. (preferred method)
+    [Subtask.associations.Task, Task.associations.Project, 'createdAt', 'DESC'],
+
+    // Will order by an associated model's created_at using a simple association object.
+    [{model: Task, as: 'Task'}, 'createdAt', 'DESC'],
+
+    // Will order by a nested associated model's created_at simple association objects.
+    [{model: Task, as: 'Task'}, {model: Project, as: 'Project'}, 'createdAt', 'DESC']
+  ]
+
+  // Will order by max age descending
+  order: sequelize.literal('max(age) DESC')
+
+  // Will order by max age ascending assuming ascending is the default order when direction is omitted
+  order: sequelize.fn('max', sequelize.col('age'))
+
+  // Will order by age ascending assuming ascending is the default order when direction is omitted
+  order: sequelize.col('age')
+
+  // Will order randomly based on the dialect (instead of fn('RAND') or fn('RANDOM'))
+  order: sequelize.random()
+})
+```
+
+#### Instances
+
+- [Instances](http://docs.sequelizejs.com/manual/tutorial/instances.html)
+
+##### Building a non-persistent instance
+
+In order to create instances of defined classes just do as follows. Using the ```build``` -method will return an unsaved object, which you explicitly have to save.
+
+```
+const project = Project.build({
+  title: 'my awesome project',
+  description: 'woot woot. this will make me a rich man'
+})
+
+const task = Task.build({
+  title: 'specify the project idea',
+  description: 'bla',
+  deadline: new Date()
+})
+```
+
+Built instances will automatically get default values when they were defined:
+
+```
+// first define the model
+const Task = sequelize.define('task', {
+  title: Sequelize.STRING,
+  rating: { type: Sequelize.STRING, defaultValue: 3 }
+})
+
+// now instantiate an object
+const task = Task.build({title: 'very important task'})
+
+task.title  // ==> 'very important task'
+task.rating // ==> 3
+```
+
+To get it stored in the database, use the ```save``` -method and catch the events ... if needed:
+
+```
+project.save().then(() => {
+  // my nice callback stuff
+})
+
+task.save().catch(error => {
+  // mhhh, wth!
+})
+
+// you can also build, save and access the object with chaining:
+Task
+  .build({ title: 'foo', description: 'bar', deadline: new Date() })
+  .save()
+  .then(anotherTask => {
+    // you can now access the currently saved task with the variable anotherTask... nice!
+  })
+  .catch(error => {
+    // Ooops, do some error-handling
+  })
+```
+
+#### Creating persistent instances
+
+While an instance created with .build() requires an explicit .save() call to be stored in the database, .create() omits that requirement altogether and automatically stores your instance's data once called.
+
+```
+Task.create({ title: 'foo', description: 'bar', deadline: new Date() }).then(task => {
+  // you can now access the newly created task via the variable task
+})
+```
+
+It is also possible to define which attributes can be set via the create method. This can be especially very handy if you create database entries based on a form which can be filled by a user. Using that would for example allow you to restrict the User model to set only a username and an address but not an admin flag:
+
+```
+User.create({ username: 'barfooz', isAdmin: true }, { fields: [ 'username' ] }).then(user => {
+  // let's assume the default of isAdmin is false:
+  console.log(user.get({
+    plain: true
+  })) // => { username: 'barfooz', isAdmin: false }
+})
+```
+
+#### Updating / Saving / Persisting an instance
+
+Now lets change some values and save changes to the database... There are two ways to do that:
+
+```
+// way 1
+task.title = 'a very different title now'
+task.save().then(() => {})
+
+// way 2
+task.update({
+  title: 'a very different title now'
+}).then(() => {})
+```
+
+It's also possible to define which attributes should be saved when calling save, by passing an array of column names. This is useful when you set attributes based on a previously defined object. E.g. if you get the values of an object via a form of a web app. Furthermore this is used internally for update. This is how it looks like:
+
+```
+task.title = 'foooo'
+task.description = 'baaaaaar'
+task.save({fields: ['title']}).then(() => {
+ // title will now be 'foooo' but description is the very same as before
+})
+
+// The equivalent call using update looks like this:
+task.update({ title: 'foooo', description: 'baaaaaar'}, {fields: ['title']}).then(() => {
+ // title will now be 'foooo' but description is the very same as before
+})
+```
+
+When you call save without changing any attribute, this method will execute nothing;
+
+#### Destroying / Deleting persistent instances
+
+Once you created an object and got a reference to it, you can delete it from the database. The relevant method is ```destroy```:
+
+```
+Task.create({ title: 'a task' }).then(task => {
+  // now you see me...
+  return task.destroy();
+}).then(() => {
+ // now i'm gone :)
+})
+```
+
+##### Working in bulk (creating, updating and destroying multiple rows at once)
+
+In addition to updating a single instance, you can also create, update, and delete multiple instances at once. The functions you are looking for are called
+
+``` * Model.bulkCreate ```
+``` * Model.update ```
+``` * Model.destroy ```
+
+Since you are working with multiple models, the callbacks will not return DAO instances. BulkCreate will return an array of model instances/DAOs, they will however, unlike ```create```, not have the resulting values of autoIncrement attributes.```update``` and ```destroy``` will return the number of affected rows.
+
+First lets look at bulkCreate
+```
+User.bulkCreate([
+  { username: 'barfooz', isAdmin: true },
+  { username: 'foo', isAdmin: true },
+  { username: 'bar', isAdmin: false }
+]).then(() => { // Notice: There are no arguments here, as of right now you'll have to...
+  return User.findAll();
+}).then(users => {
+  console.log(users) // ... in order to get the array of user objects
+})
+```
+
+To update several rows at once:
+```
+Task.bulkCreate([
+  {subject: 'programming', status: 'executing'},
+  {subject: 'reading', status: 'executing'},
+  {subject: 'programming', status: 'finished'}
+]).then(() => {
+  return Task.update(
+    { status: 'inactive' }, /* set attributes' value */
+    { where: { subject: 'programming' }} /* where criteria */
+  );
+}).spread((affectedCount, affectedRows) => {
+  // .update returns two values in an array, therefore we use .spread
+  // Notice that affectedRows will only be defined in dialects which support returning: true
+
+  // affectedCount will be 2
+  return Task.findAll();
+}).then(tasks => {
+  console.log(tasks) // the 'programming' tasks will both have a status of 'inactive'
+})
+```
+And delete them:
+
+```
+Task.bulkCreate([
+  {subject: 'programming', status: 'executing'},
+  {subject: 'reading', status: 'executing'},
+  {subject: 'programming', status: 'finished'}
+]).then(() => {
+  return Task.destroy({
+    where: {
+      subject: 'programming'
+    },
+    truncate: true /* this will ignore where and truncate the table instead */
+  });
+}).then(affectedRows => {
+  // affectedRows will be 2
+  return Task.findAll();
+}).then(tasks => {
+  console.log(tasks) // no programming, just reading :(
+})
+```
+
+If you are accepting values directly from the user, it might be beneficial to limit the columns that you want to actually insert.```bulkCreate()``` accepts an options object as the second parameter. The object can have a .```fields.``` parameter, (an array) to let it know which fields you want to build explicitly
+
+##### Values of an instance
+
+If you log an instance you will notice, that there is a lot of additional stuff. In order to hide such stuff and reduce it to the very interesting information, you can use the ```get```-attribute. Calling it with the option ```plain``` = true will only return the values of an instance.
+```
+Person.create({
+  name: 'Rambow',
+  firstname: 'John'
+}).then(john => {
+  console.log(john.get({
+    plain: true
+  }))
+})
+
+// result:
+
+// { name: 'Rambow',
+//   firstname: 'John',
+//   id: 1,
+//   createdAt: Tue, 01 May 2012 19:12:16 GMT,
+//   updatedAt: Tue, 01 May 2012 19:12:16 GMT
+// }
+```
+Hint:You can also transform an instance into JSON by using ```JSON.stringify(instance)```. This will basically return the very same as values.
+
+
+
 #### Reading:
  - [SQL - tutorialspoint](https://www.tutorialspoint.com/sql/sql-overview.htm)
  - [SQL - w3schools](https://www.w3schools.com/sql/default.asp)
