@@ -1444,7 +1444,7 @@ var express = require('express');
 var router = express.Router();
 var Sequelize = require('sequelize');
 
-router.get('/init', function (req, res) {
+router.post('/init', function (req, res) {
 	var customer;
 	models.customer.create({
 		//customerid: db.sequelize.Utils.generateUUID(),
@@ -1494,11 +1494,33 @@ module.exports = router;
 ##### App.js
 
 ```
+var app = express();
+
 const oneToOne  = require('./routes/oneToOne');
 
 app.use('/oneToOne', oneToOne);
+```
+
+– POST customers:
+
+![Postman](assets/1_1_postman.PNG)
+
+Database after do POST:
+
+![Address DB](assets/1_1_address_bd.PNG)
+
+![Customer DB](assets/1_1_customer_bd.PNG)
+
 
 ```
+Executing (default): INSERT INTO `customers` (`uuid`,`firstname`,`lastname`,`age`,`createdAt`,`updatedAt`) VALUES ('1ec93490-2f07-11e9-9538-29377f244a63','Lucas','Sartori',21,'2019-02-12 20:45:23','2019-02-12 20:45:23');
+Executing (default): INSERT INTO `addresses` (`id`,`street`,`phone`,`createdAt`,`updatedAt`) VALUES (DEFAULT,'6 e/44 y 43','221','2019-02-12 20:45:24','2019-02-12 20:45:24');
+Executing (default): SELECT `id`, `street`, `phone`, `createdAt`, `updatedAt`, `fk_customerid` FROM `addresses` AS `address` WHERE `address`.`fk_customerid` = '1ec93490-2f07-11e9-9538-29377f244a63' LIMIT 1;
+```
+
+– Find All Customers:
+
+![Customer DB](assets/1_1_all_postman.PNG)
 
 
 ### Raw queries
