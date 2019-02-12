@@ -312,7 +312,7 @@ You should have a test project done, right? Well go to [chapter_6](/exercises/ch
 
 ### SQL Databases
 
-What is a database?
+#### What is a database?
 
 A database is a collection of data used in a website or application. There are various ways of representing data, but in this workshop we focus on data represented in tables with rows and columns (like Excel). Databases are useful because they are persistent and scalable. 
 
@@ -330,7 +330,7 @@ SQL stands for Structured Query Language, and a query is a request for informati
 
 ![SQL Join Types](./assets/sql-join-types.jpg)
 
-What is ORM?
+#### What is ORM?
 
 Object-Relational Mapping is a technique that lets you query and manipulates data from a database using an object-oriented paradigm. ORM loves objects as much as developers, and is available for any programming languagee of your choosing.
 
@@ -343,17 +343,79 @@ The ORM software generates objects (as in OOP) that virtually map (like the map 
 ![ORM](./assets/orm.png)
 
 
-What is PostgreSQL?
+### What is PostgreSQL?
 
 PostgreSQL comes with many features aimed to help developers build applications, administrators to protect data integrity and build fault-tolerant environments, and help you manage your data no matter how big or small the dataset. In addition to being free and open source, PostgreSQL is highly extensible. For example, you can define your own data types, build out custom functions, even write code from different programming languages without recompiling your database!
 
-Sequelize
+### Sequelize
 
 Sequelize is a promise-based ORM for Node.js and io.js. It supports the dialects PostgreSQL, MySQL, MariaDB, SQLite and MSSQL and features solid transaction support, relations, read replication and more.
 
 
+#### Getting started
 
-##### Model definition
+- [Getting started](http://docs.sequelizejs.com/manual/installation/getting-started.html)
+
+#### Basic usage
+
+- [Basic usage](http://docs.sequelizejs.com/manual/installation/usage.html)
+
+To get the ball rollin' you first have to create an instance of Sequelize. Use it the following way:
+```
+const sequelize = new Sequelize('database', 'username', 'password', {
+  dialect: 'mysql'
+});
+```
+
+This will save the passed database credentials and provide all further methods.
+
+Furthermore you can specify a non-default host/port:
+
+```
+const sequelize = new Sequelize('database', 'username', 'password', {
+  // the sql dialect of the database
+  // currently supported: 'mysql', 'sqlite', 'postgres', 'mssql'
+  dialect: 'mysql',
+  host: "my.server.tld",
+  port: 9821,
+})
+```
+If you just don't have a password:
+
+```
+const sequelize = new Sequelize({
+  database: 'db_name',
+  username: 'username',
+  password: null,
+  dialect: 'mysql'
+});
+```
+
+You can also use a connection string:
+```
+const sequelize = new Sequelize('mysql://user:pass@example.com:9821/db_name', {
+  // Look to the next section for possible options
+})
+```
+
+##### Options
+
+Besides the host and the port, Sequelize comes with a whole bunch of options. Here they are:
+
+See [Sequelize API](http://docs.sequelizejs.com/class/lib/sequelize.js~Sequelize.html)
+See [Model Definition](http://docs.sequelizejs.com/manual/tutorial/models-definition.html#configuration)
+See [Transactions](http://docs.sequelizejs.com/manual/tutorial/transactions.html)
+
+##### Executing raw SQL queries
+
+As there are often use cases in which it is just easier to execute raw / already prepared SQL queries, you can utilize the function sequelize.query.
+
+See [Sequelize.query API](http://docs.sequelizejs.com/class/lib/sequelize.js~Sequelize.html#instance-method-query)
+See [Query Types](http://docs.sequelizejs.com/variable/index.html#static-variable-QueryTypes)
+
+Here is how it works:
+
+#### Model definition
 
 - [Model definition](http://docs.sequelizejs.com/manual/tutorial/models-definition.html)
 
@@ -370,13 +432,12 @@ const Task = sequelize.define('task', {
   description: Sequelize.TEXT,
   deadline: Sequelize.DATE
 })
-
 ```
 
 ##### Data types
 
 Below are some of the datatypes supported by sequelize. For a full and updated list, see DataTypes.
-- [DataTypes ](http://docs.sequelizejs.com/variable/index.html#static-variable-DataTypes)
+- [DataTypes](http://docs.sequelizejs.com/variable/index.html#static-variable-DataTypes)
 
 ```
 Sequelize.STRING                      // VARCHAR(255)
@@ -667,7 +728,7 @@ Project.sum('age').then(sum => {
 })
 ```
 
-#### Querying
+### Querying
  
  - [Querying](http://docs.sequelizejs.com/manual/tutorial/querying.html)
 
@@ -966,7 +1027,7 @@ Subtask.findAll({
 })
 ```
 
-#### Instances
+### Instances
 
 - [Instances](http://docs.sequelizejs.com/manual/tutorial/instances.html)
 
@@ -1184,7 +1245,269 @@ Person.create({
 ```
 Hint:You can also transform an instance into JSON by using ```JSON.stringify(instance)```. This will basically return the very same as values.
 
+### Associations
 
+- [Associations](http://docs.sequelizejs.com/manual/tutorial/associations.html)
+
+#### One-To-One associations
+
+When calling a method such as ```Customer.hasOne(Address)```, we say that the Customer model is the __source__ and the Address model is the __target__.
+
+We define 2 models:
+
+```
+Customer = sequelize.define('customer', {
+  /* attributes */
+})
+
+Address = sequelize.define('address', {
+  /* attributes */
+})
+```
+
+How to create One-to-One association between them?
+Sequelize provides 2 ways:
+
+__belongsTo__
+
+```
+Address.belongsTo(Customer) // Will add a customerId attribute to Address to hold the primary key value for Customer
+```
+
+__hasOne__
+
+```
+Customer.hasOne(Address); // Will add an attribute customerId to the Address model.
+```
+
+What is difference between __belongsTo__ and __hasOne__?
+
+__hasOne__ inserts the association key in target model whereas __BelongsTo__ inserts the association key in the source model.
+
+We can create a solution by combine ```foreignKey``` and ```targetKey``` with ```belongsTo``` and ```hasOne``` relation as below code:
+
+```
+module.exports = (sequelize, DataTypes) => {
+  var Customer = sequelize.define('customer', {
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
+    },
+  })
+
+  Customer.associate = function (models) {
+    models.customer.hasOne(models.address, {foreignKey: 'fk_customerid', targetKey: 'uuid'});
+  }
+
+  return Customer;
+};
+
+
+module.exports = (sequelize, DataTypes) => {
+  var Address = sequelize.define('address', {
+  })
+
+  Address.associate = function (models) {
+    models.address.belongsTo(models.customer, {foreignKey: 'fk_customerid', targetKey: 'uuid'});
+  }
+
+  return Address;
+};
+```
+
+__Foreign Key__
+
+– In __belongsTo__ relation, foreign key will be generated from the target model name and the target primary key name. Sequelize provides a ```foreignKey``` option to override defaultValue.
+
+__Target Key__
+
+– The target key is the column on the target model that the foreign key column on the source model points to. In __belongsTo__ relation, by default the target key will be the target model’s primary key. Sequelize provides a ```targetKey``` option to define a custom column.
+
+
+__How to save it?__
+
+```
+var customer;
+Customer.create({ 
+	firstname: 'Jack',
+	...
+	}).then(createdCustomer => {		
+		// Send created customer to client
+		customer = createdCustomer;
+		
+		return Address.create({
+			street: 'W NORMA ST',
+			...
+		})
+	}).then(address => {
+		customer.setAddress(address)
+	})
+};
+```
+
+__How to fetch entities?__
+
+Way to get all Customers that includes Addresses:
+
+```
+Customer.findAll({
+	attributes: [['uuid', 'customerId'], ['firstname', 'name'], 'age'],
+	include: [{
+		model: Address,
+		where: { fk_customerid: db.Sequelize.col('customer.uuid') },
+		attributes: ['street', 'phone']
+	}]
+}).then(customers => {
+   console.log(customers);
+});
+```
+
+With ```attributes``` option, we can select only some attributes:
+
+```
+Customer.findAll({
+    attributes: ['uuid', 'firstname', 'age']
+});
+```
+
+And ```attributes``` can be renamed using a nested array:
+
+```
+// 'uuid, firstname' can be renamed to 'customerId, name' as below:
+ 
+Customer.findAll({
+    attributes: [['uuid', 'customerId'], ['firstname', 'name'], 'age']
+});
+```
+
+And ```attributes``` can be renamed using a nested array:
+
+```
+// 'uuid, firstname' can be renamed to 'customerId, name' as below:
+
+Customer.findAll({
+    attributes: [['uuid', 'customerId'], ['firstname', 'name'], 'age']
+});
+```
+
+#### Example
+
+##### Define Sequelize models
+
+Customer model
+
+```
+module.exports = (sequelize, DataTypes) => {
+  var Customer = sequelize.define('customer', {
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
+    },
+    firstname: DataTypes.STRING,
+    lastname: DataTypes.STRING,
+    age: DataTypes.INTEGER,
+  })
+
+  Customer.associate = function (models) {
+    models.customer.hasOne(models.address, {foreignKey: 'fk_customerid', targetKey: 'uuid'});
+  }
+
+  return Customer;
+};
+
+```
+
+Address model
+
+```
+module.exports = (sequelize, DataTypes) => {
+  var Address = sequelize.define('address', {
+    street: DataTypes.STRING,
+    phone: DataTypes.STRING
+  })
+
+  Address.associate = function (models) {
+    models.address.belongsTo(models.customer, {foreignKey: 'fk_customerid', targetKey: 'uuid'});
+  }
+
+  return Address;
+};  
+```
+
+##### Express RestAPIs
+
+```
+var models = require('../models');
+var express = require('express');
+var router = express.Router();
+var Sequelize = require('sequelize');
+
+router.get('/init', function (req, res) {
+	var customer;
+	models.customer.create({
+		//customerid: db.sequelize.Utils.generateUUID(),
+		firstname: req.body.firstname,
+		lastname: req.body.lastname,
+		age: req.body.age
+	}).then(createdCustomer => {
+		// Send created customer to client
+		customer = createdCustomer;
+
+		return models.address.create({
+			street: req.body.street,
+			phone: req.body.phone
+		})
+	}).then(address => {
+		customer.setAddress(address)
+		res.send('OK');
+	})
+});
+
+router.get('/all', function (req, res) {
+
+	models.customer.findAll({
+		attributes: [
+			['uuid', 'customerId'],
+			['firstname', 'name'], 'age'
+		],
+		include: [{
+			model: models.address,
+			where: {
+				fk_customerid: Sequelize.col('customer.uuid')
+			},
+			attributes: ['street', 'phone']
+		}]
+	}).then(customers => {
+		res.send(customers);
+	});
+
+});
+
+
+
+module.exports = router;
+```
+
+
+##### App.js
+
+```
+const oneToOne  = require('./routes/oneToOne');
+
+app.use('/oneToOne', oneToOne);
+
+```
+
+
+### Raw queries
+
+- [Raw queries](http://docs.sequelizejs.com/manual/tutorial/raw-queries.html)
+
+### Migrations
+
+- [Migrations](http://docs.sequelizejs.com/manual/tutorial/migrations.html)
 
 #### Reading:
  - [SQL - tutorialspoint](https://www.tutorialspoint.com/sql/sql-overview.htm)
