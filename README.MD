@@ -1158,7 +1158,9 @@ Task.create({ title: 'a task' }).then(task => {
 In addition to updating a single instance, you can also create, update, and delete multiple instances at once. The functions you are looking for are called
 
 ``` * Model.bulkCreate ```
+
 ``` * Model.update ```
+
 ``` * Model.destroy ```
 
 Since you are working with multiple models, the callbacks will not return DAO instances. BulkCreate will return an array of model instances/DAOs, they will however, unlike ```create```, not have the resulting values of autoIncrement attributes.```update``` and ```destroy``` will return the number of affected rows.
@@ -1248,6 +1250,8 @@ Hint:You can also transform an instance into JSON by using ```JSON.stringify(ins
 ### Associations
 
 - [Associations](http://docs.sequelizejs.com/manual/tutorial/associations.html)
+
+- [Associations - Reference](http://docs.sequelizejs.com/class/lib/associations/base.js~Association.html)
 
 #### One-To-One associations
 
@@ -1520,7 +1524,302 @@ Executing (default): SELECT `id`, `street`, `phone`, `createdAt`, `updatedAt`, `
 
 – Find All Customers:
 
-![Customer DB](assets/1_1_all_postman.PNG)
+![All Postman 1_1](assets/1_1_all_postman.PNG)
+
+
+#### One-To-Many associations (hasMany)
+
+One-To-Many associations are connecting one source with multiple targets. But the targets are connected to only one source.
+
+```
+Company = sequelize.define('company', 
+      {/* attributes */
+})
+
+
+Product = sequelize.define('product', 
+      {/* attributes */
+})
+
+Company.hasMany(Product)
+```
+
+The above code will add the attribute companyId to Product. Instances of Company has accessors ```getProducts``` and ```setProducts```.
+
+We can use ```sourceKey``` option to associate records on different columns:
+
+```
+  const Company = sequelize.define('company', {
+    uuid: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV1,
+      primaryKey: true
+    },
+  
+    
+    return Company;
+  };
+
+  const Product = sequelize.define('product', {
+    /*attributes*/
+
+    return Product;
+  };
+
+ Company.hasMany(Product, {foreignKey: 'companyId', sourceKey: 'id'})
+ Product.belongsTo(Company, {foreignKey: 'companyId', targetKey: 'id'});
+```
+
+__How to persist one-to-many objects to database?__
+
+```
+// Apple company
+Company.create({ 
+	name: 'Apple', 
+	street: 'Cupertino, CA 95014', 
+	phone: '1-408-996-1010',
+	products: [
+		// IPhone 7 
+		{
+			/*
+				attributes
+			*/
+		},
+		// IPadPro
+		{
+			/*
+				attributes
+			*/
+		}
+	]
+}, {
+	include: [ Product ]
+})
+```
+
+__How to persist one-to-many objects to database?__
+
+```
+// Apple company
+Company.create({ 
+	name: 'Apple', 
+	street: 'Cupertino, CA 95014', 
+	phone: '1-408-996-1010',
+	products: [
+		// IPhone 7 
+		{
+			/*
+				attributes
+			*/
+		},
+		// IPadPro
+		{
+			/*
+				attributes
+			*/
+		}
+	]
+}, {
+	include: [ Product ]
+})
+```
+
+__How to fetch all Companies (include Products)?__
+
+```
+Company.findAll({
+	attributes: [['uuid', 'companyId'], 'name', 'street', 'phone'],
+	include: [{
+		model: Product,
+		where: { fk_companyid: db.Sequelize.col('company.uuid') },
+		attributes: ['code', 'name', 'details']
+	}]
+})
+```
+
+With ```attributes``` option, we can select only some attributes:
+
+```
+Company.findAll({
+	attributes: ['uuid', 'name', 'street', 'phone']
+});
+```
+
+And attributes can be renamed using a nested array:
+
+```
+// 'uuid' can be renamed to 'companyId' as below:
+
+Company.findAll({
+	attributes: [['uuid', 'companyId'], 'name', 'street', 'phone'],
+});
+```
+
+#### Example
+
+##### Define Sequelize models
+
+Company model:
+
+```
+module.exports = (sequelize, DataTypes) => {
+  const Company = sequelize.define('company', {
+    name: DataTypes.STRING,
+    street: DataTypes.STRING,
+    phone: DataTypes.STRING
+  });
+
+  Company.associate = function (models) {
+    models.company.hasMany(models.product, {
+      foreignKey: 'companyId',
+      sourceKey: 'id'
+    })
+  }
+
+  return Company;
+};
+```
+
+Product model:
+
+```
+module.exports = (sequelize, DataTypes) => {
+  var Product = sequelize.define('product', {
+    code: DataTypes.STRING,
+    name: DataTypes.STRING,
+    details: DataTypes.STRING
+  });
+
+  Product.associate = function (models) {
+    models.product.belongsTo(models.company, {foreignKey: 'companyId', targetKey: 'id'});
+  }
+
+  return Product;
+};
+```
+
+##### Express RestAPIs
+
+```
+var models = require('../models');
+var router = express.Router();
+
+router.get('/init', function (req, res) {
+
+	// Apple company
+	models.company.create({
+		name: 'Apple',
+		street: 'Cupertino, CA 95014',
+		phone: '1-408-996-1010',
+		products: [{
+				code: "A-123",
+				name: "Iphone7",
+				details: "Price: 649.00 USD & FREE shipping"
+			},
+			{
+				code: "A-456",
+				name: "IPadPro",
+				details: "Price: 417.67 USD & FREE shipping"
+			}
+		]
+	}, {
+		include: [models.product]
+	}).then(() => {
+
+		console.log("-----------> Apple is created");
+
+		models.company.create({
+			name: 'Samsung',
+			street: 'Seocho District, Seoul, South Korea',
+			phone: '+82-2-2053-3000',
+			products: [{
+					code: "S-012",
+					name: "GalaxyJ7",
+					details: "Price: 219.00 USD & FREE shipping"
+				},
+				{
+					code: "S-456",
+					name: "GalaxyTabA",
+					details: "Price: 299.99 USD & FREE shipping"
+				}
+			]
+		}, {
+			include: [models.product]
+		}).then(() => {
+			console.log("-----------> Samsung is created");
+		})
+	}).then(() => {
+		res.send("Done!");
+	})
+});
+
+router.get('/all', function (req, res) {
+
+	models.company.findAll({
+		attributes: [['id', 'companyId'], 'name', 'street', 'phone'],
+		include: [{
+			model: Product,
+			// where: { companyId },
+			attributes: ['code', 'name', 'details']
+		}]
+	}).then(function (companies) {
+
+	   res.send(companies);
+	});
+
+
+});
+
+
+module.exports = router;
+```
+
+
+##### App.js
+
+```
+var app = express();
+
+const oneToMany  = require('./routes/oneToMany');
+
+app.use('/oneToMany', oneToMany);
+```
+Make an initial data request:
+```
+http://localhost:3000/oneToMany/init
+```
+
+![Tables DB](assets/1_N_tables.PNG)
+
+```
+Executing (default): INSERT INTO `companies` (`id`,`name`,`street`,`phone`,`createdAt`,`updatedAt`) VALUES (DEFAULT,'Apple','Cupertino, CA 95014','1-408-996-1010','2019-02-13 13:29:03','2019-02-13 13:29:03');
+Executing (default): INSERT INTO `products` (`id`,`code`,`name`,`details`,`createdAt`,`updatedAt`,`companyId`) VALUES (DEFAULT,'A-123','Iphone7','Price: 649.00 USD & FREE shipping','2019-02-13 13:29:03','2019-02-13 13:29:03',1);
+Executing (default): INSERT INTO `products` (`id`,`code`,`name`,`details`,`createdAt`,`updatedAt`,`companyId`) VALUES (DEFAULT,'A-456','IPadPro','Price: 417.67 USD & FREE shipping','2019-02-13 13:29:03','2019-02-13 13:29:03',1);
+-----------> Apple is created
+Executing (default): INSERT INTO `companies` (`id`,`name`,`street`,`phone`,`createdAt`,`updatedAt`) VALUES (DEFAULT,'Samsung','Seocho District, Seoul, South Korea','+82-2-2053-3000','2019-02-13 13:29:03','2019-02-13 13:29:03');
+GET /oneToMany/init 200 336.671 ms - 5
+Executing (default): INSERT INTO `products` (`id`,`code`,`name`,`details`,`createdAt`,`updatedAt`,`companyId`) VALUES (DEFAULT,'S-012','GalaxyJ7','Price: 219.00 USD & FREE shipping','2019-02-13 13:29:03','2019-02-13 13:29:03',2);
+Executing (default): INSERT INTO `products` (`id`,`code`,`name`,`details`,`createdAt`,`updatedAt`,`companyId`) VALUES (DEFAULT,'S-456','GalaxyTabA','Price: 299.99 USD & FREE shipping','2019-02-13 13:29:03','2019-02-13 13:29:03',2);
+-----------> Samsung is created
+```
+
+![Company DB](assets/1_N_company_bd.PNG)
+
+![Product DB](assets/1_N_product_bd.PNG)
+
+Get all Companies, include Products:
+
+```
+http://localhost:3000/oneToMany/all
+```
+
+```
+Executing (default): SELECT `company`.`id`, `company`.`id` AS `companyId`, `company`.`name`, `company`.`street`, `company`.`phone`, `products`.`id` AS `products.id`, `products`.`code` AS `products.code`, `products`.`name` AS `products.name`, `products`.`details` AS `products.details` FROM
+`companies` AS `company` LEFT OUTER JOIN `products` AS `products` ON `company`.`id` = `products`.`companyId`;
+GET /oneToMany/all 200 24.987 ms - 544
+```
+
+![All Postman 1_N](assets/1_N_postman.PNG)
 
 
 ### Raw queries
