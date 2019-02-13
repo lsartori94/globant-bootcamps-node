@@ -1822,6 +1822,302 @@ GET /oneToMany/all 200 24.987 ms - 544
 ![All Postman 1_N](assets/1_N_postman.PNG)
 
 
+#### Sequelize Many-To-Many
+
+When calling a method such as ```Project.belongsToMany(User, {through: 'UserProject'})```, we say that the Project model is the __source__ and the User model is the __target__.
+
+We define 2 models:
+
+```
+Project = sequelize.define('project', {
+  /* attributes */
+});
+
+Person = sequelize.define('person', {
+  /* attributes */
+});
+```
+
+Many-To-Many associations are used to connect sources with multiple targets. And the targets can also have connections to multiple sources.
+
+Project.belongsToMany(Person, { through: 'PersonProject' });
+Person.belongsToMany(Project, { through: 'PersonProject' });
+
+A new model UserProject will be created with projectId and userId.
+
+```through``` is required. Sequelize will create accessors for both Project and User instances: ```getUsers```, ```setUsers```, ```addUser```, ```addUsers``` to Project, and ```getProjects```, ```setProjects```, ```addProject```, and ```addProjects``` to User.
+
+To modify the name of models in associations, we can use the alias with ```as``` option:
+
+```
+Project.belongsToMany(Person, { as: 'Workers', through: 'worker_tasks', foreignKey: 'projectId', otherKey: 'personId'});
+Person.belongsToMany(Project, { as: 'Tasks', through: 'worker_tasks', foreignKey: 'personId', otherKey: 'projectId'});
+```
+
+```foreignKey``` is used to set source model key in the through relation.
+```otherKey``` is used to set target model key in the through relation.
+
+![N_M Tables DB](assets/N_M_tables_bd.PNG)
+
+__How to persist many-to-many entities into database?__
+
+```
+
+Person.create({
+		firstname: "Jack",
+		lastname: "Davis",
+		age: 37		
+	}).then(jack => {
+			let people = [jack];
+			
+			return Person.create({
+				firstname: "Mary",
+				lastname: "Taylor",
+				age: 21
+			}).then(mary => {
+				people.push(mary);
+				return people;
+			})
+	}).then(people => {
+		Project.create({
+			code: 'P-123',
+			name: 'JSA - Branding Development'
+		}).then(p123 => {
+			p123.setWorkers(people);
+		})
+		
+		Project.create({
+			code: 'P-456',
+			name: 'JSA - DataEntry Development'
+		}).then(p456 => {
+			p456.setWorkers(people);
+		})
+	}).then(() => {
+		res.send("OK");
+	});
+```
+
+__How to retrieve all entities?__
+
+With Belongs-To-Many you can query based on through relation by using ```through``` option and select specific ```attributes``` by using attributes option.
+
+```
+Project.findAll({
+		attributes: ['code', 'name'],
+		include: [{
+			model: Person, as: 'Workers',
+			attributes: [['firstname', 'name'], 'age'],
+			through: {
+				attributes: ['projectId', 'personId'],
+			}
+		  }]
+	}).then(projects => {
+	   res.send(projects);
+	});
+```
+
+#### Example
+
+##### Define Sequelize models
+
+- Project model:
+
+```
+module.exports = (sequelize, DataTypes) => {
+  var Project = sequelize.define('project', {
+    code: DataTypes.STRING,
+    name: DataTypes.STRING,
+  });
+
+  Project.associate = function (models) {
+    models.project.belongsToMany(models.person, { as: 'Workers', through: 'worker_tasks', foreignKey: 'projectId', otherKey: 'personId'});
+  }
+
+  return Project;
+};
+```
+
+– Person model:
+
+```
+module.exports = (sequelize, DataTypes) => {
+  var Person = sequelize.define('person', {
+    firstname: DataTypes.STRING,
+    lastname: DataTypes.STRING,
+    age: DataTypes.STRING,
+  });
+  
+  Person.associate = function(models) {
+    models.person.belongsToMany(models.project, { as: 'Tasks', through: 'worker_tasks', foreignKey: 'personId', otherKey: 'projectId'});
+  }
+    
+  
+  return Person;
+};
+```
+
+##### Express RestAPIs
+
+```
+var models = require('../models');
+var express = require('express');
+var router = express.Router();
+
+router.get('/init', function (req, res) {
+  models.person.create({
+		firstname: "Jack",
+		lastname: "Davis",
+		age: 37		
+	}).then(jack => {
+			let people = [jack];
+			
+			return models.person.create({
+				firstname: "Mary",
+				lastname: "Taylor",
+				age: 21
+			}).then(mary => {
+				people.push(mary);
+				return people;
+			})
+	}).then(people => {
+		models.project.create({
+			code: 'P-123',
+			name: 'JSA - Branding Development'
+		}).then(p123 => {
+			p123.setWorkers(people);
+		})
+		
+		models.project.create({
+			code: 'P-456',
+			name: 'JSA - DataEntry Development'
+		}).then(p456 => {
+			p456.setWorkers(people);
+		})
+	}).then(() => {
+		res.send("OK");
+	});
+});
+
+router.get('/all', function (req, res) {
+  models.project.findAll({
+		attributes: ['code', 'name'],
+		include: [{
+			model: models.person, as: 'Workers',
+			attributes: [['firstname', 'name'], 'age'],
+			through: {
+				attributes: ['projectId', 'personId'],
+			}
+		  }]
+	}).then(projects => {
+	   res.send(projects);
+	});
+});
+
+
+
+module.exports = router;
+```
+
+##### App.js
+
+```
+var app = express();
+var manyToMany  = require('./routes/manyToMany');
+
+app.use('/manyToMany', manyToMany);
+```
+
+__Initial data__
+
+Request:
+
+```
+http://localhost:3000/manyToMany/init
+```
+
+Logs:
+```
+Executing (default): INSERT INTO `projects` (`id`,`code`,`name`,`createdAt`,`updatedAt`) VALUES (DEFAULT,'P-456','JSA - DataEntry Development','2019-02-13 18:15:09','2019-02-13 18:15:09');
+Executing (default): SELECT `createdAt`, `updatedAt`, `personId`, `projectId` FROM `worker_tasks` AS `worker_tasks` WHERE `worker_tasks`.`projectId` = 1;
+Executing (default): SELECT `createdAt`, `updatedAt`, `personId`, `projectId` FROM `worker_tasks` AS `worker_tasks` WHERE `worker_tasks`.`projectId` = 2;
+Executing (default): INSERT INTO `worker_tasks` (`personId`,`projectId`,`createdAt`,`updatedAt`) VALUES (1,2,'2019-02-13 18:15:09','2019-02-13 18:15:09'),(2,2,'2019-02-13 18:15:09','2019-02-13 18:15:09');
+Executing (default): INSERT INTO `worker_tasks` (`personId`,`projectId`,`createdAt`,`updatedAt`) VALUES (1,1,'2019-02-13 18:15:09','2019-02-13 18:15:09'),(2,1,'2019-02-13 18:15:09','2019-02-13 18:15:09');
+```
+
+Results:
+
+![Peope Table](assets/N_M_people_bd.PNG)
+
+![Projects Table](assets/N_M_projects.PNG)
+
+![Work Tasks Table](assets/N_M_work_tasks_bd.PNG)
+
+__Fetch all entities__
+
+Request:
+
+```
+http://localhost:3000/manyToMany/all
+```
+
+Logs:
+
+```
+Executing (default): SELECT `project`.`id`, `project`.`code`, `project`.`name`, `Workers`.`id` AS `Workers.id`, `Workers`.`firstname` AS `Workers.name`, `Workers`.`age` AS `Workers.age`, `Workers.worker_tasks`.`createdAt` AS `Workers.worker_tasks.createdAt`, `Workers.worker_tasks`.`updatedAt` AS `Workers.worker_tasks.updatedAt`, `Workers.worker_tasks`.`personId` AS `Workers.worker_tasks.personId`, `Workers.worker_tasks`.`projectId` AS `Workers.worker_tasks.projectId` FROM `projects` AS `project` LEFT OUTER JOIN (`worker_tasks` AS `Workers.worker_tasks` INNER JOIN `people` AS `Workers` ON `Workers`.`id` = `Workers.worker_tasks`.`personId`) ON `project`.`id` = `Workers.worker_tasks`.`projectId`;
+```
+
+Result:
+
+```
+[
+    {
+        "code": "P-123",
+        "name": "JSA - Branding Development",
+        "Workers": [
+            {
+                "name": "Jack",
+                "age": "37",
+                "worker_tasks": {
+                    "projectId": 1,
+                    "personId": 1
+                }
+            },
+            {
+                "name": "Mary",
+                "age": "21",
+                "worker_tasks": {
+                    "projectId": 1,
+                    "personId": 2
+                }
+            }
+        ]
+    },
+    {
+        "code": "P-456",
+        "name": "JSA - DataEntry Development",
+        "Workers": [
+            {
+                "name": "Jack",
+                "age": "37",
+                "worker_tasks": {
+                    "projectId": 2,
+                    "personId": 1
+                }
+            },
+            {
+                "name": "Mary",
+                "age": "21",
+                "worker_tasks": {
+                    "projectId": 2,
+                    "personId": 2
+                }
+            }
+        ]
+    }
+]
+```
+
+
 ### Raw queries
 
 - [Raw queries](http://docs.sequelizejs.com/manual/tutorial/raw-queries.html)
