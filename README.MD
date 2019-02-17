@@ -280,7 +280,7 @@ REST
 
 OK, now, we're going to take a REST.
 
-[rest.gif]
+[rest.jpg]
 
 Oh, no, we're not talking about THAT rest. We're talking about this REST:
 
