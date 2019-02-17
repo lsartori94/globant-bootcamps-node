@@ -253,6 +253,9 @@ If you want to be a real nodejs developer, you need to know this.
 
 ![Ninja](./assets/ninja.gif)
 
+##### What is Bluebird?
+Bluebird is a Promise engine substitution that provides significant performance improvements over native ES6 Promise, and also contains a superset API that overlays the native Promise specification.
+
 #### Reading:
 - [Bluebird vs ES6 Promises](https://medium.com/@housecor/5-reasons-to-keep-using-bluebird-for-promises-a4f59c8a5d69)
 - [Node uses a single thread?](https://codeburst.io/how-node-js-single-thread-mechanism-work-understanding-event-loop-in-nodejs-230f7440b0ea)
@@ -276,7 +279,7 @@ Go to [chapter_4](/exercises/chapter_4) and follow the instructions.
  - Middlewares
  - Validations
 
-REST
+#### REST
 
 OK, now, we're going to take a REST.
 
@@ -286,7 +289,7 @@ Oh, no, we're not talking about THAT rest. We're talking about this REST:
 
 REpresentational State Transfer
 
-And... what does it means?
+##### And... what does it means?
 
 It means when a RESTful API is called, the server will transfer to the client a representation of the state of the requested resource.
 The representation of the state can be in a JSON format, and probably for most APIs this is indeed the case. It can also be in XML or HTML format.
@@ -296,7 +299,7 @@ What the server does when you, the client, call one of its APIs depends on 2 thi
   1- An identifier for the resource you are interested in. This is the URL for the resource, also known as the "endpoint".
   2- The operation you want the server to perform on that resource, in the form of an HTTP method, or verb. The common HTTP methods are GET, POST, PUT, and DELETE.
 
-EXPRESS
+##### EXPRESS
 
 Express is the most popular Node web framework. It provides mechanisms to:
 
