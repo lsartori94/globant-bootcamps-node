@@ -276,6 +276,48 @@ Go to [chapter_4](/exercises/chapter_4) and follow the instructions.
  - Middlewares
  - Validations
 
+REST
+
+OK, now, we're going to take a REST.
+
+[rest.gif]
+
+Oh, no, we're not talking about THAT rest. We're talking about this REST:
+
+REpresentational State Transfer
+
+And... what does it means?
+
+It means when a RESTful API is called, the server will transfer to the client a representation of the state of the requested resource.
+The representation of the state can be in a JSON format, and probably for most APIs this is indeed the case. It can also be in XML or HTML format.
+
+What the server does when you, the client, call one of its APIs depends on 2 things that you need to provide to the server:
+
+  1- An identifier for the resource you are interested in. This is the URL for the resource, also known as the "endpoint".
+  2- The operation you want the server to perform on that resource, in the form of an HTTP method, or verb. The common HTTP methods are GET, POST, PUT, and DELETE.
+
+EXPRESS
+
+Express is the most popular Node web framework. It provides mechanisms to:
+
+   -Write handlers for requests with different HTTP verbs at different URL paths (routes).
+   -Integrate with "view" rendering engines in order to generate responses by inserting data into templates.
+   -Set common web application settings like the port to use for connecting, and the location of templates that are used for rendering the response.
+   -Add additional request processing "middleware" (we're going to talk about that later) at any point within the request handling pipeline.
+
+#### Reading:
+- [What is REST part-1](https://medium.com/extend/what-is-rest-a-simple-explanation-for-beginners-part-1-introduction-b4a072f8740f)
+- [What is REST part-2](https://medium.com/extend/what-is-rest-a-simple-explanation-for-beginners-part-2-rest-constraints-129a4b69a582)
+- [Introducing Express](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Introduction#Introducing_Express)
+
+#### Excercise:
+_It's time, let's do it_
+
+Go to [chapter_5](/exercises/chapter_5) and follow the instructions.
+
+#### ~~Not so~~ optional reading
+- [The definitive guide to Express](https://hackernoon.com/the-definitive-guide-to-express-the-node-js-web-application-framework-649352e2ae87)
+
 ### Chapter 6: Testing
 You've been doing apps, exercises, REST APIs. But how can you make sure that what you did will actually work on every scenario?
 
