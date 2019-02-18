@@ -397,12 +397,149 @@ You can also search npm documentation for help. To do that use
 npm help-search <command>
 ```
 
+#### What are NPM Scripts?
+
+NPM scripts are, well, scripts. We use scripts to automate repetitive tasks. For example, building your project, minifying Cascading Style Sheets (CSS) and JavaScript (JS) files. Scripts are also used in deleting temporary files and folders, etc,. There are many ways to pull this off — you could write bash/batch scripts, or use a task runner like Gulp or Grunt. However, a lot of people are moving over to NPM scripts for their simplicity and versatility. They also offer possibility of having fewer tools to learn, use, and keep track of.
+
+Now that we have (some) idea of what NPM scripts are and what they can do for us, let’s go ahead and write some!
+
+##### The Scripts Object in package.json
+
+Most of our work will happen in the package.json file that NPM uses as a manifest of sorts.
+
+Here’s a sample package.json file:
+
+```
+{   
+    "name": "super-cool-package",   
+    "version": "1.0.0",   
+    "scripts": {    
+        ...   
+    }, 
+    "dependencies": { 
+        ...
+    }    
+    "devDependencies": {     
+        ...   
+    } 
+}
+```
+
+
+If you’ve been working with NodeJS and NPM, you will be familiar with the package.json file. Notice the scripts object in the file. This is where our NPM scripts will go. NPM scripts are written as usual JSON key-value pairs where the key is the name of the script and the value contains the script you want to execute.
+
+Here’s perhaps the most popular NPM script (and it’s also a special kind of script):
+
+```
+"scripts": {
+    "start": "node index.js",
+    ...
+}
+```
+
+You’ve probably seen this tons of times in your package.json files. And you probably know that you can type npm start to execute the script. But this example illustrates the first important aspect of NPM scripts — they are simply terminal commands. They run in the shell of the OS on which they’re executed. So it might be bash for Linux and cmd.exe for Windows.
+
+##### Custom Scripts
+
+NPM also let’s you define your own custom scripts. Let’s look at a super basic custom NPM script that outputs “hello world” to the console. Add this to the scripts object of your package.json file:
+
+```
+"say-hello": "echo 'Hello World'"
+```
+
+The scripts object in your package.json file should look like this:
+
+```
+...
+"scripts": {
+    "start": "node index.js",
+    "say-hello": "echo 'Hello World!'"
+}
+```
+
+Now try running ```npm say-hello```. Doesn’t work? This is because custom NPM scripts must be preceded by either run-script or run for them to be executed correctly. Try running ```npm run-script say-hello``` or ```npm run say-hello```. The console says, “Hello World!”! We’ve written our first NPM script!
+
+##### Calling NPM Scripts Within Other NPM Scripts
+
+One downside of using NPM scripts shows up when your script is fairly complex (and long). This problem is compounded by the fact that the JSON spec does not support comments. There are a few ways around this problem. One way is to divide your script into small single-purpose scripts and then call them within other NPM scripts. The way to call an NPM script within another is straightforward. Modify your scripts object so that it looks like this:
+
+```
+"scripts": {
+    "say-hello": "echo 'Hello World'",
+    "awesome-npm": "npm run say-hello && echo 'echo NPM is awesome!'"
+}
+```
+Since NPM scripts execute in the shell, calling npm run say-hello within another NPM script is almost intuitive.
+
+
+##### Calling Shell and Node Scripts
+
+At times, you may have to write scripts far more complex than ones that can be achieved in 2–3 commands. When this situation arises, one solution is to write bash or JS scripts (or scripts in any scripting language you like) and call them from NPM scripts.
+
+Let’s quickly write a bash script that says hello to you. Create a file called ```hello.sh``` in your root directory and paste this code in it:
+
+```
+#!/usr/bin/env bash
+# filename: hello.sh
+echo "What's your name?"
+read name
+echo "Hello there, $name!"
+```
+
+It’s a simple script that echoes your name back to you. Now modify the ```package.json``` file so that the ```scripts``` object has this line of code:
+
+```
+"bash-hello": "bash hello.sh"
+```
+
+Now, when you run ```npm run bash-hello```, it asks you for your name and then says hello to you! Brilliant.
+
+You can do the same thing with JS scripts run using node. An advantage of this approach is that this script will be platform independent since it uses node to run. Here’s a slightly more complex JS script to add two integers received as command line arguments (put this in a file named add.js):
+
+```
+// add.js
+// adds two integers received as command line arguments
+function add(a, b) {
+    return parseInt(a)+parseInt(b);
+}
+if(!process.argv[2] || !process.argv[3]) {
+    console.log('Insufficient number of arguments! Give two numbers please!');
+}
+else {
+    console.log('The sum of', process.argv[2], 'and', process.argv[3], 'is', add(process.argv[2], process.argv[3]));
+}
+```
+
+The process.argv object contains the command line arguments given to the script. The first two elements, ```process.argv[0]``` and ```process.argv[1]```, are reserved by node. Thus ```process.argv[2]``` and ```process.argv[3]``` let you access the command line arguments.
+
+Now add this line to the ```scripts``` object of the ```package.json``` file:
+
+```
+"js-add": "node add.js"
+```
+
+Finally, run the script as an npm script by giving it two numbers as command line arguments:
+
+```
+npm run js-add 2 3
+```
+
+And the output is
+
+```
+The sum of 2 and 3 is 5
+```
+
+Brilliant! Now we’re capable of writing much more powerful scripts and leveraging the power of other scripting languages.
+
+
 #### Reading:
  - [NPM](https://docs.npmjs.com/about-npm)
  - [NVM](https://github.com/creationix/nvm)
  - [Modules](https://www.nodebeginner.org/blog/post/nodejs-tutorial-what-are-node.js-modules/)
  - [Debugging](https://www.nodebeginner.org/blog/post/nodejs-tutorial-what-are-node.js-modules/)
  - [Debugging on VS-Code](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)
+ - [Module System](https://medium.freecodecamp.org/anatomy-of-js-module-systems-and-building-libraries-fadcd8dbd0e)
 
 #### Excercise:
 If guess you've noticed, but there's a folder called exercises. _Yes, you need to do them_
