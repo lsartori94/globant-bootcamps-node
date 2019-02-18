@@ -20,6 +20,7 @@ OK, let's start.
 
 - You should rewrite this code using promises instead of callbacks 
 - You should rewrite this code using bluebirds promises instead of native promises.
+- You should rewrite this code using async/await.
 
 Your folder structure should look like this:
 ```
@@ -27,6 +28,7 @@ chapter_4
 ├── app.js
 ├── app_promises.js
 ├── app_bluebirds.js
+├── app_async_await.js
 └── package.json
 ```
 
@@ -34,3 +36,4 @@ Finally, the app should return the same result for each approach.
 - run `node app.js`
 - run `node app_promises.js`
 - run `node app_bluebird.js`
+- run `node app_async_await.js`
