@@ -1,0 +1,11 @@
+{
+  "name": "bootcamp_chapter_4",
+  "version": "1.0.0",
+  "description": "Just a exercise",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "Globant",
+  "license": "MIT"
+}
