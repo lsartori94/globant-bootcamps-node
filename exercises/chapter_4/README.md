@@ -6,7 +6,7 @@ Let's compare these approaches: callbacks, promises and bluebird.
 In this folder, you have an exercise `app.js` with some request using callbacks.
 
 Before starting, let's run the example ....
-- In a console go to this folder
+- In a console, go to `chapter_4` folder
 - run `npm install`
 - run `node app.js {a number}` -> {a number} represents an id of a comment in this [API testing site](https://jsonplaceholder.typicode.com/)
 - You should see information about the user who created the post where the comment was made.
