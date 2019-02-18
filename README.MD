@@ -209,6 +209,73 @@ Let's talk shop.
 Node just runs Javascript, but you actually need more than that to make an app. You need some kind of code modularization,
 some kind of debugging tool and, of course, other people's code :grimacing:.
 
+
+#### What is npm and what are packages?
+
+The letters ```npm``` stand for “node package manager”. When you are working on a JavaScript project, you can use npm to install other people’s code packages into your own project. Your project might be a web project like a website or web app, or it could be a server-side project using node. Any JavaScript project can use npm to pull in packages of existing code.
+
+npm is a tool you install on your computer. It’s part of node, so [install the LTS version of Node](https://nodejs.org/en/) to get both the ```node``` and ```npm``` commands in your command line. It must be installed on every computer where you want to work on your project, so if you move your files around using a USB drive don’t forget that part!
+
+You use npm from the command line to install, uninstall or update packages. By “package” I mean any piece of code which someone has chosen to publish on npm.
+
+Some examples of npm packages are:
+
+Angular
+React
+jQuery
+Express
+Socket.io
+
+There are thousands of packages published on npm. You can browse them on [npmjs.comh](https://www.npmjs.com/), but usually you will find recommended packages by searching on Google or following blog posts. Some packages are only suitable for web projects, and some are only suitable for node projects.
+
+#### Using npm in a project
+To use npm packages in a project, your project must contain a file called package.json. This file keeps a list of all the packages you are using, and which version of each one you have chosen to use.
+
+##### If your file does not have a package.json 
+then you can create one from the command line by running npm init inside your project.
+
+```
+cd example-project
+npm init
+```
+or 
+
+Generate it without having it ask any questions:
+
+```
+$ mkdir my-npm-pkg && cd my-npm-pkg
+$ npm init -y
+```
+
+#### Installing packages
+
+Each time you open your project on a different computer, you may have to reinstall all your packages. This is especially true if you are moving between Mac and Windows. This is because not all packages are cross-compatible, and sometimes need a version downloaded for the specific system you are using it on.
+
+When you open a project for the first time or on a different computer, reinstall all your packages:
+
+```
+cd example-project
+npm install
+or
+npm i
+```
+
+After running ```npm install``` there will be a new folder in your project called ```node_modules```. This folder contains all the code for all the packages you have installed. It also contains all that packages that your packages installed. It can get pretty big.
+
+Here’s a programmer joke you can now consider yourself “in on”:
+
+image_node_modules
+
+[node_modules](./assets/image_node_modules.jpeg)
+
+To install a new package, use the command ```npm install``` followed by the name of the package. Include the ```--save``` flag to ensure the library is added to your ```package.json``` so you can install or update it again later:
+
+```
+npm install that-cool-thing --save
+```
+
+If everything explodes and you don’t understand the errors and you don’t know what to do, first try deleting your ```node_modules``` folder and then running a fresh npm install. You’ll get the hang of it, don’t panic!
+
 #### Reading:
  - [NPM](https://docs.npmjs.com/about-npm)
  - [NVM](https://github.com/creationix/nvm)
