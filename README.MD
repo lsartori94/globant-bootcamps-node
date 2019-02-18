@@ -220,13 +220,13 @@ You use npm from the command line to install, uninstall or update packages. By �
 
 Some examples of npm packages are:
 
-Angular
-React
-jQuery
-Express
+Angular<br>
+React<br>
+jQuery<br>
+Express<br>
 Socket.io
 
-There are thousands of packages published on npm. You can browse them on [npmjs.comh](https://www.npmjs.com/), but usually you will find recommended packages by searching on Google or following blog posts. Some packages are only suitable for web projects, and some are only suitable for node projects.
+There are thousands of packages published on npm. You can browse them on [npmjs.com](https://www.npmjs.com/), but usually you will find recommended packages by searching on Google or following blog posts. Some packages are only suitable for web projects, and some are only suitable for node projects.
 
 #### Using npm in a project
 To use npm packages in a project, your project must contain a file called package.json. This file keeps a list of all the packages you are using, and which version of each one you have chosen to use.
@@ -266,7 +266,7 @@ Here’s a programmer joke you can now consider yourself “in on”:
 
 image_node_modules
 
-[node_modules](./assets/image_node_modules.jpeg)
+![node_modules](./assets/image_node_modules.jpeg)
 
 To install a new package, use the command ```npm install``` followed by the name of the package. Include the ```--save``` flag to ensure the library is added to your ```package.json``` so you can install or update it again later:
 
@@ -275,6 +275,127 @@ npm install that-cool-thing --save
 ```
 
 If everything explodes and you don’t understand the errors and you don’t know what to do, first try deleting your ```node_modules``` folder and then running a fresh npm install. You’ll get the hang of it, don’t panic!
+
+#### Basic NPM Commands
+
+##### Installing packages:
+
+__Locally__: A locally installed package can be accessed only on the folder you’ve downloaded it.
+
+The node_modules is the folder in which our local packages are installed. There will be a new file named package-lock.json. This file contains the exact version of the package, unlike package.json which contains the semantic version
+
+You can also install packages as a developer dependency i.e., these packages are only needed for development. For example, they can be any package for testing the project. To install packages as a developer dependency use the command
+
+```
+npm install <package_name> --save-dev
+or
+npm i -D <package_name>
+```
+
+__Globally__: A globally installed packages works anywhere on the machine. To install global packages you’ve to use -g flag.
+
+Generally, any packages you use in your project have to be installed locally. And packages you use in the command line are to be installed globally.
+
+The command for the local and global packages are same except that you have to use -g flag for global packages.
+
+
+##### Updating packages:
+
+Since we have installed packages sometimes we need to update our packages to get new features. To do that, you’ve to use
+
+```
+npm update <package_name>
+```
+
+for a specific package (or) just
+
+```
+npm update
+```
+
+to update all packages.
+
+For global packages, you’ve to use -g.
+
+```
+npm update <package_name> -g
+```
+
+
+##### Uninstalling packages:
+
+Sometimes you don’t need a particular package and you want to remove it. It’s not a good idea to manually remove the package from the node_modules folder as it can be a dependency for the other packages. So, to safely remove a package you’ve to use the command
+
+```
+npm uninstall <package_name>
+```
+
+For global packages,
+
+```
+npm uninstall <package_name> -g
+```
+
+##### Installing from package.json:
+
+If you want to share your project then you may not want to share all your node modules. So, you will be sharing only your package.json which contains the packages needed for your project. And also If you want to contribute to some others project then you need to download the project and install packages in it. To do that, you have to use the command
+
+```
+npm install
+
+or
+
+npm i
+```
+
+##### List of installed packages:
+
+To get the list of installed packages, use the command
+
+```
+npm list
+```
+
+#### Semantic versioning:
+
+![Semantic versioning npm](./assets/semantic_versioning_npm.jpeg)
+
+
+All the package versions are represented with three digits. The first digit is major, second is minor and third is patch(see fig).
+
+patch(~) is updated for bug fixes. You can update patch from the command
+
+minor(^) is updated for every new functionality that doesn’t break the existing code.
+
+major is updated for big changes. These generally break the existing code.
+
+In the package.json, when you install a package, you will see a caret(^) symbol by default. This indicates that when a user is downloading your project, the package will be updated to the latest minor version. Same applies to patch. If we don’t include any symbol then exact version is downloaded. To get the latest major version, asterisk(*) is used. But you don’t want to do this as the major version can break your code.
+
+To install either major, minor, patch (or) exact version, you can use the command
+
+```
+npm install <package_name>@x.y.z
+```
+
+#### Getting help:
+
+npm CLI has built -n help command. You can access it by
+
+```
+npm help
+```
+
+To get help for a particular command, use the command
+
+```
+npm <command> -h
+```
+
+You can also search npm documentation for help. To do that use
+
+```
+npm help-search <command>
+```
 
 #### Reading:
  - [NPM](https://docs.npmjs.com/about-npm)
