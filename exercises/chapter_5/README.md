@@ -10,8 +10,8 @@ We're ready to develop our first real and useful endpoints. We'll use a base cod
 |Entities  |Attributes  |
 |---|---|
 |**user** | - **username**: String<br>- **pass**: String<br>- **name**: String<br>- **lastname**: String<br>- **email**: String<br>- **createdAt**: Date|
-|**card** | - **title**: String.<br>- **description**: Text.<br>- **owner**: \<User\> _reference to the user who creates the card_|
-|**comment** | - **text**: Text.<br>- **author**: \<User\> _reference to the user who creates the comment_<br>- **createdAt**: Date|
+|**card** | - **title**: String.<br>- **description**: Text.<br>- **owner**: \<userid\> _reference to the user who creates the card_|
+|**comment** | - **text**: Text.<br>- **author**: \<userid\> _reference to the user who creates the comment_<br>- **card**: \<cardid\> _reference to the card where the comment was created_<br>- **createdAt**: Date|
 
 #### Before starting, let's run the base ....
 
@@ -25,13 +25,13 @@ OK, let's start with the endpoints.
 |Method  |Endpoint  |Description |
 |---|---|---|
 |GET|/users |a list of users|
-|GET|/users/\<id\>|retrieve a user by id|
-|GET|/users/\<id\>/posts|get posts of a user|
+|GET|/users/\<userid\>|retrieve a user by id|
+|GET|/users/\<userid\>/posts|get posts of a user|
 |GET|/cards|a list of cards|
-|GET|/cards/\<id\>|retrieve a card by id|
-|GET|/cards/\<id\>/comments|get comments of a card|
+|GET|/cards/\<cardid\>|retrieve a card by id|
+|GET|/cards/\<cardid\>/comments|get comments of a card|
 |GET|/comments|a list of comments|
-|GET|/comments/\<id\>|retrieve a comment by id|
+|GET|/comments/\<commentid\>|retrieve a comment by id|
 
 Your folder structure should look like this:
 ```
