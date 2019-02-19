@@ -22,14 +22,16 @@ We're ready to develop our first real and useful endpoints. We'll use a base cod
 #### To work
 OK, let's start with the endpoints.
 
-- GET | /users | a list of users
-- GET | /users/<id> | retrieve a user by id
-- GET | /users/<id>/posts | get posts of a user
-- GET | /cards | a list of cards
-- GET | /cards/<id> | retrieve a card by id
-- GET | /cards/<id>/comments | get comments of a card
-- GET | /comments | a list of comments
-- GET | /comments/<id> | retrieve a comment by id
+|Method  |Endpoint  |Description |
+|---|---|---|
+|GET|/users |a list of users|
+|GET|/users/\<id\>|retrieve a user by id|
+|GET|/users/\<id\>/posts|get posts of a user|
+|GET|/cards|a list of cards|
+|GET|/cards/\<id\>|retrieve a card by id|
+|GET|/cards/\<id\>/comments|get comments of a card|
+|GET|/comments|a list of comments|
+|GET|/comments/\<id\>|retrieve a comment by id|
 
 Your folder structure should look like this:
 ```
