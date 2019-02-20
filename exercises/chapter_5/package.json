@@ -1,0 +1,19 @@
+{
+  "name": "bootcamp_chapter_5",
+  "version": "1.0.0",
+  "description": "Just a exercise",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/api-server/server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "find": "^0.2.9",
+    "lodash": "^4.17.11",
+    "morgan": "^1.9.1"
+  }
+}
