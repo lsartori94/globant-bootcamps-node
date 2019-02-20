@@ -20,7 +20,7 @@ module.exports = {
  * Load all routes files
  * @param {} app
  */
-async function loadRoutes(path, app) {
+function loadRoutes(path, app) {
     // Find all routes files
     const files = find.fileSync(/routes.js$/, path + '/../');
 
