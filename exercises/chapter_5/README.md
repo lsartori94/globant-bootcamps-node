@@ -56,3 +56,8 @@ chapter_5
                 ├── actions.js
                 └── controllers.js
 ```
+
+### Bonus
+
+- Add validations to endpoints
+- Use a middleware for the validations
