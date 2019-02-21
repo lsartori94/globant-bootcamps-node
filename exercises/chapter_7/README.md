@@ -2,4 +2,6 @@
 
 ### What to do?
 
-Create CRUD of one table, with tests.
+Create tables with Sequelize like next image.
+
+![Tables](./assets/tables.PNG)
