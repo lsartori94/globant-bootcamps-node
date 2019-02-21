@@ -633,10 +633,24 @@ Express is the most popular Node web framework. It provides mechanisms to:
 - Set common web application settings like the port to use for connecting, and the location of templates that are used for rendering the response.
 - Add additional request processing "middleware" (we're going to talk about that later) at any point within the request handling pipeline.
 
+##### MIDDLEWARE
+
+Middleware functions are functions that have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle. The next middleware function is commonly denoted by a variable named next.
+
+Middleware functions can perform the following tasks:
+
+- Execute any code.
+- Make changes to the request and the response objects.
+- End the request-response cycle.
+- Call the next middleware function in the stack.
+
 #### Reading:
 - [What is REST part-1](https://medium.com/extend/what-is-rest-a-simple-explanation-for-beginners-part-1-introduction-b4a072f8740f)
 - [What is REST part-2](https://medium.com/extend/what-is-rest-a-simple-explanation-for-beginners-part-2-rest-constraints-129a4b69a582)
 - [Introducing Express](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Introduction#Introducing_Express)
+- [Writing middleware](https://expressjs.com/en/guide/writing-middleware.html)
+- [Using middleware](https://expressjs.com/en/guide/using-middleware.html)
+- [Add validations](https://medium.freecodecamp.org/how-to-make-input-validation-simple-and-clean-in-your-express-js-app-ea9b5ff5a8a7)
 
 #### Excercise:
 _It's time, let's do it_
@@ -645,6 +659,7 @@ Go to [chapter_5](/exercises/chapter_5) and follow the instructions.
 
 #### ~~Not so~~ optional reading
 - [The definitive guide to Express](https://hackernoon.com/the-definitive-guide-to-express-the-node-js-web-application-framework-649352e2ae87)
+- [Validations with JOI](https://scotch.io/tutorials/node-api-schema-validation-with-joi)
 
 ### Chapter 6: Testing
 You've been doing apps, exercises, REST APIs. But how can you make sure that what you did will actually work on every scenario?
