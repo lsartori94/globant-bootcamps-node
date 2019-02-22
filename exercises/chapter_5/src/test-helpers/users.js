@@ -10,25 +10,25 @@ const ALL_USERS = [
         pass: 'aPassword',
         name: 'Germán',
         lastname: 'Márquez',
-        email: 'mail@globant.com',
+        email: 'gmarquez@globant.com',
         createdAt: '2019-02-20T18:49:27'
     },
     {
         id: 2,
-        username: 'nHerrera',
+        username: 'nherrera',
         pass: 'aPassword',
         name: 'Nicolas',
         lastname: 'Herrera',
-        email: 'mail@globant.com',
+        email: 'nherrera@globant.com',
         createdAt: '2019-02-20T18:49:27'
     },
     {
         id: 3,
-        username: 'tTest',
+        username: 'ttest',
         pass: 'aPassword',
         name: 'test',
         lastname: 'test',
-        email: 'mail@globant.com',
+        email: 'ttest@globant.com',
         createdAt: '2019-02-20T18:49:27'
     }
 ];
