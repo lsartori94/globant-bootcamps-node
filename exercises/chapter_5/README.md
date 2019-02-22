@@ -10,7 +10,7 @@ We're ready to develop our first real and useful endpoints. We'll use a base cod
 |Entities  |Attributes  |
 |---|---|
 |**user** | - **username**: String<br>- **pass**: String<br>- **name**: String<br>- **lastname**: String<br>- **email**: String<br>- **createdAt**: Date|
-|**card** | - **title**: String.<br>- **description**: Text.<br>- **owner**: \<userid\> _reference to the user who creates the card_|
+|**card** | - **title**: String.<br>- **description**: Text.<br>- **owner**: \<userid\> _reference to the user who creates the card_<br>- **createdAt**: Date|
 |**comment** | - **text**: Text.<br>- **author**: \<userid\> _reference to the user who creates the comment_<br>- **card**: \<cardid\> _reference to the card where the comment was created_<br>- **createdAt**: Date|
 
 #### Before starting, let's run the base ....
@@ -59,5 +59,5 @@ chapter_5
 
 ### Bonus
 
-- Add validations to endpoints
+- Add validations to the endpoints
 - Use a middleware for the validations
