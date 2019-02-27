@@ -1,0 +1,24 @@
+{
+  "name": "bootcamp_chapter_5",
+  "version": "1.0.0",
+  "description": "Just a exercise",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/api-server/server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-validator": "^5.3.1",
+    "find": "^0.2.9",
+    "lodash": "^4.17.11",
+    "morgan": "^1.9.1",
+    "pg": "^7.8.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.42.1",
+    "sequelize-cli": "^5.4.0"
+  }
+}
