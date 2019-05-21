@@ -210,7 +210,7 @@ Node just runs Javascript, but you actually need more than that to make an app. 
 some kind of debugging tool and, of course, other people's code :grimacing:.
 
 
-[Knowing npm - What is npm and what are packages?](./chapter_2/npm.md)
+[Knowing npm - What is npm and what are packages?](./exercises/chapter_2/npm.md)
 
 
 #### Reading:
@@ -378,7 +378,7 @@ You should have a test project done, right? Well go to [chapter_6](/exercises/ch
 
 ### SQL Databases
 
-[Let's started with Storing](./chapter_7/storing.md)
+[Let's started with Storing](./exercises/chapter_7/storing.md)
 
 #### Reading:
  - [SQL - tutorialspoint](https://www.tutorialspoint.com/sql/sql-overview.htm)
