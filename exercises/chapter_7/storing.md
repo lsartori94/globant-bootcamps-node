@@ -1,4 +1,41 @@
-# Sequelize
+#### What is a database?
+
+A database is a collection of data used in a website or application. There are various ways of representing data, but in this workshop we focus on data represented in tables with rows and columns (like Excel). Databases are useful because they are persistent and scalable. 
+
+Within a database, a schema represents how the data is organized, specifying the format and type. For example, we might have two columns called ‘name’ and ‘age’, with name being a type of string, and age being a type of integer.
+
+What is SQL?
+
+SQL stands for Structured Query Language, and a query is a request for information from the database. To begin, we introduced the basic structure of SQL queries.
+
+![SQL Cheat Sheet 1](../../assets/SQL-Cheet-Sheet-1.png)
+
+![SQL Cheat Sheet 2](../../assets/SQL-Cheat-Sheet-2.png)
+
+![SQL Cheat Sheet 3](../../assets/SQL-Cheat-Sheet-3.png)
+
+![SQL Join Types](../../assets/sql-join-types.jpg)
+
+#### What is ORM?
+
+Object-Relational Mapping is a technique that lets you query and manipulates data from a database using an object-oriented paradigm. ORM loves objects as much as developers, and is available for any programming languagee of your choosing.
+
+OK, but what does an ORM do?
+
+ORMs can be thought of as a translator converting our code from one form to another.
+
+The ORM software generates objects (as in OOP) that virtually map (like the map of a city) the tables in your database. Then the programmer would use these objects to interact and play with the database! So the core idea is to try and shield the programmer from having to write optimized and complex SQL code — the ORM generated objects take care of that for you.
+
+![ORM](../../assets/orm.png)
+
+
+### What is PostgreSQL?
+
+PostgreSQL comes with many features aimed to help developers build applications, administrators to protect data integrity and build fault-tolerant environments, and help you manage your data no matter how big or small the dataset. In addition to being free and open source, PostgreSQL is highly extensible. For example, you can define your own data types, build out custom functions, even write code from different programming languages without recompiling your database!
+
+### Sequelize
+
+Sequelize is a promise-based ORM for Node.js and io.js. It supports the dialects PostgreSQL, MySQL, MariaDB, SQLite and MSSQL and features solid transaction support, relations, read replication and more.
 
 #### Getting started
 
@@ -1163,13 +1200,13 @@ app.use('/oneToOne', oneToOne);
 
 – POST customers:
 
-![Postman](assets/1_1_postman.PNG)
+![Postman](../../assets/1_1_postman.PNG)
 
 Database after do POST:
 
-![Address DB](assets/1_1_address_bd.PNG)
+![Address DB](../../assets/1_1_address_bd.PNG)
 
-![Customer DB](assets/1_1_customer_bd.PNG)
+![Customer DB](../../assets/1_1_customer_bd.PNG)
 
 
 ```
@@ -1180,7 +1217,7 @@ Executing (default): SELECT `id`, `street`, `phone`, `createdAt`, `updatedAt`, `
 
 – Find All Customers:
 
-![All Postman 1_1](assets/1_1_all_postman.PNG)
+![All Postman 1_1](../../assets/1_1_all_postman.PNG)
 
 
 #### One-To-Many associations (hasMany)
@@ -1445,7 +1482,7 @@ Make an initial data request:
 http://localhost:3000/oneToMany/init
 ```
 
-![Tables DB](assets/1_N_tables.PNG)
+![Tables DB](../../assets/1_N_tables.PNG)
 
 ```
 Executing (default): INSERT INTO `companies` (`id`,`name`,`street`,`phone`,`createdAt`,`updatedAt`) VALUES (DEFAULT,'Apple','Cupertino, CA 95014','1-408-996-1010','2019-02-13 13:29:03','2019-02-13 13:29:03');
@@ -1459,9 +1496,9 @@ Executing (default): INSERT INTO `products` (`id`,`code`,`name`,`details`,`creat
 -----------> Samsung is created
 ```
 
-![Company DB](assets/1_N_company_bd.PNG)
+![Company DB](../../assets/1_N_company_bd.PNG)
 
-![Product DB](assets/1_N_product_bd.PNG)
+![Product DB](../../assets/1_N_product_bd.PNG)
 
 Get all Companies, include Products:
 
@@ -1475,7 +1512,7 @@ Executing (default): SELECT `company`.`id`, `company`.`id` AS `companyId`, `comp
 GET /oneToMany/all 200 24.987 ms - 544
 ```
 
-![All Postman 1_N](assets/1_N_postman.PNG)
+![All Postman 1_N](../../assets/1_N_postman.PNG)
 
 
 #### Sequelize Many-To-Many
@@ -1513,7 +1550,7 @@ Person.belongsToMany(Project, { as: 'Tasks', through: 'worker_tasks', foreignKey
 ```foreignKey``` is used to set source model key in the through relation.
 ```otherKey``` is used to set target model key in the through relation.
 
-![N_M Tables DB](assets/N_M_tables_bd.PNG)
+![N_M Tables DB](../../assets/N_M_tables_bd.PNG)
 
 __How to persist many-to-many entities into database?__
 
@@ -1702,11 +1739,11 @@ Executing (default): INSERT INTO `worker_tasks` (`personId`,`projectId`,`created
 
 Results:
 
-![Peope Table](assets/N_M_people_bd.PNG)
+![Peope Table](../../assets/N_M_people_bd.PNG)
 
-![Projects Table](assets/N_M_projects.PNG)
+![Projects Table](../../assets/N_M_projects.PNG)
 
-![Work Tasks Table](assets/N_M_work_tasks_bd.PNG)
+![Work Tasks Table](../../assets/N_M_work_tasks_bd.PNG)
 
 __Fetch all entities__
 

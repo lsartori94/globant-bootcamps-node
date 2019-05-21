@@ -55,7 +55,7 @@ Here’s a programmer joke you can now consider yourself “in on”:
 
 image_node_modules
 
-![node_modules](./assets/image_node_modules.jpeg)
+![node_modules](../../assets/image_node_modules.jpeg)
 
 To install a new package, use the command ```npm install``` followed by the name of the package. Include the ```--save``` flag to ensure the library is added to your ```package.json``` so you can install or update it again later:
 
@@ -147,7 +147,7 @@ npm list
 
 #### Semantic versioning:
 
-![Semantic versioning npm](./assets/semantic_versioning_npm.jpeg)
+![Semantic versioning npm](../../assets/semantic_versioning_npm.jpeg)
 
 
 All the package versions are represented with three digits. The first digit is major, second is minor and third is patch(see fig).
