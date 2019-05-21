@@ -4,14 +4,14 @@ module.exports = {
     password: "",
     database: "bootcamp",
     host: "127.0.0.1",
-    dialect: "postgres",
+    dialect: "mysql",
   },
   test: {
     username: "",
     password: "",
     database: "bootcamp",
     host: "127.0.0.1",
-    dialect: "postgres",
+    dialect: "mysql",
     storage: ":memory:"
   },
   production: {
@@ -19,7 +19,7 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_HOSTNAME,
-    dialect: 'postgres',
+    dialect: 'mysql',
     use_env_variable: 'DATABASE_URL'
   }
 };
