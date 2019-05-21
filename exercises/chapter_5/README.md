@@ -19,6 +19,8 @@ We're ready to develop our first real and useful endpoints. We'll use a base cod
 - in a console, go to chapter_5 folder
 - run `npm install`
 - run `npm start`
+- try `localhost:9001/api/v1` with POSTMAN or similar
+- try `localhost:9001/api/v1/users` with POSTMAN or similar
 
 #### To work
 OK, let's start with the endpoints.
