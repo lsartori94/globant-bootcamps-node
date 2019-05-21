@@ -283,21 +283,20 @@ Go to [chapter_4](/exercises/chapter_4) and follow the instructions.
  - Express
  - Middlewares
  - Validations
-
 #### REST
 
 OK, now, we're going to take a REST.
-
-[rest.jpg]
+![RESTDAY](./assets/rest-day.png)
 
 Oh, no, we're not talking about THAT rest. We're talking about this REST:
+
+![RESTfulAPI](./assets/restful-api.png)
 
 REpresentational State Transfer
 
 ##### And... what does it means?
 
 It means when a RESTful API is called, the server will transfer to the client a representation of the state of the requested resource.
-
 The representation of the state can be in a JSON format, and probably for most APIs this is indeed the case. It can also be in XML or HTML format.
 
 What the server does when you, the client, call one of its APIs depends on 2 things that you need to provide to the server:
@@ -312,17 +311,6 @@ Express is the most popular Node web framework. It provides mechanisms to:
 - Integrate with "view" rendering engines in order to generate responses by inserting data into templates.
 - Set common web application settings like the port to use for connecting, and the location of templates that are used for rendering the response.
 - Add additional request processing "middleware" (we're going to talk about that later) at any point within the request handling pipeline.
-
-##### MIDDLEWARE
-
-Middleware functions are functions that have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle. The next middleware function is commonly denoted by a variable named next.
-
-Middleware functions can perform the following tasks:
-
-- Execute any code.
-- Make changes to the request and the response objects.
-- End the request-response cycle.
-- Call the next middleware function in the stack.
 
 #### Reading:
 - [What is REST part-1](https://medium.com/extend/what-is-rest-a-simple-explanation-for-beginners-part-1-introduction-b4a072f8740f)
