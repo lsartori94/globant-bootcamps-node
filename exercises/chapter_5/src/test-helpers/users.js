@@ -11,6 +11,7 @@ const ALL_USERS = [
         name: 'Germán',
         lastname: 'Márquez',
         email: 'gmarquez@globant.com',
+        profile: 1,
         createdAt: '2019-02-20T18:49:27'
     },
     {
@@ -20,6 +21,7 @@ const ALL_USERS = [
         name: 'Nicolas',
         lastname: 'Herrera',
         email: 'nherrera@globant.com',
+        profile: 1,
         createdAt: '2019-02-20T18:49:27'
     },
     {
@@ -29,6 +31,7 @@ const ALL_USERS = [
         name: 'test',
         lastname: 'test',
         email: 'ttest@globant.com',
+        profile: 2,
         createdAt: '2019-02-20T18:49:27'
     }
 ];

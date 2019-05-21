@@ -1,32 +1,29 @@
 'use strict';
 
 /****************************
-*        CARD MOCK         *
+*        PROFILE MOCK         *
 ***************************/
-const ALL_CARDS = [
+const ALL_PROFILES = [
     {
         id: 1,
-        title: 'A title',
+        name: 'A name',
         description: 'A generic description',
-        owner: 1,
         createdAt: '2019-02-20T18:49:27'
     },
     {
         id: 2,
-        title: 'Another title',
+        name: 'Another name',
         description: 'Another description',
-        owner: 1,
         createdAt: '2019-02-20T18:49:27'
     },
     {
         id: 3,
-        title: 'A title',
+        name: 'Any another name',
         description: 'A generic description',
-        owner: 2,
         createdAt: '2019-02-20T18:49:27'
     }
 ];
 
 module.exports = {
-    ALL_CARDS: ALL_CARDS
+    ALL_PROFILES: ALL_PROFILES
 };
