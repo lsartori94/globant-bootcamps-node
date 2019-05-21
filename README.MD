@@ -286,6 +286,7 @@ Go to [chapter_4](/exercises/chapter_4) and follow the instructions.
 #### REST
 
 OK, now, we're going to take a REST.
+
 ![RESTDAY](./assets/rest-day.png)
 
 Oh, no, we're not talking about THAT rest. We're talking about this REST:
