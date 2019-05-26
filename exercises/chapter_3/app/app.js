@@ -1,13 +1,13 @@
 const callFs = require("fs");
-const uuidv1 = require('uuid/v1');
-//const promFs = require("fs").promises;
+const uuidv1 = require("uuid/v1");
 const logger = require("./utils/logger.js");
 
+//ask for good practices in function calling
 callFs.writeFile(
   "log.json",
-  logger.logger(`${uuidv1()}`),
-  { encoding: "utf-8", flag: "a" },
-  (err, fd) => {
+  JSON.stringify(logger.logger("this is a test message", uuidv1()), null, 2),
+  { flag: "a" },
+  err => {
     if (err) {
       console.log(err);
     }
@@ -15,3 +15,15 @@ callFs.writeFile(
   }
 );
 
+/*/
+callFs.promises
+  .writeFile(
+    "log.json",
+    JSON.stringify(logger.logger("this is a test message", uuidv1()), null, 2),
+    { flag: "a" }
+  )
+  .then(console.log("File written"))
+  .catch(e => {
+    console.log(e);
+  });
+/*/

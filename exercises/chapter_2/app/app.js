@@ -14,9 +14,9 @@ const logger = function(msg) {
 if (!!!args.msg) {
   console.log("usage: [--msg=<message>]");
 } else {
-  if (args.msg === true) {
+  if (args.msg === true)
     console.log("should enter a message after --msg option...");
-  } else {
+  else {
     for (string of args.message.split(" ")) {
       logger(string);
     }

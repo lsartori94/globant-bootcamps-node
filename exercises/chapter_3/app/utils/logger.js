@@ -1,3 +1,6 @@
-exports.logger = function(msg) {
-  return msg.concat(` --> ${new Date().toDateString()}\n`);
+exports.logger = function(msg, uuid) {
+  return {
+    UUID : uuid,
+    message: `${msg} --> ${new Date().toDateString()}`
+  };
 };
