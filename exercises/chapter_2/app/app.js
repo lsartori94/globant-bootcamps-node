@@ -10,7 +10,7 @@ let args = minimist(process.argv.slice(2), {
 const logger = function(msg) {
   console.log(msg.concat(` --> ${new Date().toDateString()}`));
 };
-
+  
 if (!!!args.msg) {
   console.log("usage: [--msg=<message>]");
 } else {

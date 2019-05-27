@@ -1,6 +1,6 @@
 exports.logger = function(msg, uuid) {
   return {
-    UUID : uuid,
-    message: `${msg} --> ${new Date().toDateString()}`
+    sessionId: uuid,
+    msg: `${msg} --> ${new Date().toDateString()}`
   };
 };

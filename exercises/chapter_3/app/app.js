@@ -10,6 +10,7 @@ callFs.writeFile(
   err => {
     if (err) {
       console.log(err);
+      process.exit();
     }
     console.log("File written");
   }
