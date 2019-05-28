@@ -7,29 +7,28 @@ if (args.length === 0) {
   process.exit();
 }
 
-
 request(`${apiUrl}/comments/${args[0]}`)
-  .catch(err => {
-    return console.log(err);
-  })
   .then(body => {
     const resp1 = JSON.parse(body);
 
     request(`${apiUrl}/posts/${resp1.postId}`)
-      .catch(err => {
-        return console.log(err);
-      })
       .then(body => {
         const resp2 = JSON.parse(body);
         request(`${apiUrl}/users/${resp2.userId}`)
-          .catch(err => {
-            return console.log(err);
-          })
           .then(body => {
             const resp3 = JSON.parse(body);
             console.log(`Nombre: ${resp3.name}`);
             console.log(`Email: ${resp3.email}`);
             console.log(`Company: ${resp3.company.name}`);
+          })
+          .catch(err => {
+            return console.log(err);
           });
+      })
+      .catch(err => {
+        return console.log(err);
       });
+  })
+  .catch(err => {
+    return console.log(err);
   });

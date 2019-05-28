@@ -11,6 +11,7 @@
   "dependencies": {
     "bluebird": "^3.5.5",
     "promise-request": "^0.1.2",
-    "request": "^2.99.99"
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
   }
 }
