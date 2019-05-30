@@ -9,6 +9,7 @@
   "author": "Globant",
   "license": "MIT",
   "dependencies": {
+    "async-request": "^1.2.0",
     "bluebird": "^3.5.5",
     "promise-request": "^0.1.2",
     "request": "^2.88.0",
