@@ -16,48 +16,48 @@ module.exports = {
             var jsonObject = new Object();
             jsonObject.sessionId = sId;
             jsonObject.msg = paramsparsed['msg'].concat(' ', new Date().toDateString());
+            var jsonFile;
             //CALLBACK METHOD
             //If the file doesn't exist it creates a empty array and push the json object on it
             //  fs.readFile('log.json', (err, data) => {
             //      if (err) {
-            //          var jsonFile= [];
+            //          jsonFile= [];
             //      }
             //      else{
-            //          var jsonFile = JSON.parse(data);
+            //          jsonFile = JSON.parse(data);
             //      }
             //      jsonFile.push(jsonObject);
             //      fs.writeFile('log.json', JSON.stringify(jsonFile, null, 2), (err) => {
             //          if (err) throw err;
             //      });  
             //  });
-            var jsonFile;
-            var fileReadPromise = new Promise(function (resolve, reject) {
+            new Promise(function (resolve, reject) {
                 fs.readFile('log.json', (err, data) => {
                     if (err) {
-                        reject(err);
+                        reject();
                     }
                     else {
                         resolve(data);
                     }
                 });
-            });
-            fileReadPromise.catch(function (err) {
-                jsonFile = [];
-            });
-            fileReadPromise.then(function (data) {
+            }).then(function (data) {
                 jsonFile = JSON.parse(data);
-            });
-            fileReadPromise.finally(function () {
+            }).catch(function () {
+                jsonFile = [];
+            }).finally(function () {
                 jsonFile.push(jsonObject);
-                var fileWritePromise = new Promise(function (resolve, reject) {
+                new Promise(function (resolve, reject) {
                     fs.writeFile('log.json', JSON.stringify(jsonFile, null, 2), (err) => {
                         if (err) {
                             reject(err);
+                        } else {
+                            resolve();
                         }
                     });
-                });
-                fileWritePromise.catch(function (err) {
+                }).catch(function (err) {
                     throw err;
+                }).then(function () {
+                    console.log('File ok');
                 });
             });
 
