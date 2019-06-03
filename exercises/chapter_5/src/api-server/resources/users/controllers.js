@@ -5,17 +5,13 @@ const _ = require("lodash");
 const actions = require("./actions");
 const userMock = require("../../../test-hepers/users");
 const profileMock = require("../../../test-hepers/profiles");
-const roleMock = require("../../../test-hepers/roles");
+
 
 module.exports = {
   v1: {
     // Initial version
-    getAll,
-    getAllProfiles,
-    getAllRoles,
+    getAllUsers,
     getUser,
-    getProfile,
-    getRole
   }
 };
 
@@ -26,7 +22,7 @@ module.exports = {
  * @param {Object} req - http.ServerRequest
  * @param {Object} res - http.ServerResponse
  */
-function getAll(req, res) {
+function getAllUsers(req, res) {
   res.status(200).send(userMock.ALL_USERS);
 }
 
@@ -43,30 +39,3 @@ function getUser(req, res) {
   //after an error in validatons > res.status(404).send({ message: "User not found" });
 }
 
-function getAllProfiles(req, res) {
-  console.log("processing profiles request");
-  res.status(200).send({ message: "OK!", data: profileMock.ALL_PROFILES });
-}
-
-function getProfile(req, res) {
-  console.log("processing profiles ID request");
-  res.status(200).send({
-    message: "OK!",
-    data: profileMock.ALL_PROFILES[req.params.id - 1]
-  });
-}
-
-function getAllRoles(req, res) {
-  console.log("processing role request");
-  res.status(200).send({
-    message: "OK!",
-    data: roleMock.ALL_ROLES
-  });
-}
-
-function getRole(req, res) {
-  console.log("processing role ID request");
-  res
-    .status(200)
-    .send({ message: "OK!", data: roleMock.ALL_ROLES[req.params.id - 1] });
-}
