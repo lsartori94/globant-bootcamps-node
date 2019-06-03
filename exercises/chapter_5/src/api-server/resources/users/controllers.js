@@ -4,10 +4,11 @@
 const _ = require('lodash');
 const actions = require('./actions');
 const userMock = require('../../../test-helpers/users');
-
+ 
 module.exports = {
     v1: { // Initial version
-        getAll: getAll
+        getAll: getAll,
+        getById: getById
     }
 };
 
@@ -20,4 +21,13 @@ module.exports = {
  */
 function getAll(req, res) {
     res.status(200).send(userMock.ALL_USERS);
+}
+
+/**
+ * Retrieve a user
+ * @param {Object} req 
+ * @param {Object} res 
+ */
+function getById(req, res){
+    res.status(200).send(userMock.userById(req.params.userid));
 }
