@@ -2,7 +2,7 @@ const _ = require("lodash");
 const roleMock = require("../../../test-hepers/roles");
 
 module.exports = {
-  v2: {
+  v1: {
     getAllRoles,
     getRole
   }

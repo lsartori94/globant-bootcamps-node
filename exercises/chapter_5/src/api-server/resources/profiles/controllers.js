@@ -2,7 +2,7 @@ const _ = require("lodash");
 const profileMock = require("../../../test-hepers/profiles");
 
 module.exports = {
-  v3: {
+  v1: {
     getAllProfiles,
     getProfile
   }

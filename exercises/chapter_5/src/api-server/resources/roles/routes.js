@@ -6,7 +6,7 @@ module.exports = function initRoutes(app) {
   
  const basePathRoles = config.basePath + "/roles";
 
-  app.get(`${basePathRoles}`, users.v2.getAllRoles);
-  app.get(`${basePathRoles}/:id`, users.v2.getRole);
+  app.get(`${basePathRoles}`, users.v1.getAllRoles);
+  app.get(`${basePathRoles}/:id`, users.v1.getRole);
 
 };

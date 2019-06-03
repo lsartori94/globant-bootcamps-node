@@ -6,6 +6,6 @@ module.exports = function initRoutes(app) {
 
   const basePathProfiles = config.basePath + "/profiles";
 
-  app.get(`${basePathProfiles}`, users.v3.getAllProfiles);
-  app.get(`${basePathProfiles}/:id`, users.v3.getProfile);
+  app.get(`${basePathProfiles}`, users.v1.getAllProfiles);
+  app.get(`${basePathProfiles}/:id`, users.v1.getProfile);
 };
