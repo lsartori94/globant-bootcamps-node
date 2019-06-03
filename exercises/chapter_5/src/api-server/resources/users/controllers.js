@@ -29,5 +29,5 @@ function getAll(req, res) {
  * @param {Object} res 
  */
 function getById(req, res){
-    res.status(200).send(userMock.userById(req.params.userid));
+    res.status(200).send(actions.userById(req.params.userid,userMock.ALL_USERS));
 }

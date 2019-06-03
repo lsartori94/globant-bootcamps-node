@@ -3,7 +3,7 @@
 
 const _ = require('lodash');
 const actions = require('./actions');
-const rolMock = require('../../../test-helpers/roles');
+const profileMock = require('../../../test-helpers/profiles');
  
 module.exports = {
     v1: { // Initial version
@@ -15,12 +15,12 @@ module.exports = {
 /////////////////////////////////////////////////////////////
 
 /**
- * Retrieve all roles
+ * Retrieve all profiles
  * @param {Object} req - http.ServerRequest
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    res.status(200).send(rolMock.ALL_ROLES);
+    res.status(200).send(profileMock.ALL_PROFILES);
 }
 
 /**
@@ -29,5 +29,5 @@ function getAll(req, res) {
  * @param {Object} res 
  */
 function getById(req, res){
-    res.status(200).send(actions.rolById(req.params.roleid,rolMock.ALL_ROLES));
+    res.status(200).send(actions.profileById(req.params.profileid,profileMock.ALL_PROFILES));
 }
