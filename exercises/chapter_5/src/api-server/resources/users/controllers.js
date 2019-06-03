@@ -45,14 +45,14 @@ function getUser(req, res) {
 
 function getAllProfiles(req, res) {
   console.log("processing profiles request");
-  res.status(200).send({ message: "OK!", data: '' });
+  res.status(200).send({ message: "OK!", data: profileMock.ALL_PROFILES });
 }
 
 function getProfile(req, res) {
   console.log("processing profiles ID request");
   res.status(200).send({
     message: "OK!",
-    data: profileMock[req.params.id - 1]
+    data: profileMock.ALL_PROFILES[req.params.id - 1]
   });
 }
 
@@ -60,7 +60,7 @@ function getAllRoles(req, res) {
   console.log("processing role request");
   res.status(200).send({
     message: "OK!",
-    data: ""
+    data: roleMock.ALL_ROLES
   });
 }
 
