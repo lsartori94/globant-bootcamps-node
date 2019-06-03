@@ -35,12 +35,18 @@ const ALL_USERS = [
         createdAt: '2019-02-20T18:49:27'
     }
 ];
-function userById(id){
-    ALL_USERS.forEach(function(user){
-        if (user.id == id){
-           return user;
+function userById(id) {
+    let user;
+    ALL_USERS.forEach(function (userId) {
+        if (userId.id == id) {
+            user = userId;
         }
-    })
+    });
+    if (user) {
+        return user;
+    } else {
+        return "user doesn't exist"
+    }
 }
 module.exports = {
     ALL_USERS: ALL_USERS,
