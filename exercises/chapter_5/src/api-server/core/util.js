@@ -26,7 +26,7 @@ function loadRoutes(path, app) {
 
     files.forEach((file) => {
         log(`Load route file: ${file}`);
-        require(file)(app);
+       require(file)(app); 
     });
 }
 
