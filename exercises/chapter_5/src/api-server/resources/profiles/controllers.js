@@ -7,7 +7,8 @@ const profilesMock = require('../../../test-helpers/profiles');
 
 module.exports = {
     v1: { // Initial version
-        getAll: getAll
+        getAll: getAll,
+        getOneById:getOneById
     }
 };
 
@@ -21,4 +22,20 @@ module.exports = {
 function getAll(req, res) {
     console.log('hey apple profiles');
     res.status(200).send(profilesMock.ALL_PROFILES);
+}
+
+function getOneById(req,res){
+    
+    const {idProfile} = req.params;
+    //console.log('hola,',idProfile);
+    var a =actions.actionGetOneById(Number(idProfile));
+    if (a==undefined){
+        res.status(400).send('No se encuentra el id buscado');
+
+    }else if (a!= undefined){
+        res.status(200).send(a);
+
+    }
+
+
 }

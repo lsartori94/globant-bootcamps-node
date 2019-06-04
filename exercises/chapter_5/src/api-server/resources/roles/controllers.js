@@ -7,7 +7,8 @@ const rolesMock = require('../../../test-helpers/roles');
 
 module.exports = {
     v1: { // Initial version
-        getAll: getAll
+        getAll: getAll,
+        getOneById:getOneById
     }
 };
 
@@ -19,6 +20,22 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    console.log('hey apple');
+    //console.log('hey apple');
     res.status(200).send(rolesMock.ALL_ROLES);
-}
+};
+
+
+
+function getOneById(req,res){
+    const {idRol} = req.params;
+    //console.log('hola,',idRol);
+    var a =actions.actionFindRolById(Number(idRol));
+    if (a==undefined){
+        res.status(400).send('No se encuentra el id buscado');
+
+    }else if (a!= undefined){
+        res.status(200).send(a);
+
+    }
+
+};
