@@ -1,14 +1,19 @@
 /*! Copyright Globant. All rights reserved. */
-'use strict';
+"use strict";
 
-const _ = require('lodash');
-const actions = require('./actions');
-const userMock = require('../../../test-helpers/users');
+const _ = require("lodash");
+const actions = require("./actions");
+const userMock = require("../../../test-helpers/users");
+const Joi = require("joi");
 
 module.exports = {
-    v1: { // Initial version
-        getAll: getAll
-    }
+  v1: {
+    // Initial version
+
+    getAll,
+    getUser,
+    validateID
+  }
 };
 
 /////////////////////////////////////////////////////////////
@@ -19,5 +24,33 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    res.status(200).send(userMock.ALL_USERS);
+  res.status(200).send(userMock.ALL_USERS);
+}
+
+function getUser(req, res) {
+  console.log("processing user ID");
+  res
+    .status(200)
+    .send({ message: "OK!", data: userMock.ALL_USERS[req.params.id - 1] });
+}
+
+function validateID(req, res, next) {
+  console.log("validating user ID");
+  const schema = Joi.object().keys({
+    id: Joi
+      .number()
+      .min(1)
+      .max(userMock.ALL_USERS.length)
+      .required()
+  });
+  Joi.validate({ id: req.params.id }, schema, (err, value) => {
+    if (err) {
+      res.status(422).send({
+        message: `Invalid request! ${req.params.id} is not a valid ID`
+      });
+    } else {
+      console.log("validation success");
+      next();
+    }
+  });
 }

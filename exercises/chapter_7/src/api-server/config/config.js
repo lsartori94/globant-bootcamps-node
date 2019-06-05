@@ -1,6 +1,6 @@
 module.exports = {
   development: {
-    username: "",
+    username: "root",
     password: "",
     database: "bootcamp",
     host: "127.0.0.1",
