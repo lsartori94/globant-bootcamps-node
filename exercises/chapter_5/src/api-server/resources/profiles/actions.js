@@ -1,16 +1,14 @@
+const _ =require('lodash');
+
 module.exports={
     profileById: profileById
 }
-function profileById(id,profiles) {
-    let profile;
-    profiles.forEach(function (profileId) {
-        if (profileId.id == id) {
-            profile = profileId;
-        }
-    });
-    if (profile) {
+function profileById(profiles,id) {
+    var profile= _.find(profiles, function(u){return u.id ==id });
+    if(profile){
         return profile;
-    } else {
-        return "profile doesn't exist"
+    }else{
+        return "profile doesn't exists"
     }
+   
 }

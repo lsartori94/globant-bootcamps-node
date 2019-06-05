@@ -1,16 +1,14 @@
+const _ =require('lodash');
+
 module.exports={
     rolById: rolById
 }
-function rolById(id,roles) {
-    let rol;
-    roles.forEach(function (rolId) {
-        if (rolId.id == id) {
-            rol = rolId;
-        }
-    });
-    if (rol) {
-        return rol;
-    } else {
-        return "rol doesn't exist"
+function rolById(roles,id) {
+    var role= _.find(roles, function(u){return u.id ==id });
+    if(role){
+        return role;
+    }else{
+        return "role doesn't exists"
     }
+   
 }

@@ -1,9 +1,10 @@
 /*! Copyright Globant. All rights reserved. */
 'use strict';
 
-const _ = require('lodash');
 const actions = require('./actions');
 const profileMock = require('../../../test-helpers/profiles');
+const Joi = require('joi');
+
  
 module.exports = {
     v1: { // Initial version
@@ -28,6 +29,22 @@ function getAll(req, res) {
  * @param {Object} req 
  * @param {Object} res 
  */
-function getById(req, res){
-    res.status(200).send(actions.profileById(req.params.profileid,profileMock.ALL_PROFILES));
+function getById(req, res) {
+
+    const schema = Joi.object().keys({
+        profileid: Joi.number().positive()
+    });
+    const data= req.params;
+    Joi.validate(data,schema, (err,value)=>{
+        if(err){
+            res.status(422).json({
+                status:'error',
+                message: 'Invalid ID',
+                data: data
+            })
+        }else{
+            res.status(200).send(actions.profileById(profileMock.ALL_PROFILES, req.params.profileid));
+        }
+    })
+
 }

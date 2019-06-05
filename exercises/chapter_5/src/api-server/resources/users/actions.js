@@ -1,16 +1,14 @@
+const _ =require('lodash');
+
 module.exports={
     userById: userById
 }
-function userById(id,users) {
-    let user;
-    users.forEach(function (userId) {
-        if (userId.id == id) {
-            user = userId;
-        }
-    });
-    if (user) {
+function userById(users,id) {
+    var user= _.find(users, function(u){return u.id ==id });
+    if(user){
         return user;
-    } else {
-        return "user doesn't exist"
+    }else{
+        return "user doesn't exists"
     }
+   
 }
