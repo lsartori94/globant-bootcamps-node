@@ -6,9 +6,9 @@ const users = require("./controllers");
 
 module.exports = function initRoutes(app) {
   // Users resource base route
-  const basePathUsers = config.basePath + "/users";
+  const basePathUsers = config.basePath + "/user";
 
   app.get(basePathUsers, users.v1.getAllUsers);
-  app.get(`${basePathUsers}/:id`, users.v1.getUser);
+  app.get(`${basePathUsers}/:id`, users.v1.validateUserID, users.v1.getUser);
 
 };

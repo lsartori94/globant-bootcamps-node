@@ -1,12 +1,10 @@
 "use strict";
 const config = require("../../core/config");
-const users = require("./controllers");
+const roles = require("./controllers");
 
 module.exports = function initRoutes(app) {
-  
- const basePathRoles = config.basePath + "/roles";
+  const basePathRoles = config.basePath + "/role";
 
-  app.get(`${basePathRoles}`, users.v1.getAllRoles);
-  app.get(`${basePathRoles}/:id`, users.v1.getRole);
-
+  app.get(`${basePathRoles}`, roles.v1.getAllRoles);
+  app.get(`${basePathRoles}/:id`, roles.v1.validateRoleID, roles.v1.getRole);
 };

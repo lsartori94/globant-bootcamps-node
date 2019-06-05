@@ -5,13 +5,14 @@ const _ = require("lodash");
 const actions = require("./actions");
 const userMock = require("../../../test-hepers/users");
 const profileMock = require("../../../test-hepers/profiles");
-
+const Joi = require("joi");
 
 module.exports = {
   v1: {
     // Initial version
     getAllUsers,
-    getUser,
+    validateUserID,
+    getUser
   }
 };
 
@@ -39,3 +40,21 @@ function getUser(req, res) {
   //after an error in validatons > res.status(404).send({ message: "User not found" });
 }
 
+function validateUserID(req, res, next) {
+  console.log("validating");
+  const schema = Joi.object().keys({
+    id: Joi.number()
+      .min(1)
+      .max(userMock.ALL_USERS.length)
+      .required()
+  });
+  Joi.validate({ id: req.params.id }, schema, (err, value) => {
+    if (err) {
+      console.log("validation failure");
+      res.status(422).send({ message: "Invalid request!" });
+    } else {
+      console.log("validation success!");
+      next();
+    }
+  });
+}
