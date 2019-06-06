@@ -36,9 +36,7 @@ function validateGetAllRoles(req, res) {
   Joi.validate({ length: rolesMock.ALL_ROLES.length }, schema, err => {
     if (err) {
       console.log("validation failure");
-      res.status(404).send({
-        message: "No roles found!"
-      });
+      res.status(404).send();
     }
   });
   return rolesMock.ALL_ROLES;

@@ -36,9 +36,7 @@ function validateGetAllUsers(req, res) {
   Joi.validate({ length: userMock.ALL_USERS.length }, schema, err => {
     if (err) {
       console.log("validation failure");
-      res.status(404).send({
-        message: "No users found!"
-      });
+      res.status(404).send();
     }
   });
   return userMock.ALL_USERS;
