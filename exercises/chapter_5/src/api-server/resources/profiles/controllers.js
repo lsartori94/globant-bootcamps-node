@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const actions = require("./actions")
+const profilesMock = require("../../../test-hepers/profiles");
 
 module.exports = {
   v1: {
@@ -10,10 +10,10 @@ module.exports = {
 
 function getAllProfiles(req, res) {
   console.log("processing profiles request");
-  res.status(200).send(actions.v1.validateGetAllProfiles(req, res));
+  res.status(200).send(profilesMock.ALL_PROFILES);
 }
 
 function getProfile(req, res) {
   console.log("processing profiles ID request");
-  res.status(200).send(actions.v1.validateProfileID(req, res));
+  res.status(200).send(profilesMock.ALL_PROFILES[req.params.id - 1]);
 }

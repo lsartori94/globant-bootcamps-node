@@ -2,7 +2,7 @@
 "use strict";
 
 const _ = require("lodash");
-const actions = require("./actions.js");
+const userMock = require("../../../test-hepers/users");
 
 module.exports = {
   v1: {
@@ -20,10 +20,10 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAllUsers(req, res) {
-  res.status(200).send(actions.v1.validateGetAllUsers(req, res));
+  res.status(200).send(userMock.ALL_USERS);
 }
 
 function getUser(req, res) {
   console.log("processing user ID request");
-  res.status(200).send(actions.v1.validateUserID(req, res));
+  res.status(200).send(userMock.ALL_USERS[req.params.id - 1]);
 }

@@ -9,7 +9,7 @@ module.exports = {
   }
 };
 
-function validateRoleID(req, res) {
+function validateRoleID(req, res, next) {
   console.log("validating");
   const schema = Joi.object().keys({
     id: Joi.number()
@@ -24,11 +24,11 @@ function validateRoleID(req, res) {
         message: `Invalid request! ${req.params.id} is not a valid ID`
       });
     }
+    next();
   });
-  return rolesMock.ALL_ROLES[req.params.id - 1];
 }
 
-function validateGetAllRoles(req, res) {
+function validateGetAllRoles(req, res, next) {
   console.log("validating");
   const schema = Joi.object().keys({
     length: Joi.number().min(1)
@@ -38,6 +38,6 @@ function validateGetAllRoles(req, res) {
       console.log("validation failure");
       res.status(404).send();
     }
+    next();
   });
-  return rolesMock.ALL_ROLES;
 }

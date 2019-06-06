@@ -9,7 +9,7 @@ module.exports = {
   }
 };
 
-function validateProfileID(req, res) {
+function validateProfileID(req, res, next) {
   console.log("validating");
   const schema = Joi.object().keys({
     id: Joi.number()
@@ -24,11 +24,11 @@ function validateProfileID(req, res) {
         message: `Invalid request! ${req.params.id} is not a valid ID`
       });
     }
+    next();
   });
-  return profilesMock.ALL_PROFILES[req.params.id - 1];
 }
 
-function validateGetAllProfiles(req, res) {
+function validateGetAllProfiles(req, res, next) {
   console.log("validating");
   const schema = Joi.object().keys({
     length: Joi.number().min(1)
@@ -38,6 +38,6 @@ function validateGetAllProfiles(req, res) {
       console.log("validation failure");
       res.status(404).send();
     }
+    next();
   });
-  return profilesMock.ALL_PROFILES;
 }
