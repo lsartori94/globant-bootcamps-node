@@ -1,14 +1,34 @@
-const _ =require('lodash');
+const _ = require('lodash');
+const userMock = require('../../../test-helpers/users');
 
-module.exports={
-    userById: userById
+module.exports = {
+    userById: userById,
+    getAllUsers: getAllUsers
 }
-function userById(users,id) {
-    var user= _.find(users, function(u){return u.id ==id });
-    if(user){
-        return user;
-    }else{
-        return "user doesn't exists"
+/**
+ * Returns an array with all users
+ */
+function getAllUsers() {
+    return userMock.ALL_USERS;
+}
+
+/**
+ * Returns a single user found by Id
+ * @param {int} id 
+ */
+function userById(id) {
+    let user = _.find(userMock.ALL_USERS, function (u) { return u.id == id });
+    if (user) {
+        return {
+            user: user,
+            res: 200
+        }
+    } else {
+        return {
+            user: "User doesn't exists",
+            res: 404
+        }
+
     }
-   
+
 }

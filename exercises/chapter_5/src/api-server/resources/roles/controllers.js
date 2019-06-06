@@ -2,7 +2,6 @@
 'use strict';
 
 const actions = require('./actions');
-const rolMock = require('../../../test-helpers/roles');
 const Joi = require('joi');
 
  
@@ -21,7 +20,7 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    res.status(200).send(rolMock.ALL_ROLES);
+    res.status(200).send(actions.getAllRoles());
 }
 
 /**
@@ -43,7 +42,8 @@ function getById(req, res) {
                 data: data
             })
         }else{
-            res.status(200).send(actions.rolById(rolMock.ALL_ROLES, req.params.roleid));
+            let response = actions.rolById( req.params.roleid);
+            res.status(response.res).send(response.role);
         }
     })
 

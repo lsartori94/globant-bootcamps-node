@@ -12,5 +12,5 @@ module.exports = function initRoutes(app) {
     app.get(basePath, roles.v1.getAll);
     
     //roleByIdPatch
-    app.get(config.basePath+'/roles/:roleid', roles.v1.getById);
+    app.get(basePath+'/:roleid', roles.v1.getById);
 };

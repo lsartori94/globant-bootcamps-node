@@ -2,7 +2,6 @@
 'use strict';
 
 const actions = require('./actions');
-const userMock = require('../../../test-helpers/users');
 const Joi = require('joi');
 
 
@@ -21,7 +20,7 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    res.status(200).send(userMock.ALL_USERS);
+    res.status(200).send(actions.getAllUsers());
 }
 
 /**
@@ -43,7 +42,8 @@ function getById(req, res) {
                 data: data
             })
         }else{
-            res.status(200).send(actions.userById(userMock.ALL_USERS, req.params.userid));
+            let response = actions.userById(req.params.userid);
+            res.status(response.res).send(response.user);
         }
     })
 

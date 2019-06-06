@@ -2,7 +2,6 @@
 'use strict';
 
 const actions = require('./actions');
-const profileMock = require('../../../test-helpers/profiles');
 const Joi = require('joi');
 
  
@@ -21,7 +20,7 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    res.status(200).send(profileMock.ALL_PROFILES);
+    res.status(200).send(actions.getAllProfiles());
 }
 
 /**
@@ -43,7 +42,8 @@ function getById(req, res) {
                 data: data
             })
         }else{
-            res.status(200).send(actions.profileById(profileMock.ALL_PROFILES, req.params.profileid));
+            let response = actions.profileById(req.params.profileid);
+            res.status(response.res).send(response.profile);
         }
     })
 
