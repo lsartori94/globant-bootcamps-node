@@ -41,63 +41,274 @@ Sequelize is a promise-based ORM for Node.js and io.js. It supports the dialects
 
 - [Getting started](http://docs.sequelizejs.com/manual/installation/getting-started.html)
 
+##### Installing
+
+Sequelize is available via npm (or yarn).
+
+```npm install --save sequelize```
+
+You'll also have to manually install the driver for your database of choice:
+
+##### One of the following:
+
+```
+$ npm install --save pg pg-hstore # Postgres
+$ npm install --save mysql2
+$ npm install --save mariadb
+$ npm install --save sqlite3
+$ npm install --save tedious # Microsoft SQL Server
+```
+
+
+##### Setting up a connection
+
+To connect to the database, you must create a Sequelize instance. This can be done by either passing the connection parameters separately to the Sequelize constructor or by passing a single connection URI:
+
+```
+const Sequelize = require('sequelize');
+
+// Option 1: Passing parameters separately
+const sequelize = new Sequelize('database', 'username', 'password', {
+  host: 'localhost',
+  dialect: /* one of 'mysql' | 'mariadb' | 'postgres' | 'mssql' */
+});
+
+// Option 2: Passing a connection URI
+const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname');
+```
+
+The Sequelize constructor takes a whole slew of options that are documented in the API Reference for the Sequelize constructor.
+
+- [Migrations](http://docs.sequelizejs.com/manual/migrations.html)
+
+#### Migrations
+
+Just like you use Git / SVN to manage changes in your source code, you can use migrations to keep track of changes to the database. With migrations you can transfer your existing database into another state and vice versa: Those state transitions are saved in migration files, which describe how to get to the new state and how to revert the changes in order to get back to the old state.
+
+You will need Sequelize CLI. The CLI ships support for migrations and project bootstrapping.
+
+##### The CLI
+
+Installing CLI
+Let's start with installing CLI, you can find instructions here. Most preferred way is installing locally like this
+
+```$ npm install --save sequelize-cli```
+
+##### Bootstrapping
+
+To create an empty project you will need to execute ```init``` command
+
+```$ npx sequelize-cli init```
+
+This will create following folders
+
+```config```, contains config file, which tells CLI how to connect with database
+```models```, contains all models for your project
+```migrations```, contains all migration files
+```seeders```, contains all seed files
+
+##### Configuration
+
+Before continuing further we will need to tell CLI how to connect to database. To do that let's open default config file ```config/config.json```. It looks something like this
+
+```
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "database_development",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
+```
+
+Now edit this file and set correct database credentials and dialect.
+
+Note: If your database doesn't exists yet, you can just call db:create command. With proper access it will create that database for you.
+
+
+##### The .sequelizerc File
+
+This is a special configuration file. It lets you specify various options that you would usually pass as arguments to CLI. Some scenarios where you can use it.
+
+- You want to override default path to ```migrations```, ```models```, ```seeders``` or ```config``` folder.
+- You want to rename ```config.json``` to something else like ```database.json```
+- And a whole lot more. Let's see how you can use this file for custom configuration.
+
+For starters, let's create an empty file in the root directory of your project.
+
+```$ touch .sequelizerc```
+
+Now let's work with an example config.
+
+```
+const path = require('path');
+
+module.exports = {
+  'config': path.resolve('config', 'database.json'),
+  'models-path': path.resolve('db', 'models'),
+  'seeders-path': path.resolve('db', 'seeders'),
+  'migrations-path': path.resolve('db', 'migrations')
+}
+```
+
+With this config you are telling CLI to
+
+- Use ```config/database.json``` file for config settings
+- Use ```db/models``` as models folder
+- Use ```db/seeders``` as seeders folder
+- Use ```db/migrations``` as migrations folder
+
+##### Dynamic Configuration
+
+Configuration file is by default a JSON file called ```config.json```. But sometimes you want to execute some code or access environment variables which is not possible in JSON files.
+
+Sequelize CLI can read from both ```JSON``` and ```JS``` files. This can be setup with ```.sequelizerc``` file. Let see how
+
+First you need to create a ```.sequelizerc``` file in the root folder of your project. This file should override config path to a ```JS``` file. Like this
+
+```
+const path = require('path');
+
+module.exports = {
+  'config': path.resolve('config', 'config.js')
+}
+```
+
+Now Sequelize CLI will load ```config/config.js``` for getting configuration options. Since this is a ```JS``` file you can have any code executed and export final dynamic configuration file.
+
+An example of ```config/config.js``` file
+
+```
+const fs = require('fs');
+
+module.exports = {
+  development: {
+    username: 'database_dev',
+    password: 'database_dev',
+    database: 'database_dev',
+    host: '127.0.0.1',
+    dialect: 'mysql'
+  },
+  test: {
+    username: 'database_test',
+    password: null,
+    database: 'database_test',
+    host: '127.0.0.1',
+    dialect: 'mysql'
+  },
+  production: {
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOSTNAME,
+    dialect: 'mysql',
+    dialectOptions: {
+      ssl: {
+        ca: fs.readFileSync(__dirname + '/mysql-ca-master.crt')
+      }
+    }
+  }
+};
+```
+
+##### Creating first Model (and Migration)
+
+Once you have properly configured CLI config file you are ready to create your first migration. It's as simple as executing a simple command.
+
+We will use ```model:generate``` command. This command requires two options
+
+- ```name```, Name of the model
+- ```attributes```, List of model attributes
+Let's create a model named ```User```.
+
+```$ npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string```
+
+##### This will do following
+
+- Create a model file ```user``` in ```models``` folder
+- Create a migration file with name like ```XXXXXXXXXXXXXX-create-user.js``` in ```migrations``` folder
+Note: Sequelize will only use Model files, it's the table representation. On the other hand, the migration file is a change in that model or more specifically that table, used by CLI. Treat migrations like a commit or a log for some change in database.
+
+##### Running Migrations
+
+Until this step, we haven't inserted anything into the database. We have just created required model and migration files for our first model User. Now to actually create that table in database you need to run ```db:migrate``` command.
+
+```$ npx sequelize-cli db:migrate```
+
+This command will execute these steps:
+
+Will ensure a table called ```SequelizeMeta``` in database. This table is used to record which migrations have run on the current database
+Start looking for any migration files which haven't run yet. This is possible by checking ```SequelizeMeta``` table. In this case it will run ```XXXXXXXXXXXXXX-create-user.js``` migration, which we created in last step.
+Creates a table called Users with all columns as specified in its migration file.
+
+###### Modeling a table
+A model is a class that extends ```Sequelize.Model```. Models can be defined in two equivalent ways. The first, with ```Sequelize.Model.init(attributes, options)```:
+
+```
+const Model = Sequelize.Model;
+class User extends Model {}
+User.init({
+  // attributes
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastName: {
+    type: Sequelize.STRING
+    // allowNull defaults to true
+  }
+}, {
+  sequelize,
+  modelName: 'user'
+  // options
+});
+```
+
+Alternatively, using ```sequelize.define```:
+
+```
+const User = sequelize.define('user', {
+  // attributes
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastName: {
+    type: Sequelize.STRING
+    // allowNull defaults to true
+  }
+}, {
+  // options
+});
+```
+
+Internally, ```sequelize.define``` calls ```Model.init```.
+
+The above code tells Sequelize to expect a table named ```users``` in the database with the fields ```firstName``` and ```lastName```. The table name is automatically pluralized by default (a library called ```inflection``` is used under the hood to do this). This behavior can be stopped for a specific model by using the ```freezeTableName: true``` option, or for all models by using the ```define``` option from the ```Sequelize constructor```.
+
+Sequelize also defines by default the fields ```id``` (primary key), ```createdAt``` and ```updatedAt``` to every model. This behavior can also be changed, of course (check the API Reference to learn more about the available options).
+
+
+
 ### Raw queries
 
 - [Raw queries](http://docs.sequelizejs.com/manual/tutorial/raw-queries.html)
-
-### Migrations
-
-- [Migrations](http://docs.sequelizejs.com/manual/tutorial/migrations.html)
-
-#### Basic usage
-
-- [Basic usage](http://docs.sequelizejs.com/manual/installation/usage.html)
-
-To get the ball rollin' you first have to create an instance of Sequelize. Use it the following way:
-```
-const sequelize = new Sequelize('database', 'username', 'password', {
-  dialect: 'mysql'
-});
-```
-
-This will save the passed database credentials and provide all further methods.
-
-Furthermore you can specify a non-default host/port:
-
-```
-const sequelize = new Sequelize('database', 'username', 'password', {
-  // the sql dialect of the database
-  // currently supported: 'mysql', 'sqlite', 'postgres', 'mssql'
-  dialect: 'mysql',
-  host: "my.server.tld",
-  port: 9821,
-})
-```
-If you just don't have a password:
-
-```
-const sequelize = new Sequelize({
-  database: 'db_name',
-  username: 'username',
-  password: null,
-  dialect: 'mysql'
-});
-```
-
-You can also use a connection string:
-```
-const sequelize = new Sequelize('mysql://user:pass@example.com:9821/db_name', {
-  // Look to the next section for possible options
-})
-```
-
-##### Options
-
-Besides the host and the port, Sequelize comes with a whole bunch of options. Here they are:
-
-See [Sequelize API](http://docs.sequelizejs.com/class/lib/sequelize.js~Sequelize.html)
-See [Model Definition](http://docs.sequelizejs.com/manual/tutorial/models-definition.html#configuration)
-See [Transactions](http://docs.sequelizejs.com/manual/tutorial/transactions.html)
 
 ##### Executing raw SQL queries
 
@@ -108,29 +319,149 @@ See [Query Types](http://docs.sequelizejs.com/variable/index.html#static-variabl
 
 Here is how it works:
 
-#### Model definition
+### Model definition
 
-- [Model definition](http://docs.sequelizejs.com/manual/tutorial/models-definition.html)
-
-To define mappings between a model and a table, use the ** define method.
+To define mappings between a model and a table, use the ```define``` method. Each column must have a datatype, see more about ```datatypes```.
 
 ```
-const Project = sequelize.define('project', {
+class Project extends Model {}
+Project.init({
   title: Sequelize.STRING,
   description: Sequelize.TEXT
-})
+}, { sequelize, modelName: 'project' });
 
-const Task = sequelize.define('task', {
+class Task extends Model {}
+Task.init({
   title: Sequelize.STRING,
   description: Sequelize.TEXT,
   deadline: Sequelize.DATE
+}, { sequelize, modelName: 'task' })
+```
+
+Apart from datatypes, there are plenty of options that you can set on each column.
+
+```
+class Foo extends Model {}
+Foo.init({
+ // instantiating will automatically set the flag to true if not set
+ flag: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: true },
+
+ // default values for dates => current time
+ myDate: { type: Sequelize.DATE, defaultValue: Sequelize.NOW },
+
+ // setting allowNull to false will add NOT NULL to the column, which means an error will be
+ // thrown from the DB when the query is executed if the column is null. If you want to check that a value
+ // is not null before querying the DB, look at the validations section below.
+ title: { type: Sequelize.STRING, allowNull: false },
+
+ // Creating two objects with the same value will throw an error. The unique property can be either a
+ // boolean, or a string. If you provide the same string for multiple columns, they will form a
+ // composite unique key.
+ uniqueOne: { type: Sequelize.STRING,  unique: 'compositeIndex' },
+ uniqueTwo: { type: Sequelize.INTEGER, unique: 'compositeIndex' },
+
+ // The unique property is simply a shorthand to create a unique constraint.
+ someUnique: { type: Sequelize.STRING, unique: true },
+
+ // It's exactly the same as creating the index in the model's options.
+ { someUnique: { type: Sequelize.STRING } },
+ { indexes: [ { unique: true, fields: [ 'someUnique' ] } ] },
+
+ // Go on reading for further information about primary keys
+ identifier: { type: Sequelize.STRING, primaryKey: true },
+
+ // autoIncrement can be used to create auto_incrementing integer columns
+ incrementMe: { type: Sequelize.INTEGER, autoIncrement: true },
+
+ // You can specify a custom column name via the 'field' attribute:
+ fieldWithUnderscores: { type: Sequelize.STRING, field: 'field_with_underscores' },
+
+ // It is possible to create foreign keys:
+ bar_id: {
+   type: Sequelize.INTEGER,
+
+   references: {
+     // This is a reference to another model
+     model: Bar,
+
+     // This is the column name of the referenced model
+     key: 'id',
+
+     // This declares when to check the foreign key constraint. PostgreSQL only.
+     deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+   }
+ },
+
+ // It is possible to add coments on columns for MySQL, PostgreSQL and MSSQL only
+ commentMe: {
+   type: Sequelize.INTEGER,
+
+   comment: 'This is a column name that has a comment'
+ }
+}, {
+  sequelize,
+  modelName: 'foo'
+});
+```
+
+The comment option can also be used on a table, see ```model configuration```.
+
+#### Database synchronization
+
+When starting a new project you won't have a database structure and using Sequelize you won't need to. Just specify your model structures and let the library do the rest. Currently supported is the creation and deletion of tables:
+
+```
+// Create the tables:
+Project.sync()
+Task.sync()
+
+// Force the creation!
+Project.sync({force: true}) // this will drop the table first and re-create it afterwards
+
+// drop the tables:
+Project.drop()
+Task.drop()
+
+// event handling:
+Project.[sync|drop]().then(() => {
+  // ok ... everything is nice!
+}).catch(error => {
+  // oooh, did you enter wrong database credentials?
 })
 ```
 
-##### Data types
+Because synchronizing and dropping all of your tables might be a lot of lines to write, you can also let Sequelize do the work for you:
+
+```
+// Sync all models that aren't already in the database
+sequelize.sync()
+
+// Force sync all models
+sequelize.sync({force: true})
+
+// Drop all tables
+sequelize.drop()
+
+// emit handling:
+sequelize.[sync|drop]().then(() => {
+  // woot woot
+}).catch(error => {
+  // whooops
+})
+```
+
+Because ```.sync({ force: true })``` is destructive operation, you can use ```match``` option as an additional safety check. match option tells sequelize to ```match``` a regex against the database name before syncing - a safety check for cases where ```force: true``` is used in tests but not live code.
+
+```
+// This will run .sync() only if database name ends with '_test'
+sequelize.sync({ force: true, match: /_test$/ });
+```
+
+
+### Data types
 
 Below are some of the datatypes supported by sequelize. For a full and updated list, see DataTypes.
-- [DataTypes](http://docs.sequelizejs.com/variable/index.html#static-variable-DataTypes)
+- [DataTypes](http://docs.sequelizejs.com/manual/data-types.html)
 
 ```
 Sequelize.STRING                      // VARCHAR(255)
@@ -138,6 +469,7 @@ Sequelize.STRING(1234)                // VARCHAR(1234)
 Sequelize.STRING.BINARY               // VARCHAR BINARY
 Sequelize.TEXT                        // TEXT
 Sequelize.TEXT('tiny')                // TINYTEXT
+Sequelize.CITEXT                      // CITEXT      PostgreSQL and SQLite only.
 
 Sequelize.INTEGER                     // INTEGER
 Sequelize.BIGINT                      // BIGINT
@@ -145,7 +477,7 @@ Sequelize.BIGINT(11)                  // BIGINT(11)
 
 Sequelize.FLOAT                       // FLOAT
 Sequelize.FLOAT(11)                   // FLOAT(11)
-Sequelize.FLOAT(11, 12)               // FLOAT(11,12)
+Sequelize.FLOAT(11, 10)               // FLOAT(11,10)
 
 Sequelize.REAL                        // REAL        PostgreSQL only.
 Sequelize.REAL(11)                    // REAL(11)    PostgreSQL only.
@@ -153,7 +485,7 @@ Sequelize.REAL(11, 12)                // REAL(11,12) PostgreSQL only.
 
 Sequelize.DOUBLE                      // DOUBLE
 Sequelize.DOUBLE(11)                  // DOUBLE(11)
-Sequelize.DOUBLE(11, 12)              // DOUBLE(11,12)
+Sequelize.DOUBLE(11, 10)              // DOUBLE(11,10)
 
 Sequelize.DECIMAL                     // DECIMAL
 Sequelize.DECIMAL(10, 2)              // DECIMAL(10,2)
@@ -204,65 +536,11 @@ Sequelize.INTEGER(11).UNSIGNED.ZEROFILL // INTEGER(11) UNSIGNED ZEROFILL
 
 ```
 
-##### Database synchronization
-
-When starting a new project you won't have a database structure and using Sequelize you won't need to. Just specify your model structures and let the library do the rest. Currently supported is the creation and deletion of tables:
-
-```
-// Create the tables:
-Project.sync()
-Task.sync()
-
-// Force the creation!
-Project.sync({force: true}) // this will drop the table first and re-create it afterwards
-
-// drop the tables:
-Project.drop()
-Task.drop()
-
-// event handling:
-Project.[sync|drop]().then(() => {
-  // ok ... everything is nice!
-}).catch(error => {
-  // oooh, did you enter wrong database credentials?
-})
-
-```
-
-Because synchronizing and dropping all of your tables might be a lot of lines to write, you can also let Sequelize do the work for you:
-
-```
-
-// Sync all models that aren't already in the database
-sequelize.sync()
-
-// Force sync all models
-sequelize.sync({force: true})
-
-// Drop all tables
-sequelize.drop()
-
-// emit handling:
-sequelize.[sync|drop]().then(() => {
-  // woot woot
-}).catch(error => {
-  // whooops
-})
-
-```
-
-Because .sync({ force: true }) is destructive operation, you can use match option as an additional safety check. match option tells sequelize to match a regex against the database name before syncing - a safety check for cases where force: true is used in tests but not live code.
-
-```
-// This will run .sync() only if database name ends with '_test'
-sequelize.sync({ force: true, match: /_test$/ });
-```
-
 ### Model usage
 
 ##### Data retrieval / Finders
 
-Finder methods are intended to query data from the database. They do not return plain objects but instead return model instances. Because finder methods return model instances you can call any model instance member on the result as described in the documentation for instances.
+Finder methods are intended to query data from the database. They do not return plain objects but instead return model instances. Because finder methods return model instances you can call any model instance member on the result as described in the documentation for ```instances```.
 
  - [Instances](http://docs.sequelizejs.com/manual/tutorial/instances.html)
 
@@ -272,25 +550,94 @@ In this document we'll explore what finder methods can do:
 
 ```
 // search for known ids
-Project.findById(123).then(project => {
+Project.findByPk(123).then(project => {
   // project will be an instance of Project and stores the content of the table entry
   // with id 123. if such an entry is not defined you will get null
+})
+
+// search for attributes
+Project.findOne({ where: {title: 'aProject'} }).then(project => {
+  // project will be the first entry of the Projects table with the title 'aProject' || null
 })
 ```
 
 ##### findOrCreate - Search for a specific element or create it if not available
 
-The method findOrCreate can be used to check if a certain element already exists in the database. If that is the case the method will result in a respective instance. If the element does not yet exist, it will be created.
+The method ```findOrCreate``` can be used to check if a certain element already exists in the database. If that is the case the method will result in a respective instance. If the element does not yet exist, it will be created.
+
+Let's assume we have an empty database with a User model which has a ```username``` and a ```job```.
+
+```
+User
+  .findOrCreate({where: {username: 'sdepold'}, defaults: {job: 'Technical Lead JavaScript'}})
+  .then(([user, created]) => {
+    console.log(user.get({
+      plain: true
+    }))
+    console.log(created)
+
+    /*
+     findOrCreate returns an array containing the object that was found or created and a boolean that
+     will be true if a new object was created and false if not, like so:
+
+    [ {
+        username: 'sdepold',
+        job: 'Technical Lead JavaScript',
+        id: 1,
+        createdAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET),
+        updatedAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET)
+      },
+      true ]
+
+ In the example above, the array spread on line 3 divides the array into its 2 parts and passes them
+  as arguments to the callback function defined beginning at line 39, which treats them as "user" and
+  "created" in this case. (So "user" will be the object from index 0 of the returned array and
+  "created" will equal "true".)
+    */
+  })
+```
 
 ##### findAndCountAll - Search for multiple elements in the database, returns both data and total count
-This is a convenience method that combinesfindAll and count (see below) this is useful when dealing with queries related to pagination where you want to retrieve data with a limit and offset but also need to know the total number of records that match the query:
+
+This is a convenience method that combines ```findAll``` and ```count``` (see below) this is useful when dealing with queries related to pagination where you want to retrieve data with a ```limit``` and ```offset``` but also need to know the total number of records that match the query:
 
 The success handler will always receive an object with two properties:
 
-count - an integer, total number records matching the where clause and other filters due to associations
-rows - an array of objects, the records matching the where clause and other filters due to associations, within the limit and offset range
+- ```count``` - an integer, total number records matching the where clause and other filters due to associations
+- ```rows```- an array of objects, the records matching the where clause and other filters due to associations, within the limit and offset range
 
-##### findAll - Búsqueda de múltiples elementos en la base de datos.
+```
+Project
+  .findAndCountAll({
+     where: {
+        title: {
+          [Op.like]: 'foo%'
+        }
+     },
+     offset: 10,
+     limit: 2
+  })
+  .then(result => {
+    console.log(result.count);
+    console.log(result.rows);
+  });
+```
+
+
+It support includes. Only the includes that are marked as ```required``` will be added to the count part:
+
+Suppose you want to find all users who have a profile attached:
+
+```
+User.findAndCountAll({
+  include: [
+     { model: Profile, required: true}
+  ],
+  limit: 3
+});
+```
+
+##### findAll - Search for multiple elements in the database
 
 ```
 // find multiple entries
@@ -298,13 +645,49 @@ Project.findAll().then(projects => {
   // projects will be an array of all Project instances
 })
 
-// also possible:
-Project.all().then(projects => {
-  // projects will be an array of all Project instances
+// search for specific attributes - hash usage
+Project.findAll({ where: { name: 'A Project' } }).then(projects => {
+  // projects will be an array of Project instances with the specified name
+})
+
+// search within a specific range
+Project.findAll({ where: { id: [1,2,3] } }).then(projects => {
+  // projects will be an array of Projects having the id 1, 2 or 3
+  // this is actually doing an IN query
+})
+
+Project.findAll({
+  where: {
+    id: {
+      [Op.and]: {a: 5},           // AND (a = 5)
+      [Op.or]: [{a: 5}, {a: 6}],  // (a = 5 OR a = 6)
+      [Op.gt]: 6,                // id > 6
+      [Op.gte]: 6,               // id >= 6
+      [Op.lt]: 10,               // id < 10
+      [Op.lte]: 10,              // id <= 10
+      [Op.ne]: 20,               // id != 20
+      [Op.between]: [6, 10],     // BETWEEN 6 AND 10
+      [Op.notBetween]: [11, 15], // NOT BETWEEN 11 AND 15
+      [Op.in]: [1, 2],           // IN [1, 2]
+      [Op.notIn]: [1, 2],        // NOT IN [1, 2]
+      [Op.like]: '%hat',         // LIKE '%hat'
+      [Op.notLike]: '%hat',       // NOT LIKE '%hat'
+      [Op.iLike]: '%hat',         // ILIKE '%hat' (case insensitive)  (PG only)
+      [Op.notILike]: '%hat',      // NOT ILIKE '%hat'  (PG only)
+      [Op.overlap]: [1, 2],       // && [1, 2] (PG array overlap operator)
+      [Op.contains]: [1, 2],      // @> [1, 2] (PG array contains operator)
+      [Op.contained]: [1, 2],     // <@ [1, 2] (PG array contained by operator)
+      [Op.any]: [2,3]            // ANY ARRAY[2, 3]::INTEGER (PG only)
+    },
+    status: {
+      [Op.not]: false           // status NOT FALSE
+    }
+  }
 })
 ```
 
 ##### Manipulating the dataset with limit, offset, order and group
+
 To get more relevant data, you can use limit, offset, order and grouping:
 
 ```
@@ -316,14 +699,17 @@ Project.findAll({ offset: 10 })
 
 // step over the first 10 elements, and take 2
 Project.findAll({ offset: 10, limit: 2 })
+
+```
+
 The syntax for grouping and ordering are equal, so below it is only explained with a single example for group, and the rest for order. Everything you see below can also be done for group
 
-Project.findAll({order: 'title DESC'})
+```
+Project.findAll({order: [['title', 'DESC']]})
 // yields ORDER BY title DESC
 
 Project.findAll({group: 'name'})
 // yields GROUP BY name
-
 ```
 
 Notice how in the two examples above, the string provided is inserted verbatim into the query, i.e. column names are not escaped. When you provide a string to order/group, this will always be the case. If you want to escape column names, you should provide an array of arguments, even though you only want to order/group by a single column
@@ -373,10 +759,15 @@ There is also a method for counting database objects:
 Project.count().then(c => {
   console.log("There are " + c + " projects!")
 })
+
+Project.count({ where: {'id': {[Op.gt]: 25}} }).then(c => {
+  console.log("There are " + c + " projects with an id greater than 25.")
+})
 ```
 
 ##### max - Get the greatest value of a specific attribute within a specific table
-And here is a method for getting the max value of an attribute:f
+
+And here is a method for getting the max value of an attribute:
 
 ```
 /*
@@ -388,9 +779,14 @@ And here is a method for getting the max value of an attribute:f
 Project.max('age').then(max => {
   // this will return 40
 })
+
+Project.max('age', { where: { age: { [Op.lt]: 20 } } }).then(max => {
+  // will be 10
+})
 ```
 
 ##### min - Get the least value of a specific attribute within a specific table
+
 And here is a method for getting the min value of an attribute:
 
 ```
@@ -402,6 +798,10 @@ And here is a method for getting the min value of an attribute:
 */
 Project.min('age').then(min => {
   // this will return 5
+})
+
+Project.min('age', { where: { age: { [Op.gt]: 5 } } }).then(min => {
+  // will be 10
 })
 ```
 
@@ -419,6 +819,83 @@ In order to calculate the sum over a specific column of a table, you can use the
 Project.sum('age').then(sum => {
   // this will return 55
 })
+
+Project.sum('age', { where: { age: { [Op.gt]: 5 } } }).then(sum => {
+  // will be 50
+})
+```
+
+##### Eager loading
+
+ - [Eager loading](http://docs.sequelizejs.com/manual/models-usage.html#eager-loading)
+
+When you are retrieving data from the database there is a fair chance that you also want to get associations with the same query - this is called eager loading. The basic idea behind that, is the use of the attribute include when you are calling find or findAll. Lets assume the following setup:
+
+```
+class User extends Model {}
+User.init({ name: Sequelize.STRING }, { sequelize, modelName: 'user' })
+class Task extends Model {}
+Task.init({ name: Sequelize.STRING }, { sequelize, modelName: 'task' })
+class Tool extends Model {}
+Tool.init({ name: Sequelize.STRING }, { sequelize, modelName: 'tool' })
+
+Task.belongsTo(User)
+User.hasMany(Task)
+User.hasMany(Tool, { as: 'Instruments' })
+
+sequelize.sync().then(() => {
+  // this is where we continue ...
+})
+```
+
+OK. So, first of all, let's load all tasks with their associated user.
+
+```
+Task.findAll({ include: [ User ] }).then(tasks => {
+  console.log(JSON.stringify(tasks))
+
+  /*
+    [{
+      "name": "A Task",
+      "id": 1,
+      "createdAt": "2013-03-20T20:31:40.000Z",
+      "updatedAt": "2013-03-20T20:31:40.000Z",
+      "userId": 1,
+      "user": {
+        "name": "John Doe",
+        "id": 1,
+        "createdAt": "2013-03-20T20:31:45.000Z",
+        "updatedAt": "2013-03-20T20:31:45.000Z"
+      }
+    }]
+  */
+})
+```
+
+Notice that the accessor (the ```User``` property in the resulting instance) is singular because the association is one-to-something.
+
+Next thing: Loading of data with many-to-something associations!
+
+```
+User.findAll({ include: [ Task ] }).then(users => {
+  console.log(JSON.stringify(users))
+
+  /*
+    [{
+      "name": "John Doe",
+      "id": 1,
+      "createdAt": "2013-03-20T20:31:45.000Z",
+      "updatedAt": "2013-03-20T20:31:45.000Z",
+      "tasks": [{
+        "name": "A Task",
+        "id": 1,
+        "createdAt": "2013-03-20T20:31:40.000Z",
+        "updatedAt": "2013-03-20T20:31:40.000Z",
+        "userId": 1
+      }]
+    }]
+  */
+})
 ```
 
 ### Querying
@@ -434,8 +911,11 @@ Model.findAll({
   attributes: ['foo', 'bar']
 });
 SELECT foo, bar ...
+```
+
 Attributes can be renamed using a nested array:
 
+```
 Model.findAll({
   attributes: ['foo', ['bar', 'baz']]
 });
@@ -572,6 +1052,9 @@ const Op = Sequelize.Op
 [Op.notLike]: '%hat'       // NOT LIKE '%hat'
 [Op.iLike]: '%hat'         // ILIKE '%hat' (case insensitive) (PG only)
 [Op.notILike]: '%hat'      // NOT ILIKE '%hat'  (PG only)
+[Op.startsWith]: 'hat'     // LIKE 'hat%'
+[Op.endsWith]: 'hat'       // LIKE '%hat'
+[Op.substring]: 'hat'      // LIKE '%hat%'
 [Op.regexp]: '^[h|a|t]'    // REGEXP/~ '^[h|a|t]' (MySQL/PG only)
 [Op.notRegexp]: '^[h|a|t]' // NOT REGEXP/!~ '^[h|a|t]' (MySQL/PG only)
 [Op.iRegexp]: '^[h|a|t]'    // ~* '^[h|a|t]' (PG only)
@@ -591,7 +1074,7 @@ const Op = Sequelize.Op
 
 Range types can be queried with all supported operators.
 
-Keep in mind, the provided range value can define the bound inclusion/exclusion as well.
+Keep in mind, the provided range value can ```define the bound inclusion/exclusion``` as well.
 
 ```
 // All the above equality and inequality operators plus the following:
@@ -646,7 +1129,6 @@ const Op = Sequelize.Op;
   ]
 }
 // title LIKE 'Boat%' OR description LIKE '%boat%'
-
 ```
 
 ##### Pagination / Limiting
@@ -726,7 +1208,7 @@ Subtask.findAll({
 
 ##### Building a non-persistent instance
 
-In order to create instances of defined classes just do as follows. Using the ```build``` -method will return an unsaved object, which you explicitly have to save.
+In order to create instances of defined classes just do as follows. You might recognize the syntax if you coded Ruby in the past. Using the ```build```-method will return an unsaved object, which you explicitly have to save.
 
 ```
 const project = Project.build({
@@ -745,10 +1227,11 @@ Built instances will automatically get default values when they were defined:
 
 ```
 // first define the model
-const Task = sequelize.define('task', {
+class Task extends Model {}
+Task.init({
   title: Sequelize.STRING,
-  rating: { type: Sequelize.STRING, defaultValue: 3 }
-})
+  rating: { type: Sequelize.TINYINT, defaultValue: 3 }
+}, { sequelize, modelName: 'task' });
 
 // now instantiate an object
 const task = Task.build({title: 'very important task'})
@@ -782,7 +1265,7 @@ Task
 
 #### Creating persistent instances
 
-While an instance created with .build() requires an explicit .save() call to be stored in the database, .create() omits that requirement altogether and automatically stores your instance's data once called.
+While an instance created with ```.build()``` requires an explicit ```.save()``` call to be stored in the database, ```.create()``` omits that requirement altogether and automatically stores your instance's data once called.
 
 ```
 Task.create({ title: 'foo', description: 'bar', deadline: new Date() }).then(task => {
@@ -846,6 +1329,29 @@ Task.create({ title: 'a task' }).then(task => {
 })
 ```
 
+If the ```paranoid``` options is true, the object will not be deleted, instead the ```deletedAt``` column will be set to the current timestamp. To force the deletion, you can pass ```force: true``` to the destroy call:
+
+```
+task.destroy({ force: true })
+```
+
+After an object is soft deleted in ```paranoid``` mode, you will not be able to create a new instance with the same primary key until you have force-deleted the old instance.
+
+
+##### Restoring soft-deleted instances
+
+If you have soft-deleted an instance of a model with ```paranoid: true```, and would like to undo the deletion, use the ```restore``` method:
+
+```
+Task.create({ title: 'a task' }).then(task => {
+  // now you see me...
+  return task.destroy();
+}).then(() => {
+  // now i'm gone, but wait...
+  return task.restore();
+})
+```
+
 ##### Working in bulk (creating, updating and destroying multiple rows at once)
 
 In addition to updating a single instance, you can also create, update, and delete multiple instances at once. The functions you are looking for are called
@@ -872,6 +1378,7 @@ User.bulkCreate([
 ```
 
 To update several rows at once:
+
 ```
 Task.bulkCreate([
   {subject: 'programming', status: 'executing'},
@@ -882,8 +1389,7 @@ Task.bulkCreate([
     { status: 'inactive' }, /* set attributes' value */
     { where: { subject: 'programming' }} /* where criteria */
   );
-}).spread((affectedCount, affectedRows) => {
-  // .update returns two values in an array, therefore we use .spread
+}).then(([affectedCount, affectedRows]) => {
   // Notice that affectedRows will only be defined in dialects which support returning: true
 
   // affectedCount will be 2
@@ -916,9 +1422,66 @@ Task.bulkCreate([
 
 If you are accepting values directly from the user, it might be beneficial to limit the columns that you want to actually insert.```bulkCreate()``` accepts an options object as the second parameter. The object can have a .```fields.``` parameter, (an array) to let it know which fields you want to build explicitly
 
+```
+User.bulkCreate([
+  { username: 'foo' },
+  { username: 'bar', admin: true}
+], { fields: ['username'] }).then(() => {
+  // nope bar, you can't be admin!
+})
+```
+
+```bulkCreate``` was originally made to be a mainstream/fast way of inserting records, however, sometimes you want the luxury of being able to insert multiple rows at once without sacrificing model validations even when you explicitly tell Sequelize which columns to sift through. You can do by adding a ```validate: true``` property to the options object.
+
+```
+class Tasks extends Model {}
+Tasks.init({
+  name: {
+    type: Sequelize.STRING,
+    validate: {
+      notNull: { args: true, msg: 'name cannot be null' }
+    }
+  },
+  code: {
+    type: Sequelize.STRING,
+    validate: {
+      len: [3, 10]
+    }
+  }
+}, { sequelize, modelName: 'tasks' })
+
+Tasks.bulkCreate([
+  {name: 'foo', code: '123'},
+  {code: '1234'},
+  {name: 'bar', code: '1'}
+], { validate: true }).catch(errors => {
+  /* console.log(errors) would look like:
+  [
+    { record:
+    ...
+    name: 'SequelizeBulkRecordError',
+    message: 'Validation error',
+    errors:
+      { name: 'SequelizeValidationError',
+        message: 'Validation error',
+        errors: [Object] } },
+    { record:
+      ...
+      name: 'SequelizeBulkRecordError',
+      message: 'Validation error',
+      errors:
+        { name: 'SequelizeValidationError',
+        message: 'Validation error',
+        errors: [Object] } }
+  ]
+  */
+})
+```
+
 ##### Values of an instance
 
 If you log an instance you will notice, that there is a lot of additional stuff. In order to hide such stuff and reduce it to the very interesting information, you can use the ```get```-attribute. Calling it with the option ```plain``` = true will only return the values of an instance.
+
 ```
 Person.create({
   name: 'Rambow',
@@ -938,6 +1501,7 @@ Person.create({
 //   updatedAt: Tue, 01 May 2012 19:12:16 GMT
 // }
 ```
+
 Hint:You can also transform an instance into JSON by using ```JSON.stringify(instance)```. This will basically return the very same as values.
 
 ### Associations
@@ -945,6 +1509,13 @@ Hint:You can also transform an instance into JSON by using ```JSON.stringify(ins
 - [Associations](http://docs.sequelizejs.com/manual/tutorial/associations.html)
 
 - [Associations - Reference](http://docs.sequelizejs.com/class/lib/associations/base.js~Association.html)
+
+This section describes the various association types in sequelize. There are four type of associations available in Sequelize
+
+- BelongsTo
+- HasOne
+- HasMany
+- BelongsToMany
 
 #### One-To-One associations
 
@@ -1533,8 +2104,10 @@ Person = sequelize.define('person', {
 
 Many-To-Many associations are used to connect sources with multiple targets. And the targets can also have connections to multiple sources.
 
+```
 Project.belongsToMany(Person, { through: 'PersonProject' });
 Person.belongsToMany(Project, { through: 'PersonProject' });
+```
 
 A new model UserProject will be created with projectId and userId.
 
