@@ -5,6 +5,6 @@ const roles = require("./controllers");
 module.exports = function initRoutes(app) {
   const basePathRoles = config.basePath + "/role";
 
-  app.get(`${basePathRoles}`, roles.v1.getAllRoles);
-  app.get(`${basePathRoles}/:id`, roles.v1.validateRoleID, roles.v1.getRole);
+  app.get(basePathRoles, roles.v1.getAllRoles);
+  app.get(`${basePathRoles}/:id`, roles.v1.getRole);
 };

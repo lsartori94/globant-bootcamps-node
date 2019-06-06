@@ -1,43 +1,19 @@
 const _ = require("lodash");
-const profileMock = require("../../../test-hepers/profiles");
-const Joi = require('joi');
+const actions = require("./actions")
 
 module.exports = {
   v1: {
     getAllProfiles,
-    validateProfileID,
     getProfile
   }
 };
 
 function getAllProfiles(req, res) {
   console.log("processing profiles request");
-  res.status(200).send({ message: "OK!", data: profileMock.ALL_PROFILES });
+  res.status(200).send(actions.v1.validateGetAllProfiles(req, res));
 }
 
 function getProfile(req, res) {
   console.log("processing profiles ID request");
-  res.status(200).send({
-    message: "OK!",
-    data: profileMock.ALL_PROFILES[req.params.id - 1]
-  });
-}
-
-function validateProfileID(req, res, next) {
-  console.log("validating");
-  const schema = Joi.object().keys({
-    id: Joi.number()
-      .min(1)
-      .max(profileMock.ALL_PROFILES.length)
-      .required()
-  });
-  Joi.validate({ id: req.params.id }, schema, (err, value) => {
-    if (err) {
-      console.log("validation failure");
-      res.status(422).send({ message: "Invalid request!" });
-    } else {
-      console.log("validation success!");
-      next();
-    }
-  });
+  res.status(200).send(actions.v1.validateProfileID(req, res));
 }
