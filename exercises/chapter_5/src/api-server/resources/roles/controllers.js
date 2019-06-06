@@ -32,13 +32,11 @@ function getAll(req, res) {
 function getById(req, res) {
     const roleId = parseInt(req.params.id);
     
-    const filterRole = roleMock.ALL_ROLES.filter(elementRole => {
-        let elementRoleId = elementRole.id;
-        return (elementRoleId === roleId);
-    });
-    if (filterRole.length === 0) {
+    const role = actions.getById(roleId);
+
+    if (role === undefined) {
         return res.status(404).send();
     } else {
-        return res.status(200).send(filterRole[0]);
+        return res.status(200).send(role);
     }
 }

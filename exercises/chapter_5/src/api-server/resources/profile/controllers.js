@@ -32,13 +32,11 @@ function getAll(req, res) {
 function getById(req, res) {
     const profileId = parseInt(req.params.id);
     
-    const filterProfile = profileMock.ALL_PROFILES.filter(elementProfile => {
-        let elementProfileId = elementProfile.id;
-        return (elementProfileId === profileId);
-    });
-    if (filterProfile.length === 0) {
+    const profile = actions.getById(profileId);
+
+    if (profile === undefined) {
         return res.status(404).send();
     } else {
-        return res.status(200).send(filterProfile[0]);
+        return res.status(200).send(profile);
     }
 }
