@@ -1,8 +1,7 @@
 /*! Copyright Globant. All rights reserved. */
 "use strict";
 
-const _ = require("lodash");
-const userMock = require("../../../test-hepers/users");
+const actions = require("./actions");
 
 module.exports = {
   v1: {
@@ -20,10 +19,10 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAllUsers(req, res) {
-  res.status(200).send(userMock.ALL_USERS);
+  res.status(200).send(actions.v1.allUsers());
 }
 
 function getUser(req, res) {
   console.log("processing user ID request");
-  res.status(200).send(userMock.ALL_USERS[req.params.id - 1]);
+  res.status(200).send(actions.v1.searchUserByID(req.params.id));
 }
