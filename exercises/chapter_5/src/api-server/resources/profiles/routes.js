@@ -12,5 +12,5 @@ module.exports = function initRoutes(app) {
     app.get(basePath, profiles.v1.getAll);
     
     //profileByIdPatch
-    app.get(basePath+'/:profileid', profiles.v1.getById);
+    app.get(basePath+'/:profileid', profiles.v1.validateParams, profiles.v1.getById);
 };

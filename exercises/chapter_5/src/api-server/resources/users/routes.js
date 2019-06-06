@@ -12,5 +12,5 @@ module.exports = function initRoutes(app) {
     app.get(basePath, users.v1.getAll);
 
     //userByIdPatch
-    app.get(basePath+'/:userid', users.v1.getById);
+    app.get(basePath+'/:userid' , users.v1.validateParams , users.v1.getById);
 };

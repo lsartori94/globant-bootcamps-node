@@ -8,7 +8,8 @@ const Joi = require('joi');
 module.exports = {
     v1: { // Initial version
         getAll: getAll,
-        getById: getById
+        getById: getById,
+        validateParams: validateParams
     }
 };
 
@@ -29,21 +30,30 @@ function getAll(req, res) {
  * @param {Object} res 
  */
 function getById(req, res) {
+    let response = actions.userById(req.params.userid);
+    res.status(response.res).send(response.user);
+}
 
+/**
+ * Validates the params
+ * @param {Object} req 
+ * @param {Object} res 
+ * @param {*} next 
+ */
+function validateParams(req, res, next) {
     const schema = Joi.object().keys({
         userid: Joi.number().positive()
     });
-    const data= req.params;
-    Joi.validate(data,schema, (err,value)=>{
-        if(err){
+    const data = req.params;
+    Joi.validate(data, schema, (err, value) => {
+        if (err) {
             res.status(422).json({
-                status:'error',
+                status: 'error',
                 message: 'Invalid ID',
                 data: data
             })
-        }else{
-            let response = actions.userById(req.params.userid);
-            res.status(response.res).send(response.user);
+        } else {
+            next();
         }
     })
 
