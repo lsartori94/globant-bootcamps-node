@@ -15,12 +15,12 @@
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
     "express": "^4.16.2",
+    "mariadb": "^2.0.5",
     "morgan": "^1.7.0",
-    "mysql": "^2.16.0",
-    "pg": "^6.1.0",
+    "mysql2": "^1.6.5",
     "pug": "^2.0.0-rc.4",
-    "sequelize": "^3.23.6",
-    "sequelize-cli": "^3.1.0",
+    "sequelize": "^5.8.7",
+    "sequelize-cli": "^5.4.0",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
