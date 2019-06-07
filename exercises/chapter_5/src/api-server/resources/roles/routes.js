@@ -3,6 +3,8 @@
 
 const config = require('../../core/config');
 const roles = require('./controllers');
+const genericMiddlewares = require('../middlewares');
+
 
 module.exports = function initRoutes(app) {
     // Roles resource base route
@@ -10,5 +12,5 @@ module.exports = function initRoutes(app) {
 
     //console.log(basePath);
     app.get(basePath, roles.v1.getAll);
-    app.get(basePath + '/:id', roles.v1.getById); 
+    app.get(basePath + '/:id', genericMiddlewares.validateId, roles.v1.getById); 
 };
