@@ -10,6 +10,6 @@ module.exports = function initRoutes(app) {
 
 
     //console.log(basePath);
-    app.get(basePath+'/:idProfile',profiles.v1.getOneById)
+    app.get(`${basePath}/:idProfile`,profiles.v1.getOneById)
     app.get(basePath, profiles.v1.getAll);
 };

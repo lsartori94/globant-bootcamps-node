@@ -10,5 +10,5 @@ module.exports = function initRoutes(app) {
 
     //console.log(basePath);
     app.get(basePath, roles.v1.getAll);
-    app.get(basePath+'/:idRol',roles.v1.getOneById)
+    app.get(`${basePath}/:idRol`,roles.v1.getOneById)
 };

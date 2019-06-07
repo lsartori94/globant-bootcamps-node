@@ -13,8 +13,9 @@ var _ = require('lodash');
         return o.id ===idParametro;
        
     });
+    //puede logear undefined
+     console.log(result);// devuelve lo encontrado en consola 
 
-     console.log('wep');
     return result;
 
 }

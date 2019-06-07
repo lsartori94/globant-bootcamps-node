@@ -4,12 +4,12 @@ var _ = require('lodash');
 
 
 
-function actionGetOneById(id){
-var profiles=profilesMock.ALL_PROFILES;
+function actionGetOneById(id) {
+const profiles=profilesMock.ALL_PROFILES;
 
-const result =  _.find(profiles, function(o){
+const result =  _.find(profiles, function(o) {
        
-    return o.id ===id;
+    return o.id === id;
 
 });
 //puede logear undefined
@@ -19,6 +19,6 @@ return result;
 
 }
 
-module.exports={
+module.exports= {
     actionGetOneById:actionGetOneById
 }

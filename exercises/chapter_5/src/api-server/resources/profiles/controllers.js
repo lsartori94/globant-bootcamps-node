@@ -30,7 +30,7 @@ function getOneById(req,res){
     //console.log('hola,',idProfile);
     var a =actions.actionGetOneById(Number(idProfile));
     if (a==undefined){
-        res.status(400).send('No se encuentra el id buscado');
+        res.status(404).send('No se encuentra el id buscado');
 
     }else if (a!= undefined){
         res.status(200).send(a);

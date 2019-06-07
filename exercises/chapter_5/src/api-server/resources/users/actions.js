@@ -3,14 +3,14 @@ var _ = require('lodash');
 
 
 
-  function actionFindById(idParametro){
+  function actionFindById(idParametro) {
     var users = userMock.ALL_USERS;
 
     //_.find(users, function(o) { return o.age < 40; });
     //_.findIndex(users, function(o) { return o.user == 'barney'; });
     const result =  _.find(users, function(o){
        
-        return o.id ===idParametro;
+        return o.id === idParametro;
        
     });
 
@@ -19,7 +19,7 @@ var _ = require('lodash');
 
 }
 
-module.exports={
+module.exports= {
     actionFindById:actionFindById,
 }
 

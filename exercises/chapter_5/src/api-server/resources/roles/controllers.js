@@ -29,9 +29,9 @@ function getAll(req, res) {
 function getOneById(req,res){
     const {idRol} = req.params;
     //console.log('hola,',idRol);
-    var a =actions.actionFindRolById(Number(idRol));
+    const a =actions.actionFindRolById(Number(idRol));
     if (a==undefined){
-        res.status(400).send('No se encuentra el id buscado');
+        res.status(404).send('No se encuentra el id buscado');
 
     }else if (a!= undefined){
         res.status(200).send(a);
