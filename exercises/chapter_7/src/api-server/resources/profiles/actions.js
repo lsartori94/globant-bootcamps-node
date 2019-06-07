@@ -16,7 +16,7 @@ module.exports = {
  */
 function validateId(req, res, next) {
     const schema = Joi.object().keys({
-        userId: Joi.number().positive()
+        profileId: Joi.number().positive()
     });
     const data = req.params;
     Joi.validate(data, schema, (err, value) => {

@@ -1,8 +1,9 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Profiles', [{
+  up:  (queryInterface, Sequelize) => {
+    
+     queryInterface.bulkInsert('Profiles', [{
        name: 'Perfil 1',
        description: 'Algo',
        createdAt: new Date(),
@@ -39,6 +40,7 @@ module.exports = {
       updatedAt: new Date(),
       ProfileId: 1
     }], {});
+    
   },
 
   down: (queryInterface, Sequelize) => {

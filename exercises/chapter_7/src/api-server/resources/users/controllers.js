@@ -3,12 +3,12 @@
 
 const models = require('../../models');
 const _ = require('lodash');
-const actions = require('./actions');
 
 
 module.exports = {
     v1: { // Initial version
-        getAll: getAll
+        getAll: getAll,
+        getUserById: getUserById
     }
 };
 
@@ -25,9 +25,37 @@ function getAll(req, res) {
             exclude: ['password']
         }
     }).then(users=>{
-        console.log(users);
         res.status(200).send(users);
     }).catch(err=>{
         res.status(404).send(err);
     });
 }
+
+/**
+ * Returns a single user finded by his id
+ * @param {Object} req 
+ * @param {Object} res 
+ */
+function getUserById(req,res){
+    models.User.findByPk(req.params.userId, {
+        attributes: {
+            exclude: ['password']
+        },
+        include: [{
+            model: models.Profile,
+            attributes: {
+                exclude: ['id']
+            }
+        }]
+    }).then(user=>{
+        if(user){
+            res.status(200).send(user);
+        }else{
+            res.status(404).send({msg: "User doesn't exists"});
+        }
+    }).catch(err=>{
+        res.status(404).send(err);
+    });
+
+}
+
