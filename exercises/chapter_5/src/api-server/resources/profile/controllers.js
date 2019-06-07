@@ -28,10 +28,8 @@ function getAll(req, res) {
  * @param {Object} req - http.ServerRequest 
  * @param {Object} res - http.ServerResponse 
  */
-
 function getById(req, res) {
-    const profileId = parseInt(req.params.id);
-    
+    const profileId = parseInt(req.params.id); 
     const profile = actions.getById(profileId);
 
     if (profile === undefined) {
