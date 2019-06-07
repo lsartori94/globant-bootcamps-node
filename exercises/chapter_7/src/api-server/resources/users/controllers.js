@@ -31,11 +31,10 @@ function getUser(req, res) {
   console.log("processing user ID");
   res
     .status(200)
-    .send({ message: "OK!", data: userMock.ALL_USERS[req.params.id - 1] });
+    .send();
 }
 
 function validateID(req, res, next) {
-  console.log("validating user ID");
   const schema = Joi.object().keys({
     id: Joi
       .number()
