@@ -9,5 +9,8 @@ module.exports = function initRoutes(app) {
     const basePath = config.basePath + '/users';
 
     //console.log(basePath);
-    app.get(basePath, users.v1.getAll);
+    app.get(basePath, users.v1.getAll); 
+
+    //Path for a single user
+    app.get(basePath+'/:userId', users.v1.validateId, users.v1.getById);
 };

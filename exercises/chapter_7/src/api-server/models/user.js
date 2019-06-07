@@ -4,10 +4,17 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     password: DataTypes.STRING,
     lastname: DataTypes.STRING,
-    email: DataTypes.STRING
+    email: DataTypes.STRING,
+    ProfileId: DataTypes.UUID
   }, {});
   User.associate = function(models) {
-    // associations can be defined here
+      models.User.belongsTo(models.Profile, {
+        onDelete: "CASCADE",
+        foreignKey: {
+          allowNull: false
+        }
+      });
+    
   };
   
   return User;

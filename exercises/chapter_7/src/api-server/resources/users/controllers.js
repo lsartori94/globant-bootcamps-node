@@ -1,9 +1,10 @@
 /*! Copyright Globant. All rights reserved. */
 'use strict';
 
+const models = require('../../models');
 const _ = require('lodash');
 const actions = require('./actions');
-const userMock = require('../../../test-helpers/users');
+
 
 module.exports = {
     v1: { // Initial version
@@ -19,5 +20,14 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    res.status(200).send(userMock.ALL_USERS);
+    models.User.findAll({
+        attributes: {
+            exclude: ['password']
+        }
+    }).then(users=>{
+        console.log(users);
+        res.status(200).send(users);
+    }).catch(err=>{
+        res.status(404).send(err);
+    });
 }
