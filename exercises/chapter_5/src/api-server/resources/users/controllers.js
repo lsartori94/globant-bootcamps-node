@@ -28,10 +28,10 @@ function getAll(req, res) {
     const {id} = req.params;
    // console.log('Ace deberiamos buscar uno por id',id);
     var a =actions.actionFindById(Number(id));
-    if (a==undefined){
-        res.status(400).send('No se encuentra el id buscado');
+    if (a == undefined) {
+        res.status(404).send('No se encuentra el id buscado');
 
-    }else if (a!= undefined){
+    }else if (a!= undefined) {
         res.status(200).send(a);
 
     }
