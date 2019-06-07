@@ -28,10 +28,8 @@ function getAll(req, res) {
  * @param {Object} req - http.ServerRequest 
  * @param {Object} res - http.ServerResponse 
  */
-
 function getById(req, res) {
     const userId = parseInt(req.params.id);
-    
     const user = actions.getById(userId);
 
     if (user === undefined) {
