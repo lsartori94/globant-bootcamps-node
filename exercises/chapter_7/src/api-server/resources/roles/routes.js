@@ -2,12 +2,12 @@
 'use strict';
 
 const config = require('../../core/config');
-const users = require('./controllers');
+const role = require('./controllers');
 
 module.exports = function initRoutes(app) {
     // Users resource base route
-    const basePath = config.basePath + '/users';
+    const basePath = config.basePath + '/role';
 
     //console.log(basePath);
-    app.get(basePath, users.v1.getAll);
+    app.get(basePath, role.v1.getAll);
 };
