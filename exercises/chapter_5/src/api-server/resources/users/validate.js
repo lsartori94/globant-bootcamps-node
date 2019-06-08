@@ -5,7 +5,6 @@ const userMock = require("../../../test-hepers/roles");
 
 module.exports = {
   v1: {
-    validateGetAllUsers,
     validateUserID
   }
 };

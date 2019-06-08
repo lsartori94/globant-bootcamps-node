@@ -9,7 +9,6 @@ module.exports = function initRoutes(app) {
 
   app.get(
     basePathProfiles,
-    validate.v1.validateGetAllProfiles,
     profiles.v1.getAllProfiles
   );
   app.get(

@@ -7,6 +7,6 @@ const validate = require("./validate");
 module.exports = function initRoutes(app) {
   const basePathRoles = config.basePath + "/role";
 
-  app.get(basePathRoles, validate.v1.validateGetAllRoles, roles.v1.getAllRoles);
+  app.get(basePathRoles, roles.v1.getAllRoles);
   app.get(`${basePathRoles}/:id`, validate.v1.validateRoleID, roles.v1.getRole);
 };

@@ -5,7 +5,6 @@ const rolesMock = require("../../../test-hepers/roles");
 
 module.exports = {
   v1: {
-    validateGetAllRoles,
     validateRoleID
   }
 };

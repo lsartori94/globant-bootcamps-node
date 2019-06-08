@@ -5,7 +5,6 @@ const profilesMock = require("../../../test-hepers/profiles");
 
 module.exports = {
   v1: {
-    validateGetAllProfiles,
     validateProfileID
   }
 };
