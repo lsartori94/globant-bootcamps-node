@@ -8,7 +8,9 @@ const _ = require('lodash');
 module.exports = {
     v1: { // Initial version
         getAll: getAll,
-        getUserById: getUserById
+        getUserById: getUserById,
+        createUser: createUser,
+        deleteUser: deleteUser
     }
 };
 
@@ -24,9 +26,9 @@ function getAll(req, res) {
         attributes: {
             exclude: ['password']
         }
-    }).then(users=>{
+    }).then(users => {
         res.status(200).send(users);
-    }).catch(err=>{
+    }).catch(err => {
         res.status(404).send(err);
     });
 }
@@ -36,7 +38,7 @@ function getAll(req, res) {
  * @param {Object} req 
  * @param {Object} res 
  */
-function getUserById(req,res){
+function getUserById(req, res) {
     models.User.findByPk(req.params.userId, {
         attributes: {
             exclude: ['password']
@@ -47,15 +49,51 @@ function getUserById(req,res){
                 exclude: ['id']
             }
         }]
-    }).then(user=>{
-        if(user){
+    }).then(user => {
+        if (user) {
             res.status(200).send(user);
-        }else{
-            res.status(404).send({msg: "User doesn't exists"});
+        } else {
+            res.status(404).send({ msg: "User doesn't exists" });
         }
-    }).catch(err=>{
+    }).catch(err => {
         res.status(404).send(err);
     });
-
 }
+
+function createUser(req, res) {
+    models.User.create({
+        name: req.body.name,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password,
+        ProfileId: req.body.ProfileId
+    })
+        .then(succes => {
+            res.status(200).send("User created");
+        })
+        .catch(err => {
+            res.status(502).send(err);
+        });
+}
+
+function deleteUser(req, res) {
+    models.User.findByPk(req.params.userId)
+        .then(user => {
+            if (user) {
+                user.destroy()
+                    .then(succes => {
+                        res.status(200).send("user destroyed");
+                    })
+                    .catch(err => {
+                        res.status(502).send(err);
+                    });
+            } else {
+                res.status(404).send("userId does't exists");
+            }
+        }).catch(err => {
+            res.status(502).send(err);
+        });
+}
+
+
 

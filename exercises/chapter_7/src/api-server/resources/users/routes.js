@@ -10,8 +10,14 @@ module.exports = function initRoutes(app) {
     const basePath = config.basePath + '/users';
 
     //console.log(basePath);
-    app.get(basePath, users.v1.getAll); 
+    app.get(basePath, users.v1.getAll);
 
     //Path for a single user
-    app.get(basePath+'/:userId', validator.v1.validateId, users.v1.getUserById);
+    app.get(basePath + '/:userId', validator.v1.validateId, users.v1.getUserById);
+
+    //Path for posting a user
+    app.post(basePath, validator.v1.validateBodyPost, users.v1.createUser);
+
+    //Path for a deleting a user
+	app.delete(basePath + "/:userId", validator.v1.validateId, users.v1.deleteUser);
 };
