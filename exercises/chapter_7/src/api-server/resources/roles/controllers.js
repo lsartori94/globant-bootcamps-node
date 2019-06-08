@@ -15,28 +15,28 @@ module.exports = {
 /////////////////////////////////////////////////////////////
 
 /**
- * Retrieve all users
+ * Retrieve all roles
  * @param {Object} req - http.ServerRequest
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    models.User.findAll().then(users => {
-        return res.status(200).send(users); 
+    models.Role.findAll().then(roles => {
+        return res.status(200).send(roles); 
     });
 }
 
 /**
- * Retrive an user by id. If the user is not found 404 will be returned
+ * Retrive a role by id. If the role is not found 404 will be returned
  * @param {Object} req - http.ServerRequest 
  * @param {Object} res - http.ServerResponse 
  */
 function getById(req, res) {
-    const userId = parseInt(req.params.id);
-    const user = actions.getById(userId);
+    const roleId = parseInt(req.params.id);
+    const role = actions.getById(roleId);
 
-    if (user === undefined) {
+    if (role === undefined) {
         return res.status(404).send();
     } else {
-        return res.status(200).send(user);
+        return res.status(200).send(role);
     }
 }
