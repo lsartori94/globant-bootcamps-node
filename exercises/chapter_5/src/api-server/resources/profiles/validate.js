@@ -28,17 +28,3 @@ function validateProfileID(req, res, next) {
     next();
   });
 }
-
-function validateGetAllProfiles(req, res, next) {
-  console.log("validating");
-  const schema = Joi.object().keys({
-    length: Joi.number().min(1)
-  });
-  Joi.validate({ length: profilesMock.ALL_PROFILES.length }, schema, err => {
-    if (err) {
-      console.log("validation failure");
-      res.status(404).send();
-    }
-    next();
-  });
-}

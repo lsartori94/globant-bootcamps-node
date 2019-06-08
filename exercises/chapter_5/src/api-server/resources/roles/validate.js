@@ -28,17 +28,3 @@ function validateRoleID(req, res, next) {
     next();
   });
 }
-
-function validateGetAllRoles(req, res, next) {
-  console.log("validating");
-  const schema = Joi.object().keys({
-    length: Joi.number().min(1)
-  });
-  Joi.validate({ length: rolesMock.ALL_ROLES.length }, schema, err => {
-    if (err) {
-      console.log("validation failure");
-      res.status(404).send();
-    }
-    next();
-  });
-}
