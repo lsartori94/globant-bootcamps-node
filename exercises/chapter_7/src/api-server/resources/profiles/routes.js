@@ -11,6 +11,16 @@ module.exports = function initRoutes(app) {
 
   //console.log(basePath);
   app.get(basePath, profile.v1.getAll);
-  //app.get(basePath, validate.v1.validateID, profile.v1.geProfileByID);
+  app.get(`${basePath}/:id`, validate.v1.id, profile.v1.getProfileById);
   app.post(basePath, profile.v1.createProfile);
+  app.put(
+    `${basePath}/:id`,
+    validate.v1.id,
+    validate.v1.profileData,
+    profile.v1.modifyProfile
+  );
+  app.delete(`${basePath}/:id`, validate.v1.id, profile.v1.deleteProfile);
+
+  //add validations to this op
+  app.post(`${basePath}/:id/users`, profile.v1.addUsers);
 };

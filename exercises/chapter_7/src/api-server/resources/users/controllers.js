@@ -25,14 +25,14 @@ module.exports = {
 function getAll(req, res) {
   models.User.findAll({
     attributes: {
-      exclude: ["password"]
+      exclude: ["password", "id", "ProfileId"]
     }
   })
     .then(data => {
       res.status(200).send(data);
     })
     .catch(err => {
-      res.status(404).send();
+      res.status(400).send();
     });
 }
 
@@ -82,12 +82,18 @@ function createUser(req, res) {
 }
 
 function modifyUser(req, res) {
-  models.User.update(req.body, { where: { id: req.params.id }, limit: 1 })
-    .then(data => {
-      res.status(200).send();
+  models.User.findByPk(req.params.id)
+    .then(user => {
+      models.User.update(req.body, { where: { id: user.dataValues.id } })
+        .then(data => {
+          res.status(200).send();
+        })
+        .catch(err => {
+          res.status(400).send();
+        });
     })
     .catch(err => {
-      res.status(400).send();
+      res.status(404).send();
     });
 }
 

@@ -16,7 +16,7 @@ function id(req, res, next) {
       .min(1)
       .required()
   });
-  Joi.validate({ id: req.params.id }, schema, (err, value) => {
+  Joi.validate({ id: req.params.id }, schema, err => {
     if (err) {
       res.status(400).send({
         message: `Invalid request! ${req.params.id} is not a valid ID`
@@ -46,25 +46,14 @@ function allUserData(req, res, next) {
       .positive()
       .required()
   });
-  Joi.validate(
-    {
-      username: req.body.username,
-      name: req.body.name,
-      lastname: req.body.lastname,
-      password: req.body.password,
-      email: req.body.email,
-      ProfileId: req.body.ProfileId
-    },
-    schema,
-    (err, value) => {
-      if (err) {
-        res.status(400).send(err.message);
-      } else {
-        console.log("validation success");
-        next();
-      }
+  Joi.validate(req.body, schema, err => {
+    if (err) {
+      res.status(422).send(err.message);
+    } else {
+      console.log("validation success");
+      next();
     }
-  );
+  });
 }
 
 function userData(req, res, next) {
@@ -78,23 +67,12 @@ function userData(req, res, next) {
     email: Joi.string().email(),
     ProfileId: Joi.number().positive()
   });
-  Joi.validate(
-    {
-      username: req.body.username,
-      name: req.body.name,
-      lastname: req.body.lastname,
-      password: req.body.password,
-      email: req.body.email,
-      ProfileId: req.body.ProfileId
-    },
-    schema,
-    (err, value) => {
-      if (err) {
-        res.status(400).send(err.message);
-      } else {
-        console.log("validation success");
-        next();
-      }
+  Joi.validate(req.body, schema, err => {
+    if (err) {
+      res.status(422).send(err.message);
+    } else {
+      console.log("validation success");
+      next();
     }
-  );
+  });
 }
