@@ -10,7 +10,9 @@ module.exports = {
 
     getAll,
     getUserByID,
-    createUser
+    createUser,
+    modifyUser,
+    deleteUser
   }
 };
 
@@ -39,11 +41,12 @@ function getUserByID(req, res) {
   models.User.findByPk(req.params.id, {
     include: [
       {
-        model: models.Profile     //exclude ID from profile!
+        model: models.Profile,
+        attributes: { exclude: ["id"] }
       }
     ],
     attributes: {
-      exclude: ["password", "id", "ProfileId"]
+      exclude: ["password", "ProfileId", "id"]
     }
   })
     .then(data => {
@@ -60,11 +63,11 @@ function getUserByID(req, res) {
 
 function createUser(req, res) {
   models.User.create({
+    username: req.body.username,
     name: req.body.name,
     lastname: req.body.lastname,
-    username: req.body.username,
     password: req.body.password,
-    email: req.body.lastname,
+    email: req.body.email,
     ProfileId: req.body.profile
   })
     .then(data => {
@@ -76,5 +79,32 @@ function createUser(req, res) {
     })
     .catch(err => {
       res.status(404).send(err);
+    });
+}
+
+function modifyUser(req, res) {
+  models.User.update(req.body, { where: { id: req.params.id }, limit: 1 })
+    .then(data => {
+      res.status(200).send();
+    })
+    .catch(err => {
+      res.status(400).send();
+    });
+}
+
+function deleteUser(req, res) {
+  models.User.findByPk(req.params.id)
+    .then(user => {
+      user
+        .destroy()
+        .then(data => {
+          res.status(204).send();
+        })
+        .catch(err => {
+          res.status(400).send();
+        });
+    })
+    .catch(err => {
+      res.status(404).send();
     });
 }

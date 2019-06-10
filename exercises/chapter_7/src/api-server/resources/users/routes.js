@@ -11,6 +11,13 @@ module.exports = function initRoutes(app) {
 
   //console.log(basePath);
   app.get(basePath, users.v1.getAll);
-  app.get(`${basePath}/:id`, validate.v1.validateID, users.v1.getUserByID);
-  app.post(basePath, users.v1.createUser);
+  app.get(`${basePath}/:id`, validate.v1.id, users.v1.getUserByID);
+  app.post(basePath, validate.v1.allUserData, users.v1.createUser);
+  app.put(
+    `${basePath}/:id`,
+    validate.v1.id,
+    validate.v1.userData,
+    users.v1.modifyUser
+  );
+  app.delete(`${basePath}/:id`, validate.v1.id, users.v1.deleteUser);
 };

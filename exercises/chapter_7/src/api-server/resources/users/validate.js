@@ -4,11 +4,13 @@ const Joi = require("joi");
 
 module.exports = {
   v1: {
-    validateID
+    id,
+    allUserData,
+    userData
   }
 };
 
-function validateID(req, res, next) {
+function id(req, res, next) {
   const schema = Joi.object().keys({
     id: Joi.number()
       .min(1)
@@ -25,3 +27,43 @@ function validateID(req, res, next) {
     }
   });
 }
+
+function allUserData(req, res, next) {
+  const schema = Joi.object().keys({
+    username: Joi.string()
+      .trim()
+      .required(),
+    name: Joi.string().required(),
+    password: Joi.string()
+      .trim()
+      .min(6),
+    lastname: Joi.string().required(),
+    email: Joi.string()
+      .email()
+      .required(),
+    ProfileId: Joi.number()
+      .positive()
+      .required()
+  });
+  Joi.validate(
+    {
+      username: req.body.username,
+      name: req.body.name,
+      lastname: req.body.lastname,
+      password: req.body.password,
+      email: req.body.email,
+      ProfileId: req.body.ProfileId
+    },
+    schema,
+    (err, value) => {
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        console.log("validation success");
+        next();
+      }
+    }
+  );
+}
+
+function userData(req, res) {}
