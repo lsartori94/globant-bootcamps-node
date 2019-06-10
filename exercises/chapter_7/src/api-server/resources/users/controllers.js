@@ -10,7 +10,8 @@ module.exports = {
         getAll: getAll,
         getUserById: getUserById,
         createUser: createUser,
-        deleteUser: deleteUser
+        deleteUser: deleteUser,
+        updateUser: updateUser
     }
 };
 
@@ -76,6 +77,28 @@ function createUser(req, res) {
         });
 }
 
+function updateUser(req, res) {
+    models.User.findByPk(req.params.userId).then(user => {
+        if (user) {
+            user.update({
+                name: req.body.name,
+                lastname: req.body.lastname,
+                email: req.body.email,
+                password: req.body.password,
+                ProfileId: req.body.ProfileId
+            }, { omitNull: true }).then(succes => {
+                res.status(200).send(user)
+            }).catch(err => {
+                res.status(502).send(err);
+            });
+        } else {
+            res.status(404).send("userId does't exists");
+        }
+    }).catch(err => {
+        res.status(502).send(err);
+    })
+}
+
 function deleteUser(req, res) {
     models.User.findByPk(req.params.userId)
         .then(user => {
@@ -93,6 +116,7 @@ function deleteUser(req, res) {
         }).catch(err => {
             res.status(502).send(err);
         });
+
 }
 
 

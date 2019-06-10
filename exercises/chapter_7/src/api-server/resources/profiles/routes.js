@@ -20,7 +20,7 @@ module.exports = function initRoutes(app) {
   app.post(basePath, validator.v1.validateBodyPost, profiles.v1.createProfile);
   
   //Path for updating a profile
-  //app.put(basePath  + "/:profileId", validator.v1.validateId, validator.v1.validateBodyPut, profiles.v1.updateProfile);
+  app.put(basePath  + "/:profileId", validator.v1.validateId, validator.v1.validateBodyPut, profiles.v1.updateProfile);
 
   //Path for a deleting a profile
 	app.delete(basePath + "/:profileId", validator.v1.validateId, profiles.v1.deleteProfile);

@@ -18,6 +18,9 @@ module.exports = function initRoutes(app) {
     //Path for posting a user
     app.post(basePath, validator.v1.validateBodyPost, users.v1.createUser);
 
+    //Path for updating a user
+    app.put(basePath + '/:userId',  validator.v1.validateId, validator.v1.validateBodyPut, users.v1.updateUser);
+
     //Path for a deleting a user
 	app.delete(basePath + "/:userId", validator.v1.validateId, users.v1.deleteUser);
 };

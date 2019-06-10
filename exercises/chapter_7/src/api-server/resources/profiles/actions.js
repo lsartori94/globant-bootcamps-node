@@ -69,7 +69,7 @@ function validateBodyPut(req, res, next) {
  */
 function validateId(req, res, next) {
 	const schema = Joi.object().keys({
-		profileId: Joi.number().positive()
+		profileId: Joi.number().positive().integer().required()
 	});
 	const data = req.params;
 	Joi.validate(data, schema, (err, value) => {

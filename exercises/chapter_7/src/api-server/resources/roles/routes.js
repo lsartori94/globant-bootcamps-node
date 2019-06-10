@@ -16,7 +16,10 @@ module.exports = function initRoutes(app) {
 	app.get(basePath + "/:roleId", validator.v1.validateId, roles.v1.getRoleById);
 
 	//Path for posting a role
-	app.post(basePath, validator.v1.validateBody, roles.v1.createRole);
+	app.post(basePath, validator.v1.validateBodyPost, roles.v1.createRole);
+
+	//Path for updating role
+	app.put(basePath + "/:roleId", validator.v1.validateId, validator.v1.validateBodyPut, roles.v1.updateRole);
 
 	//Path for a deleting a role
 	app.delete(basePath + "/:roleId", validator.v1.validateId, roles.v1.deleteRole);

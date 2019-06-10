@@ -4,7 +4,8 @@ const Joi = require('joi');
 module.exports = {
     v1: {
         validateId: validateId,
-        validateBodyPost: validateBodyPost
+        validateBodyPost: validateBodyPost,
+        validateBodyPut: validateBodyPut
     }
 }
  
@@ -21,7 +22,36 @@ function validateBodyPost(req, res, next) {
         password: Joi.string().required().min(6),
         lastname: Joi.string().required(),
         email: Joi.string().required().email(),
-        ProfileId: Joi.number().positive().required() 
+        ProfileId: Joi.number().positive().integer().required() 
+	});
+	const data = req.body;
+	Joi.validate(data, schema, (err, value) => {
+		if (err) {
+			res.status(501).json({
+				status: "error",
+				message: "Invalid format of params",
+				data: data
+			});
+		} else {
+			next();
+		}
+	});
+}
+
+
+/**
+ * Validates the params received from the body of the put request
+ * @param {Object} req
+ * @param {Object} res
+ * @param {*} next
+ */
+function validateBodyPut(req, res, next) {
+	const schema = Joi.object().keys({
+		name: Joi.string().min(4),
+        password: Joi.string().min(6),
+        lastname: Joi.string(),
+        email: Joi.string().email(),
+        ProfileId: Joi.number().positive().integer()
 	});
 	const data = req.body;
 	Joi.validate(data, schema, (err, value) => {
@@ -45,7 +75,7 @@ function validateBodyPost(req, res, next) {
  */
 function validateId(req, res, next) {
     const schema = Joi.object().keys({
-        userId: Joi.number().positive()
+        userId: Joi.number().positive().integer().required()
     });
     const data = req.params;
     Joi.validate(data, schema, (err, value) => {

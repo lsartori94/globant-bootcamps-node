@@ -10,7 +10,8 @@ module.exports = {
 		getAll: getAll,
 		getRoleById: getRoleById,
 		createRole: createRole,
-		deleteRole: deleteRole
+		deleteRole: deleteRole,
+		updateRole: updateRole
 	}
 };
 
@@ -60,6 +61,24 @@ function createRole(req, res) {
 		.catch(err => {
 			res.status(502).send(err);
 		});
+}
+
+function updateRole(req, res) {
+    models.Role.findByPk(req.params.roleId).then(role => {
+        if (role) {
+            role.update({
+                name: req.body.name
+            }, { omitNull: true }).then(succes => {
+                res.status(200).send(role)
+            }).catch(err => {
+                res.status(502).send(err);
+            });
+        } else {
+            res.status(404).send("roleId does't exists");
+        }
+    }).catch(err => {
+        res.status(502).send(err);
+    })
 }
 
 function deleteRole(req, res) {

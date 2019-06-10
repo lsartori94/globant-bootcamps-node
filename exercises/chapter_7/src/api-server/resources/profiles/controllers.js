@@ -10,7 +10,8 @@ module.exports = {
 		getAll: getAll,
 		getProfileById: getProfileById,
 		createProfile: createProfile,
-		deleteProfile: deleteProfile
+		deleteProfile: deleteProfile,
+		updateProfile: updateProfile
 	}
 };
 
@@ -62,12 +63,22 @@ function createProfile(req, res) {
 }
 
 function updateProfile(req, res) {
-	models.Profile.findByPk(req.params.profile)
+	models.Profile.findByPk(req.params.profileId)
 		.then(profile => {
 			if (profile) {
-				//profile.update();
-				res.status(200);
+				profile.update({
+					name: req.body.name,
+					description: req.body.description
+				}, { omitNull: true }).then(succes => {
+					res.status(200).send(profile)
+				}).catch(err => {
+					res.status(502).send(err);
+				});
+			} else {
+				res.status(404).send("profileId does't exists");
 			}
+		}).catch(err => {
+			res.status(502).send(err);
 		})
 }
 
