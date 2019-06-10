@@ -1,7 +1,6 @@
 /*! Copyright Globant. All rights reserved. */
 "use strict";
 
-const actions = require("./actions");
 const models = require("../../models");
 
 module.exports = {

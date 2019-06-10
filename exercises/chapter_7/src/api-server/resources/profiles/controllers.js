@@ -21,7 +21,13 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-  res.status(200).send(userMock.ALL_USERS);
+  models.Profile.findAll()
+    .then(data => {
+      res.status(200).send(data);
+    })
+    .catch(err => {
+      res.status(404).send();
+    });
 }
 
 function createProfile(req, res) {
