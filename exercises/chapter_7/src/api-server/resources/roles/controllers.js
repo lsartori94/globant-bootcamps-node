@@ -68,7 +68,7 @@ function createRole(req, res) {
 function modifyRole(req, res) {
   models.Role.findByPk(req.params.id)
     .then(role => {
-      models.Role.update(req.body,{where: {id: role.dataValues.id}})
+      models.Role.update(req.body, { where: { id: role.dataValues.id } })
         .then(data => {
           res.status(200).send();
         })

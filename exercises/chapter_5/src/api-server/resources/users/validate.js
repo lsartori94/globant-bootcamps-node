@@ -27,4 +27,3 @@ function validateUserID(req, res, next) {
     next();
   });
 }
-
