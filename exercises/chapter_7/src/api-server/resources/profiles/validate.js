@@ -4,7 +4,6 @@ const Joi = require("joi");
 
 module.exports = {
   v1: {
-    id,
     profileData,
     allProfileData
   }

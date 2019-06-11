@@ -3,7 +3,8 @@
 
 const config = require("../../core/config");
 const profile = require("./controllers");
-const validate = require("./validate");
+const validateProfile = require("./validate");
+const validate = require("../validate");
 
 module.exports = function initRoutes(app) {
   // Users resource base route
@@ -16,7 +17,7 @@ module.exports = function initRoutes(app) {
   app.put(
     `${basePath}/:id`,
     validate.v1.id,
-    validate.v1.profileData,
+    validateProfile.v1.profileData,
     profile.v1.modifyProfile
   );
   app.delete(`${basePath}/:id`, validate.v1.id, profile.v1.deleteProfile);
