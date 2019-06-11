@@ -3,7 +3,6 @@
 
 const _ = require('lodash');
 const actions = require('./actions');
-const models = require('../../models');
 
 module.exports = {
     v1: { // Initial version
@@ -20,9 +19,8 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    models.User.findAll().then(users => {
-        return res.status(200).send(users); 
-    });
+    const users = actions.getAll();
+    return res.status(200).send(users); 
 }
 
 /**

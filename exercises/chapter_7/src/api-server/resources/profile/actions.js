@@ -1,7 +1,18 @@
 'use strict';
 
-
 const models = require('../../models');
+
+/**
+ * Retrieves all profiles.
+ */
+function getAll() {
+    let allProfiles = [];
+
+    models.Profile.findAll().then(profiles => {
+        allProfiles = profiles;
+    });
+    return allProfiles;
+}
 
 /**
  * Retrieves a profile by id. Returns a profile object or undefined
@@ -15,5 +26,6 @@ function getById(profileId) {
 }
 
 module.exports = {
-    getById: getById
+    getById: getById,
+    getAll: getAll
 } 

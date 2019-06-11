@@ -3,7 +3,7 @@
 
 const _ = require('lodash');
 const actions = require('./actions');
-const models = require('../../models');
+
 
 module.exports = {
     v1: { // Initial version
@@ -20,9 +20,13 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    models.Role.findAll().then(roles => {
+    const roles = actions.getAll();
+
+    if (roles === undefined) {
+        return res.status(404).send();
+    } else {
         return res.status(200).send(roles); 
-    });
+    }
 }
 
 /**

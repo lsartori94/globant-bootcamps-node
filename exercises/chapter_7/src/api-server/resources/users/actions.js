@@ -2,6 +2,17 @@
 
 const models = require('../../models');
 
+/**
+ * Retrieves all users
+ */
+function getAll() {
+    let allUsers = [];
+
+    models.User.findAll().then(users => {
+        allUsers = users;
+    });
+    return allUsers;
+}
 
 /**
  * Retrieves a user by id. Returns a user object or undefined
@@ -15,5 +26,6 @@ function getById(userId) {
 }
 
 module.exports = {
-    getById: getById
+    getById: getById,
+    getAll: getAll
 }
