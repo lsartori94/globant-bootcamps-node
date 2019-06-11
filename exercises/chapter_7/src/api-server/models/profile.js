@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Profile.associate = function(models) {
-    models.Profile.hasMany(models.User);
+    models.Profile.hasMany(models.User, { plural: "Users", singular: "User" });
     models.Profile.belongsToMany(models.Role, {
       as: { plural: "Roles", singular: "Role" },
-      through: "profile_role",
-      foreignKey: "role_id",
-      otherKey: "profile_id"
+      through: "profileRole",
+      foreignKey: "roleId",
+      otherKey: "profileId"
     });
   };
 

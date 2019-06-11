@@ -118,22 +118,11 @@ function deleteProfile(req, res) {
 }
 
 function addUsers(req, res) {
-  models.Profile.findByPk(req.params.id, {
-    include: [{ model: models.User }]
-  })
-    .then(profile => {
-      models.Profile.update(
-        { Users: req.body.users },
-        { where: { id: profile.dataValues.id } }
-      )
-        .then(data => {
-          res.status(200).send();
-        })
-        .catch(err => {
-          res.status(400).send();
-        });
+  models.Profile.update(req.body.Users, { where: { id: req.params.id } })
+    .then(data => {
+      res.status(200).send(data);
     })
     .catch(err => {
-      res.status(404).send(err);
+      res.status(400).send(err);
     });
 }

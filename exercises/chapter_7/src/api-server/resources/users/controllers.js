@@ -24,6 +24,12 @@ module.exports = {
  */
 function getAll(req, res) {
   models.User.findAll({
+    include: [
+      {
+        model: models.Profile,
+        attributes: { exclude: ["id"] }
+      }
+    ],
     attributes: {
       exclude: ["password", "id", "ProfileId"]
     }
@@ -67,7 +73,7 @@ function createUser(req, res) {
     lastname: req.body.lastname,
     password: req.body.password,
     email: req.body.email,
-    ProfileId: req.body.profile
+    ProfileId: req.body.ProfileId
   })
     .then(data => {
       if (!!data) {
