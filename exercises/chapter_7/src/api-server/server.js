@@ -7,7 +7,6 @@ const app = require('./core/app'); // The express app we just created
 const config = require('./core/config');
 const models = require('./models');
 
-app.set('port', config.port);
 
 const server = http.createServer(app);
 

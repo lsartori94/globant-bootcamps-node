@@ -11,7 +11,8 @@ module.exports = {
 		getProfileById: getProfileById,
 		createProfile: createProfile,
 		deleteProfile: deleteProfile,
-		updateProfile: updateProfile
+		updateProfile: updateProfile,
+		setProfileToUsers: setProfileToUsers
 	}
 };
 
@@ -62,6 +63,25 @@ function createProfile(req, res) {
 		});
 }
 
+function setProfileToUsers(req, res) {
+	models.Profile.findByPk(req.params.profileId)
+		.then(profile => {
+			if (profile) {
+				models.User.update({ ProfileId: req.params.profileId }, { omitNull: true, where: { id: req.body.usersId } })
+					.then(() => {
+						res.status(200).send("Users updated");
+					})
+					.catch(err => {
+						console.log(err);
+						res.status(502).send(err);
+					})
+			}
+			else {
+				res.status(404).send("profileId does't exists");
+			}
+		})
+}
+
 function updateProfile(req, res) {
 	models.Profile.findByPk(req.params.profileId)
 		.then(profile => {
@@ -69,7 +89,7 @@ function updateProfile(req, res) {
 				profile.update({
 					name: req.body.name,
 					description: req.body.description
-				}, { omitNull: true }).then(succes => {
+				}, { omitNull: true }).then(() => {
 					res.status(200).send(profile)
 				}).catch(err => {
 					res.status(502).send(err);

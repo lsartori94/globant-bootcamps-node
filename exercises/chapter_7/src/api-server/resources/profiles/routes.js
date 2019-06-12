@@ -19,6 +19,9 @@ module.exports = function initRoutes(app) {
   //Path for posting a profile
   app.post(basePath, validator.v1.validateBodyPost, profiles.v1.createProfile);
   
+  //Path for settig a profile to a list of users
+  app.post(basePath + '/:profileId', validator.v1.validateId, validator.v1.validateUsersId, profiles.v1.setProfileToUsers);
+  
   //Path for updating a profile
   app.put(basePath  + "/:profileId", validator.v1.validateId, validator.v1.validateBodyPut, profiles.v1.updateProfile);
 

@@ -69,7 +69,7 @@ function createUser(req, res) {
         password: req.body.password,
         ProfileId: req.body.ProfileId
     })
-        .then(succes => {
+        .then(() => {
             res.status(200).send("User created");
         })
         .catch(err => {
@@ -104,7 +104,7 @@ function deleteUser(req, res) {
         .then(user => {
             if (user) {
                 user.destroy()
-                    .then(succes => {
+                    .then(() => {
                         res.status(200).send("user destroyed");
                     })
                     .catch(err => {

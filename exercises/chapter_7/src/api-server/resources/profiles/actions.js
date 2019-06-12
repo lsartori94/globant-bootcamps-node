@@ -4,7 +4,8 @@ module.exports = {
 	v1: {
 		validateId: validateId,
 		validateBodyPost: validateBodyPost,
-		validateBodyPut: validateBodyPut
+		validateBodyPut: validateBodyPut,
+		validateUsersId: validateUsersId
 	}
 };
 
@@ -83,5 +84,30 @@ function validateId(req, res, next) {
 			next();
 		}
     });
+}
+
+/**
+ * Validates the id received from the params
+ * @param {Object} req
+ * @param {Object} res
+ * @param {*} next
+ */
+function validateUsersId(req, res, next) {
+	const schema = Joi.object().keys({
+		usersId: Joi.array().items(Joi.number().positive().integer().required())
+	});
+	const data = req.body;
+	Joi.validate(data, schema, (err, value) => {
+		if (err) {
+			res.status(422).json({
+				status: "error",
+				message: "Invalid usersId",
+				data: data
+			});
+		} else {
+			next();
+		}
+    });
     
 }
+
