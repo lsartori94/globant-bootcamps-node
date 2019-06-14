@@ -23,7 +23,7 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-  models.User.findAll({
+  return models.User.findAll({
     include: [
       {
         model: models.Profile,
@@ -34,16 +34,16 @@ function getAll(req, res) {
       exclude: ["password", "id", "ProfileId"]
     }
   })
-    .then(data => {
-      res.status(200).send(data);
+    .then(users => {
+      res.status(200).send(users);
     })
-    .catch(err => {
+    .catch(error => {
       res.status(400).send();
     });
 }
 
 function getUserByID(req, res) {
-  models.User.findByPk(req.params.id, {
+  return models.User.findByPk(req.params.id, {
     include: [
       {
         model: models.Profile,
@@ -62,41 +62,28 @@ function getUserByID(req, res) {
       }
     })
     .catch(err => {
-      res.status(404).send();
+      res.status(400).send();
     });
 }
 
 function createUser(req, res) {
-  models.User.create({
-    username: req.body.username,
-    name: req.body.name,
-    lastname: req.body.lastname,
-    password: req.body.password,
-    email: req.body.email,
-    ProfileId: req.body.ProfileId
-  })
+  return models.User.create(req.body)
     .then(data => {
-      if (!!data) {
-        res.status(201).send(data);
-      } else {
-        res.status(400).send();
-      }
+      res.status(201).send(data);
     })
     .catch(err => {
-      res.status(404).send(err);
+      res.status(400).send();
     });
 }
 
 function modifyUser(req, res) {
-  models.User.findByPk(req.params.id)
-    .then(user => {
-      models.User.update(req.body, { where: { id: user.dataValues.id } })
-        .then(data => {
-          res.status(200).send();
-        })
-        .catch(err => {
-          res.status(400).send();
-        });
+  return models.User.update(req.body, { where: { id: req.params.id } })
+    .then(idUserModified => {
+      if (!!idUserModified) {
+        res.status(200).send(idUserModified);
+      } else {
+        res.status(404).send({ msg: "user not found" });
+      }
     })
     .catch(err => {
       res.status(404).send();
@@ -104,16 +91,13 @@ function modifyUser(req, res) {
 }
 
 function deleteUser(req, res) {
-  models.User.findByPk(req.params.id)
+  return models.User.destroy({ where: { id: req.params.id } }, { logging: true })
     .then(user => {
-      user
-        .destroy()
-        .then(data => {
-          res.status(204).send();
-        })
-        .catch(err => {
-          res.status(400).send();
-        });
+      if (!!user) {
+        res.status(204).send({});
+      } else {
+        res.status(404).send({ msg: "user not found" });
+      }
     })
     .catch(err => {
       res.status(404).send();
