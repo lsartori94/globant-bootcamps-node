@@ -7,7 +7,9 @@ const actions = require('./actions');
 module.exports = {
     v1: { // Initial version
         getAll: getAll,
-        getById: getById
+        getById: getById,
+        postUser: postUser,
+        updateById: updateById
     }
 };
 
@@ -19,8 +21,10 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    const users = actions.getAll();
-    return res.status(200).send(users); 
+    const usersPromise = actions.getAll();
+    usersPromise.then(users => {
+        return res.status(200).send(users); 
+    });
 }
 
 /**
@@ -30,11 +34,40 @@ function getAll(req, res) {
  */
 function getById(req, res) {
     const userId = parseInt(req.params.id);
-    const user = actions.getById(userId);
+    const userPromise = actions.getById(userId);
 
-    if (user === undefined) {
-        return res.status(404).send();
-    } else {
+    userPromise.then(user => {
+        if (user === null) {
+            return res.status(404).send();
+        } else {
+            return res.status(200).send(user);
+        }
+    });
+}
+
+/**
+ * Creates and returns a JSON with the created user
+ * @param {Object} req - http.ServerRequest
+ * @param {Object} res - http.ServerResponse
+ */
+function postUser(req, res) {
+    const userPromise = actions.postUser(req.body);
+
+    userPromise.then(user => {
         return res.status(200).send(user);
-    }
+    });
+}
+
+/**
+ * Updates and returns
+ * @param {Object} req 
+ * @param {Object} res 
+ */
+function updateById(req, res) {
+    const userId = parseInt(req.params.id);
+    const userPromise = actions.updateById(userId, req.body);
+
+    userPromise.then(user => {
+        return res.status(200).send(user);
+    });
 }

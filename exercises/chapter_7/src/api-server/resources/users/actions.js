@@ -2,16 +2,12 @@
 
 const models = require('../../models');
 
+
 /**
  * Retrieves all users
  */
 function getAll() {
-    let allUsers = [];
-
-    models.User.findAll().then(users => {
-        allUsers = users;
-    });
-    return allUsers;
+    return models.User.findAll();
 }
 
 /**
@@ -20,12 +16,34 @@ function getAll() {
  * @param {Integer} userId - Desired user's id
  */
 function getById(userId) {
-    models.User.findByPk(userId).then(user => {
-        return user;
-    });
+    return models.User.findByPk(userId);
+}
+
+/**
+ * Create a user
+ * @param {*} reqData 
+ */
+function postUser(reqData) {
+    return models.User.create(reqData);
+}
+
+/**
+ *  Update a user by ID
+ * @param {Integer} userId 
+ * @param {Object} reqData 
+ */
+function updateById(userId, reqData) {
+    const userPromise = getById(userId);
+    
+    return userPromise.then(user => {
+        return user.update(reqData);
+    }); 
 }
 
 module.exports = {
+    getAll: getAll,
     getById: getById,
-    getAll: getAll
+    postUser: postUser,
+    updateById: updateById,
+
 }

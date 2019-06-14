@@ -4,10 +4,14 @@
 const _ = require('lodash');
 const actions = require('./actions');
 
+
 module.exports = {
     v1: { // Initial version
         getAll: getAll,
-        getById: getById
+        getById: getById,
+        postProfile: postProfile,
+        updateById: updateById,
+        deleteById: deleteById
     }
 };
 
@@ -19,13 +23,15 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    const profiles = actions.getAll();
+    const profilesPromise = actions.getAll();
     
-    if (profiles === undefined) {
-        return res.status(404).send();
-    } else {
-        return res.status(200).send(profiles);
-    }    
+    profilesPromise.then(profiles => {
+        if (profiles === undefined) {
+            return res.status(404).send();
+        } else {
+            return res.status(200).send(profiles);
+        }   
+    });
 }
 
 /**
@@ -35,11 +41,54 @@ function getAll(req, res) {
  */
 function getById(req, res) {
     const profileId = parseInt(req.params.id); 
-    const profile = actions.getById(profileId);
+    const profilePromise = actions.getById(profileId);
 
-    if (profile === undefined) {
-        return res.status(404).send();
-    } else {
+    profilePromise.then(profile => {
+        if (profile === null) {
+            return res.status(404).send();
+        } else {
+            return res.status(200).send(profile);
+        }    
+    });
+}
+
+/**
+ * Creates a profile and returns a JSON  
+ * @param {Object} req - http.ServerRequest
+ * @param {Object} res - http.ServerResponse 
+ */
+function postProfile(req, res) {
+    const profilePromise = actions.postProfile(req.body);
+
+    profilePromise.then(profile => {
         return res.status(200).send(profile);
-    }
+    });
+}
+
+/**
+ * Updates a profile and returns
+ * @param {Object} req - http.ServerRequest
+ * @param {Object} res - http.ServerResponse
+ */
+function updateById(req, res) {
+    const profileId = parseInt(req.params.id); 
+    const profilePromise = actions.updateById(profileId, req.body);
+
+    profilePromise.then(profile => {
+        return res.status(204).send(profile);
+    });
+}
+
+/**
+ * Deletes a role by Id and returns 204
+ * @param {Object} req - http.ServerRequest
+ * @param {Object} res - http.ServerResponse
+ */
+function deleteById(req, res) {
+    const profileId = parseInt(req.params.id); 
+    const profilePromise = actions.deleteById(profileId);
+
+    profilePromise.then(() => {
+        return res.status(204).send();
+    });
 }

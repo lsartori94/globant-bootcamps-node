@@ -2,16 +2,12 @@
 
 const models = require('../../models');
 
+
 /**
  * Retrieves all profiles.
  */
 function getAll() {
-    let allProfiles = [];
-
-    models.Profile.findAll().then(profiles => {
-        allProfiles = profiles;
-    });
-    return allProfiles;
+    return models.Profile.findAll();
 }
 
 /**
@@ -20,12 +16,46 @@ function getAll() {
  * @param {Integer} profileId - Desired profile's id
  */
 function getById(profileId) {
-    models.Profile.findByPk(profileId).then(profile => {
-        return profile;    
+    return models.Profile.findByPk(profileId);
+}
+
+/**
+ * Create a profile
+ * @param {Object} reqData - Data for a new profile
+ */
+function postProfile(reqData) {
+    return models.Profile.create(reqData);
+}
+
+/**
+ * Updte a profile by ID
+ * @param {Integer} profileId - Desired profile's id for the update
+ * @param {Object} reqData - New data for the update
+ */
+function updateById(profileId, reqData) {
+    const profilePromise = getById(profileId);
+
+    return profilePromise.then(profile => {
+        return profile.update(reqData);
+    });    
+}
+
+/**
+ * Delete a profile by id.
+ * @param {Integer} profileId - profile's id
+ */
+function deleteById(profileId) {
+    const profilePromise = getById(profileId);
+
+    return profilePromise.then(profile => {
+        return profile.destroy({force: true});
     });
 }
 
 module.exports = {
+    getAll: getAll,
     getById: getById,
-    getAll: getAll
+    postProfile: postProfile,
+    updateById: updateById,
+    deleteById: deleteById,
 } 

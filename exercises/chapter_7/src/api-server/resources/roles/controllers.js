@@ -8,7 +8,10 @@ const actions = require('./actions');
 module.exports = {
     v1: { // Initial version
         getAll: getAll,
-        getById: getById
+        getById: getById,
+        postRole: postRole,
+        updateById: updateById,
+        deleteById: deleteById
     }
 };
 
@@ -20,13 +23,15 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    const roles = actions.getAll();
+    const rolesPromise = actions.getAll();
 
-    if (roles === undefined) {
-        return res.status(404).send();
-    } else {
-        return res.status(200).send(roles); 
-    }
+    rolesPromise.then(roles => {
+        if (roles === undefined) {
+            return res.status(404).send();
+        } else {
+            return res.status(200).send(roles); 
+        }
+    });
 }
 
 /**
@@ -36,11 +41,54 @@ function getAll(req, res) {
  */
 function getById(req, res) {
     const roleId = parseInt(req.params.id);
-    const role = actions.getById(roleId);
+    const rolePromise = actions.getById(roleId);
 
-    if (role === undefined) {
-        return res.status(404).send();
-    } else {
+    rolePromise.then(role => {
+        if (role === null) {
+            return res.status(404).send();
+        } else {
+            return res.status(200).send(role);
+        }
+    });
+}
+
+/**
+ * Creates and returns a JSON with the created role
+ * @param {Object} req - http.ServerRequest
+ * @param {Object} res - http.ServerResponse
+ */
+function postRole(req, res) {
+    const rolePromise = actions.postRole(req.body);
+
+    rolePromise.then(role => {
         return res.status(200).send(role);
-    }
+    });
+}
+
+/**
+ * Updates and returns
+ * @param {Object} req 
+ * @param {Object} res 
+ */
+function updateById(req, res) {
+    const roleId = parseInt(req.params.id);
+    const rolePromise = actions.updateById(roleId, req.body);
+
+    rolePromise.then(role => {
+        return res.status(200).send(role);
+    });
+}
+
+/**
+ * Deletes a role by Id and returns 204 
+ * @param {Object} req - http.ServerRequest
+ * @param {Object} res - http.ServerResponse
+ */
+function deleteById(req, res) {
+    const roleId = parseInt(req.params.id);
+    const rolePromise = actions.deleteById(roleId);
+
+    rolePromise.then(() => {
+        return res.status(204).send();
+    });
 }
