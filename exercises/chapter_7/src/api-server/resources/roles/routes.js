@@ -12,5 +12,10 @@ module.exports = function initRoutes(app) {
 
     //console.log(basePath);
     app.get(basePath, roles.v1.getAll);
-    app.get(`${basePath}/:idRol`,validations.validateRolId,roles.v1.getOneById)
+    app.get(`${basePath}/:id`,validations.validateRolId,roles.v1.getOneById)
+    app.post(`${basePath}/create`,roles.v1.createRol);
+
+    app.delete(`${basePath}/:id`,validations.validateRolId,roles.v1.deleteRol);
+    app.put(`${basePath}/:id`,validations.validateRolId,roles.v1.updateRol);
+
 };

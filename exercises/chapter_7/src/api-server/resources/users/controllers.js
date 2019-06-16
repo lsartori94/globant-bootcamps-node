@@ -2,7 +2,7 @@
 'use strict';
 
 
-const models = require('../../models');
+const models = require('../../../db/models');
 const _ = require('lodash');
 const actions = require('./actions');
 // const userMock = require('../../../test-helpers/users'); 
@@ -28,7 +28,7 @@ module.exports = {
  */
 async function getAll(req, res) {
     const users = await models.User.findAll({
-        attributes: ['id', 'name', 'lastname', 'email'],
+        attributes: ['id', 'name', 'lastname', 'email','ProfileId'],
         order: [
             ['id', 'DESC']
         ]
@@ -44,7 +44,7 @@ async function getOneByid(req, res) {
     const { id } = req.params;
     const user = await models.User.findOne({
         where: { id },
-        attributes: ['id', 'name', 'lastname', 'email'],
+        attributes: ['id', 'name', 'lastname', 'email','ProfileId'],
     });
     // console.log(user,'lalalalla');
     // const a=1;
@@ -83,7 +83,7 @@ async function createUser(req, res) {
         lastname,
         email
     }, {
-            fields: ['name', 'password', 'lastname', 'email']// que fields voy a pasar cuando creo un nuevo dato
+            fields: ['name', 'password', 'lastname', 'email','ProfileId']// que fields voy a pasar cuando creo un nuevo dato
         });
 
 

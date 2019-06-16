@@ -1,15 +1,16 @@
 module.exports = {
   development: {
     username: "root",
-    password: "",
-    database: "excercise7",
-    host: "127.0.0.1",
+    password: "root",
+    database: "testbd",
+    host: "localhost",
     dialect: "mysql",
+    
   },
   test: {
     username: "root",
     password: "",
-    database: "excercise7",
+    database: "testbd",
     host: "127.0.0.1",
     dialect: "mysql",
     storage: ":memory:"

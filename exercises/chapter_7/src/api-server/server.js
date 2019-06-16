@@ -5,7 +5,7 @@
 const http = require('http');
 const app = require('./core/app'); // The express app we just created
 const config = require('./core/config');
-const models = require('./models');
+const models = require('../db/models');
 
 app.set('port', config.port);
 
