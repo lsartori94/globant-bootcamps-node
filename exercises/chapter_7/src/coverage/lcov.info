@@ -98,6 +98,29 @@ BRF:0
 BRH:0
 end_of_record
 TN:
+SF:E:\Back up\Bootcamps\globant-bootcamps-node\exercises\chapter_7\src\api-server\resources\validate.js
+FN:11,id
+FN:17,(anonymous_1)
+FNF:2
+FNH:2
+FNDA:2,id
+FNDA:2,(anonymous_1)
+DA:3,1
+DA:5,1
+DA:12,2
+DA:17,2
+DA:18,2
+DA:19,1
+DA:23,1
+DA:24,1
+LF:8
+LH:8
+BRDA:18,0,0,1
+BRDA:18,0,1,1
+BRF:2
+BRH:2
+end_of_record
+TN:
 SF:E:\Back up\Bootcamps\globant-bootcamps-node\exercises\chapter_7\src\api-server\resources\users\controllers.js
 FN:25,getAll
 FN:37,(anonymous_1)

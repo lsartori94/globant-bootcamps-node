@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1560715475015" clover="3.2.0">
-  <project timestamp="1560715475015" name="All files">
-    <metrics statements="61" coveredstatements="60" conditionals="15" coveredconditionals="12" methods="24" coveredmethods="24" elements="100" coveredelements="96" complexity="0" loc="61" ncloc="61" packages="3" files="6" classes="6"/>
+<coverage generated="1560715647516" clover="3.2.0">
+  <project timestamp="1560715647516" name="All files">
+    <metrics statements="69" coveredstatements="68" conditionals="17" coveredconditionals="14" methods="26" coveredmethods="26" elements="112" coveredelements="108" complexity="0" loc="69" ncloc="69" packages="4" files="7" classes="7"/>
     <package name="api-server.models">
       <metrics statements="36" coveredstatements="35" conditionals="9" coveredconditionals="6" methods="9" coveredmethods="9"/>
       <file name="index.js" path="E:\Back up\Bootcamps\globant-bootcamps-node\exercises\chapter_7\src\api-server\models\index.js">
@@ -51,6 +51,20 @@
         <line num="14" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="api-server.resources">
+      <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <file name="validate.js" path="E:\Back up\Bootcamps\globant-bootcamps-node\exercises\chapter_7\src\api-server\resources\validate.js">
+        <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
       </file>
     </package>
     <package name="api-server.resources.users">
