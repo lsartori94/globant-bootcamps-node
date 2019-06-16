@@ -30,7 +30,7 @@ function allUserData(req, res, next) {
   });
   Joi.validate(req.body, schema, err => {
     if (err) {
-      res.status(422).send(err.message);
+      res.status(400).send(err.message);
     } else {
       console.log("validation success");
       next();
@@ -51,7 +51,7 @@ function userData(req, res, next) {
   });
   Joi.validate(req.body, schema, err => {
     if (err) {
-      res.status(422).send(err.message);
+      res.status(400).send(err.message);
     } else {
       console.log("validation success");
       next();

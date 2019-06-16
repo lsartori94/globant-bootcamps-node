@@ -1,4 +1,4 @@
-const validate = require("../resources/validate");
+const validate = require("../../../resources/validate");
 
 describe("validate id from resources", () => {
   let mockReq, mockRes, mockNext, mockJoi;
@@ -16,21 +16,18 @@ describe("validate id from resources", () => {
       body: {}
     };
     mockNext = jest.fn();
-    mockJoi = jest.fn();
+  });
+
+  test("validate id must execute next() (validation success)", () => {
+    mockReq.params = { id: 1 };
+    validate.v1.id(mockReq, mockRes, mockNext);
+    expect(mockNext).toBeCalled();
   });
 
   test("validate id must return 400 ", () => {
-    mockJoi.validate = jest.fn().mockImplementation(err => {});
     validate.v1.id(mockReq, mockRes, mockNext);
 
     expect(mockRes.send).toBeCalledWith({ message: "ID not found" });
     expect(mockRes.status).toBeCalledWith(400);
-  });
-
-  test("validate id must execute next()", () => {
-    mockReq.params = { id: 1 };
-    mockJoi.validate = jest.fn().mockImplementation(err => {});
-    validate.v1.id(mockReq, mockRes, mockNext);
-    expect(mockNext).toBeCalled();
   });
 });

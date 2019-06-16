@@ -13,7 +13,7 @@ module.exports = function initRoutes(app) {
   //console.log(basePath);
   app.get(basePath, role.v1.getAll);
   app.get(`${basePath}/:id`, validate.v1.id, role.v1.getRoleById);
-  app.post(basePath, validateRole.v1.allRoleData, role.v1.createRole);
+  app.post(basePath, validateRole.v1.roleData, role.v1.createRole);
   app.put(
     `${basePath}/:id`,
     validate.v1.id,

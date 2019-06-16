@@ -22,7 +22,7 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-  models.Role.findAll({
+  return models.Role.findAll({
     attributes: {
       exclude: ["id"]
     }
@@ -31,12 +31,12 @@ function getAll(req, res) {
       res.status(200).send(data);
     })
     .catch(err => {
-      res.status(400).send();
+      res.status(500).send();
     });
 }
 
 function getRoleById(req, res) {
-  models.Role.findByPk(req.params.id, {
+  return models.Role.findByPk(req.params.id, {
     attributes: {
       exclude: ["id"]
     }
@@ -49,12 +49,12 @@ function getRoleById(req, res) {
       }
     })
     .catch(err => {
-      res.status(400).send();
+      res.status(500).send();
     });
 }
 
 function createRole(req, res) {
-  models.Role.create({
+  return models.Role.create({
     name: req.body.name
   })
     .then(data => {
@@ -66,34 +66,29 @@ function createRole(req, res) {
 }
 
 function modifyRole(req, res) {
-  models.Role.findByPk(req.params.id)
-    .then(role => {
-      models.Role.update(req.body, { where: { id: role.dataValues.id } })
-        .then(data => {
-          res.status(200).send();
-        })
-        .catch(err => {
-          res.status(400).send();
-        });
+  return models.Role.update(req.body, { where: { id: req.params.id } })
+    .then(idRoleModified => {
+      if (!!idRoleModified) {
+        res.status(200).send(idRoleModified);
+      } else {
+        res.status(404).send({ msg: "role not found" });
+      }
     })
     .catch(err => {
-      res.status(404).send();
+      res.status(400).send();
     });
 }
 
 function deleteRole(req, res) {
-  models.Role.findByPk(req.params.id)
-    .then(role => {
-      role
-        .destroy()
-        .then(data => {
-          res.status(204).send();
-        })
-        .catch(err => {
-          res.status(400).send();
-        });
+  return models.Role.destroy({ where: { id: req.params.id } })
+    .then(data => {
+      if (!!data) {
+        res.status(204).send();
+      } else {
+        res.status(404).send({ msg: "role not found" });
+      }
     })
     .catch(err => {
-      res.status(404).send();
+      res.status(500).send();
     });
 }
