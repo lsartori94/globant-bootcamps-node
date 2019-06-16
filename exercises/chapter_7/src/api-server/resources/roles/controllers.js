@@ -23,7 +23,7 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-	models.Role.findAll({})
+	return models.Role.findAll({})
 		.then(roles => {
 			res.status(200).send(roles);
 		})
@@ -38,7 +38,7 @@ function getAll(req, res) {
  * @param {Object} res
  */
 function getRoleById(req, res) {
-	models.Role.findByPk(req.params.roleId)
+	return models.Role.findByPk(req.params.roleId)
 		.then(role => {
 			if (role) {
 				res.status(200).send(role);
@@ -47,57 +47,57 @@ function getRoleById(req, res) {
 			}
 		})
 		.catch(err => {
-			res.status(404).send(err);
+			res.status(500).send(err);
 		});
 }
 
 function createRole(req, res) {
-	models.Role.create({
+	return models.Role.create({
 		name: req.body.name
 	})
-		.then(succes => {
+		.then(() => {
 			res.status(200).send("Role created");
 		})
 		.catch(err => {
-			res.status(502).send(err);
+			res.status(500).send(err);
 		});
 }
 
 function updateRole(req, res) {
-    models.Role.findByPk(req.params.roleId).then(role => {
-        if (role) {
-            role.update({
-                name: req.body.name
-            }, { omitNull: true }).then(succes => {
-                res.status(200).send(role)
-            }).catch(err => {
-                res.status(502).send(err);
-            });
-        } else {
-            res.status(404).send("roleId does't exists");
-        }
-    }).catch(err => {
-        res.status(502).send(err);
-    })
+	return models.Role.findByPk(req.params.roleId).then(role => {
+		if (role) {
+			role.update({
+				name: req.body.name
+			}, { omitNull: true }).then(succes => {
+				res.status(200).send(role)
+			}).catch(err => {
+				res.status(500).send(err);
+			});
+		} else {
+			res.status(404).send("roleId does't exists");
+		}
+	}).catch(err => {
+		res.status(500).send(err);
+	})
 }
 
 function deleteRole(req, res) {
-    models.Role.findByPk(req.params.roleId)
-    .then(role => {
-        if(role){
-            role.destroy()
-            .then(succes => {
-				res.status(200).send("Role destroyed");
-			})
-			.catch(err => {
-				res.status(502).send(err);
-            });
-        }else{
-    			res.status(404).send("RoleId does't exists");
-        }
-    })
-    .catch(err => {
-				res.status(502).send(err);
-            });
-            
+	return models.Role.findByPk(req.params.roleId)
+		.then(role => {
+			if (role) {
+				role.destroy()
+					.then(succes => {
+						res.status(200).send("Role destroyed");
+					})
+					.catch(err => {
+						res.status(500).send(err);
+					});
+			} else {
+				res.status(404).send("RoleId does't exists");
+			}
+		})
+		.catch(err => {
+			res.status(500).send(err);
+		});
+
 }

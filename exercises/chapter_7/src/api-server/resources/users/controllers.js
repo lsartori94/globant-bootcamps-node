@@ -23,7 +23,7 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    models.User.findAll({
+    return models.User.findAll({
         attributes: {
             exclude: ['password']
         }
@@ -40,7 +40,7 @@ function getAll(req, res) {
  * @param {Object} res 
  */
 function getUserById(req, res) {
-    models.User.findByPk(req.params.userId, {
+    return models.User.findByPk(req.params.userId, {
         attributes: {
             exclude: ['password']
         },
@@ -57,12 +57,12 @@ function getUserById(req, res) {
             res.status(404).send({ msg: "User doesn't exists" });
         }
     }).catch(err => {
-        res.status(404).send(err);
+        res.status(500).send(err);
     });
 }
 
 function createUser(req, res) {
-    models.User.create({
+    return models.User.create({
         name: req.body.name,
         lastname: req.body.lastname,
         email: req.body.email,
@@ -73,12 +73,12 @@ function createUser(req, res) {
             res.status(200).send("User created");
         })
         .catch(err => {
-            res.status(502).send(err);
+            res.status(500).send(err);
         });
 }
 
 function updateUser(req, res) {
-    models.User.findByPk(req.params.userId).then(user => {
+    return models.User.findByPk(req.params.userId).then(user => {
         if (user) {
             user.update({
                 name: req.body.name,
@@ -89,32 +89,32 @@ function updateUser(req, res) {
             }, { omitNull: true }).then(succes => {
                 res.status(200).send(user)
             }).catch(err => {
-                res.status(502).send(err);
+                res.status(500).send(err);
             });
         } else {
             res.status(404).send("userId does't exists");
         }
     }).catch(err => {
-        res.status(502).send(err);
+        res.status(500).send(err);
     })
 }
 
 function deleteUser(req, res) {
-    models.User.findByPk(req.params.userId)
+    return models.User.findByPk(req.params.userId)
         .then(user => {
             if (user) {
-                user.destroy()
+                 user.destroy()
                     .then(() => {
                         res.status(200).send("user destroyed");
                     })
                     .catch(err => {
-                        res.status(502).send(err);
+                        res.status(500).send(err);
                     });
             } else {
                 res.status(404).send("userId does't exists");
             }
         }).catch(err => {
-            res.status(502).send(err);
+            res.status(500).send(err);
         });
 
 }

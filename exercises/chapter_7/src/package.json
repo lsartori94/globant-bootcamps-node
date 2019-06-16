@@ -4,7 +4,7 @@
   "description": "Chapter 7 exercise",
   "scripts": {
     "start": "node api-server/server",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "author": "",
   "license": "MIT",

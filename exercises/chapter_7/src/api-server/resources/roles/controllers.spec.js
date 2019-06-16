@@ -68,29 +68,61 @@ describe('Role controller bad path', () => {
         name: ""
     }
     };
-    model.Role.findAll = jest.fn().mockReturnValue(Promise.reject());
     model.Role.findByPk = jest.fn().mockReturnValue(Promise.resolve());
-    model.Role.destroy = jest.fn().mockReturnValue(Promise.resolve());
-    model.Role.update = jest.fn().mockReturnValue(Promise.resolve());
-
-
   });
 
-  test('get roleById must return 404', async () => {
+  test('getAll must return 404', async ()=>{
+    model.Role.findAll = jest.fn().mockReturnValue(Promise.reject());
     await roleController.v1.getRoleById(mockReq, mockRes);
     expect(mockRes.status).toHaveBeenCalledWith(404);
     expect(mockRes.send).toBeCalled();
   });
-  
-  test('delete role must return 404', async () => {
-    await roleController.v1.deleteRole(mockReq, mockRes);
+
+  test('get RoleById must return 404', async () => {
+    await roleController.v1.getRoleById(mockReq, mockRes);
     expect(mockRes.status).toHaveBeenCalledWith(404);
     expect(mockRes.send).toBeCalled();
   });
 
-  test('update role must return 404', async () => {
+  test('get RoleById must return 500', async () => {
+    model.Role.findByPk = jest.fn().mockReturnValue(Promise.reject());
+    await roleController.v1.getRoleById(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(500);
+    expect(mockRes.send).toBeCalled();
+  });
+  
+  test('create Role must return 500', async () => {
+    model.Role.create = jest.fn().mockReturnValue(Promise.reject());
+    await roleController.v1.createRole(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(500);
+    expect(mockRes.send).toBeCalled();
+  });
+
+  test('delete Role must return 404', async () => {
+    model.Role.destroy = jest.fn().mockReturnValue(Promise.reject());
+    await roleController.v1.deleteRole(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(404);
+    expect(mockRes.send).toBeCalled();
+  });
+  
+  test('delete Role must return 500', async () => {
+    model.Role.findByPk = jest.fn().mockReturnValue(Promise.reject());
+    await roleController.v1.deleteRole(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(500);
+    expect(mockRes.send).toBeCalled();
+  });
+
+  test('update Role must return 404', async () => {
+    model.Role.update = jest.fn().mockReturnValue(Promise.reject());
     await roleController.v1.updateRole(mockReq, mockRes);
     expect(mockRes.status).toHaveBeenCalledWith(404);
+    expect(mockRes.send).toBeCalled();
+  });
+
+  test('update Role must return 500', async () => {
+    model.Role.findByPk = jest.fn().mockReturnValue(Promise.reject());
+    await roleController.v1.updateRole(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(500);
     expect(mockRes.send).toBeCalled();
   });
 

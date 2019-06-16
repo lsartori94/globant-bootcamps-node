@@ -75,12 +75,14 @@ describe('User controller bad path', () => {
         password: "",
         ProfileId: ""}
     };
-    model.User.findAll = jest.fn().mockReturnValue(Promise.reject());
     model.User.findByPk = jest.fn().mockReturnValue(Promise.resolve());
-    model.User.destroy = jest.fn().mockReturnValue(Promise.resolve());
-    model.User.update = jest.fn().mockReturnValue(Promise.resolve());
+  });
 
-
+  test('getAll must return 404', async ()=>{
+    model.User.findAll = jest.fn().mockReturnValue(Promise.reject());
+    await userController.v1.getUserById(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(404);
+    expect(mockRes.send).toBeCalled();
   });
 
   test('get userById must return 404', async () => {
@@ -88,16 +90,47 @@ describe('User controller bad path', () => {
     expect(mockRes.status).toHaveBeenCalledWith(404);
     expect(mockRes.send).toBeCalled();
   });
+
+  test('get userById must return 500', async () => {
+    model.User.findByPk = jest.fn().mockReturnValue(Promise.reject());
+    await userController.v1.getUserById(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(500);
+    expect(mockRes.send).toBeCalled();
+  });
   
+  test('create User must return 500', async () => {
+    model.User.create = jest.fn().mockReturnValue(Promise.reject());
+    await userController.v1.createUser(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(500);
+    expect(mockRes.send).toBeCalled();
+  });
+
   test('delete User must return 404', async () => {
+    model.User.destroy = jest.fn().mockReturnValue(Promise.reject());
     await userController.v1.deleteUser(mockReq, mockRes);
     expect(mockRes.status).toHaveBeenCalledWith(404);
     expect(mockRes.send).toBeCalled();
   });
+  
+  test('delete User must return 500', async () => {
+    model.User.findByPk = jest.fn().mockReturnValue(Promise.reject());
+    await userController.v1.deleteUser(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(500);
+    expect(mockRes.send).toBeCalled();
+  });
 
   test('update User must return 404', async () => {
+    model.User.update = jest.fn().mockReturnValue(Promise.reject());
     await userController.v1.updateUser(mockReq, mockRes);
     expect(mockRes.status).toHaveBeenCalledWith(404);
     expect(mockRes.send).toBeCalled();
   });
+
+  test('update User must return 500', async () => {
+    model.User.findByPk = jest.fn().mockReturnValue(Promise.reject());
+    await userController.v1.updateUser(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(500);
+    expect(mockRes.send).toBeCalled();
+  });
+
 });

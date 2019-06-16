@@ -22,7 +22,7 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-	models.Profile.findAll({})
+	return models.Profile.findAll({})
 		.then(profiles => {
 			res.status(200).send(profiles);
 		})
@@ -37,7 +37,7 @@ function getAll(req, res) {
  * @param {Object} res
  */
 function getProfileById(req, res) {
-	models.Profile.findByPk(req.params.profileId)
+	return models.Profile.findByPk(req.params.profileId)
 		.then(profile => {
 			if (profile) {
 				res.status(200).send(profile);
@@ -46,12 +46,12 @@ function getProfileById(req, res) {
 			}
 		})
 		.catch(err => {
-			res.status(404).send(err);
+			res.status(500).send(err);
 		});
 }
 
 function createProfile(req, res) {
-	models.Profile.create({
+	return models.Profile.create({
 		name: req.body.name,
 		description: req.body.description
 	})
@@ -59,12 +59,12 @@ function createProfile(req, res) {
 			res.status(200).send("Profile created");
 		})
 		.catch(err => {
-			res.status(502).send(err);
+			res.status(500).send(err);
 		});
 }
 
 function setProfileToUsers(req, res) {
-	models.Profile.findByPk(req.params.profileId)
+	return models.Profile.findByPk(req.params.profileId)
 		.then(profile => {
 			if (profile) {
 				models.User.update({ ProfileId: req.params.profileId }, { omitNull: true, where: { id: req.body.usersId } })
@@ -73,7 +73,7 @@ function setProfileToUsers(req, res) {
 					})
 					.catch(err => {
 						console.log(err);
-						res.status(502).send(err);
+						res.status(500).send(err);
 					})
 			}
 			else {
@@ -83,7 +83,7 @@ function setProfileToUsers(req, res) {
 }
 
 function updateProfile(req, res) {
-	models.Profile.findByPk(req.params.profileId)
+	return models.Profile.findByPk(req.params.profileId)
 		.then(profile => {
 			if (profile) {
 				profile.update({
@@ -92,18 +92,18 @@ function updateProfile(req, res) {
 				}, { omitNull: true }).then(() => {
 					res.status(200).send(profile)
 				}).catch(err => {
-					res.status(502).send(err);
+					res.status(500).send(err);
 				});
 			} else {
 				res.status(404).send("profileId does't exists");
 			}
 		}).catch(err => {
-			res.status(502).send(err);
+			res.status(500).send(err);
 		})
 }
 
 function deleteProfile(req, res) {
-	models.Profile.findByPk(req.params.profileId)
+	return models.Profile.findByPk(req.params.profileId)
 		.then(profile => {
 			if (profile) {
 				profile.destroy()
@@ -111,14 +111,14 @@ function deleteProfile(req, res) {
 						res.status(200).send("Profile destroyed");
 					})
 					.catch(err => {
-						res.status(502).send(err);
+						res.status(500).send(err);
 					});
 			} else {
 				res.status(404).send("ProfileId does't exists");
 			}
 		})
 		.catch(err => {
-			res.status(502).send(err);
+			res.status(500).send(err);
 		});
 
 }

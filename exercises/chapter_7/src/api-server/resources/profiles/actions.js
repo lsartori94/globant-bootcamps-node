@@ -25,7 +25,7 @@ function validateBodyPost(req, res, next) {
 	const data = req.body;
 	Joi.validate(data, schema, (err, value) => {
 		if (err) {
-			res.status(501).json({
+			res.status(422).json({
 				status: "error",
 				message: "Invalid format of params",
 				data: data
@@ -51,7 +51,7 @@ function validateBodyPut(req, res, next) {
 	const data = req.body;
 	Joi.validate(data, schema, (err, value) => {
 		if (err) {
-			res.status(501).json({
+			res.status(422).json({
 				status: "error",
 				message: "Invalid format of params",
 				data: data

@@ -1,6 +1,6 @@
-const userActions = require('./actions');
+const profileActions = require('./actions');
 
-describe('User actions happy path', () => {
+describe('Profile actions happy path', () => {
   let mockReq,
     mockNext,
     mockRes;
@@ -17,45 +17,35 @@ describe('User actions happy path', () => {
       params: {},
       body: {
         name: "",
-        lastname: "",
-        email: "",
-        password: "",
-        ProfileId: ""
+        description: ""
       }
     };
-    mockSchema = {};
     mockJoi = jest.fn();
     mockJoi.validate = jest.fn().mockImplementation((value, err) => { });
   });
 
   test('ValidateId must call next', () => {
-    mockReq.params = { userId: 1 };
-    userActions.v1.validateId(mockReq, mockRes, mockNext);
+    mockReq.params = { profileId: 1 };
+    profileActions.v1.validateId(mockReq, mockRes, mockNext);
     expect(mockNext).toBeCalled();
   });
 
   test('ValidateBodyPost must call next', () => {
     mockReq.body = {
       name: "Un nombre",
-      lastname: "Apellido",
-      email: "mail@gmail.com",
-      password: "contraseña",
-      ProfileId: 1
+      description: "Una descripcion"
     }
-    userActions.v1.validateBodyPost(mockReq, mockRes, mockNext);
+    profileActions.v1.validateBodyPost(mockReq, mockRes, mockNext);
     expect(mockNext).toBeCalled();
   });
 
   test('ValidateBodyPut must call next', () => {
     mockReq.body = {
       name: "Un nombre",
-      lastname: "Apellido",
-      email: "mail@gmail.com",
-      password: "contraseña",
-      ProfileId: 1
+      description: "Una descripcion"
     };
-    mockReq.params = { userId: 1 };
-    userActions.v1.validateBodyPut(mockReq, mockRes, mockNext);
+    mockReq.params = { profileId: 1 };
+    profileActions.v1.validateBodyPut(mockReq, mockRes, mockNext);
     expect(mockNext).toBeCalled();
   });
 
@@ -64,7 +54,7 @@ describe('User actions happy path', () => {
 
 
 
-describe('User actions bad path', () => {
+describe('profile actions bad path', () => {
   let mockReq,
     mockNext,
     mockRes;
@@ -81,44 +71,37 @@ describe('User actions bad path', () => {
       params: {},
       body: {
         name: "",
-        lastname: "",
-        email: "",
-        password: "",
-        ProfileId: ""
+        description: ""
       }
     };
-    mockSchema = {};
     mockJoi = jest.fn();
     mockJoi.validate = jest.fn().mockImplementation((value, err) => { });
   });
 
 
   test('ValidateId must return 422', () => {
-    userActions.v1.validateId(mockReq, mockRes, mockNext);
+    profileActions.v1.validateId(mockReq, mockRes, mockNext);
     expect(mockRes.json).toBeCalled();
     expect(mockRes.status).toHaveBeenCalledWith(422);
   });
 
 
   test('ValidateBodyPost must call next', () => {
-    userActions.v1.validateBodyPost(mockReq, mockRes, mockNext);
+    profileActions.v1.validateBodyPost(mockReq, mockRes, mockNext);
     expect(mockRes.json).toBeCalled();
     expect(mockRes.status).toHaveBeenCalledWith(422);
   });
 
   test('ValidateBodyPut must return 422', () => {
-    mockReq.params = { userId: 1 };
-    userActions.v1.validateBodyPut(mockReq, mockRes, mockNext);
+    mockReq.params = { profileId: 1 };
+    profileActions.v1.validateBodyPut(mockReq, mockRes, mockNext);
     expect(mockRes.json).toBeCalled();
     expect(mockRes.status).toHaveBeenCalledWith(422); 
     mockReq.body = {
       name: "Un nombre",
-      lastname: "Apellido",
-      email: "mail@gmail.com",
-      password: "contraseña",
-      ProfileId: 1
+      description: "Una descripcion"
     };
-    mockReq.params = { userId: 0 };    
+    mockReq.params = { profileId: 0 };    
     expect(mockRes.json).toBeCalled();
     expect(mockRes.status).toHaveBeenCalledWith(422);
 
