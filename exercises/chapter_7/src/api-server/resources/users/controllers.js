@@ -38,7 +38,7 @@ function getAll(req, res) {
       res.status(200).send(users);
     })
     .catch(error => {
-      res.status(400).send();
+      res.status(500).send();
     });
 }
 
@@ -62,7 +62,7 @@ function getUserByID(req, res) {
       }
     })
     .catch(err => {
-      res.status(400).send();
+      res.status(500).send();
     });
 }
 
@@ -86,12 +86,15 @@ function modifyUser(req, res) {
       }
     })
     .catch(err => {
-      res.status(404).send();
+      res.status(500).send();
     });
 }
 
 function deleteUser(req, res) {
-  return models.User.destroy({ where: { id: req.params.id } }, { logging: true })
+  return models.User.destroy(
+    { where: { id: req.params.id } },
+    { logging: true }
+  )
     .then(user => {
       if (!!user) {
         res.status(204).send({});
@@ -100,6 +103,6 @@ function deleteUser(req, res) {
       }
     })
     .catch(err => {
-      res.status(404).send();
+      res.status(500).send();
     });
 }

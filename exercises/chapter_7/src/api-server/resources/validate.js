@@ -17,7 +17,7 @@ function id(req, res, next) {
   Joi.validate({ id: req.params.id }, schema, err => {
     if (err) {
       res.status(400).send({
-        message: `Invalid request! ${req.params.id} is not a valid ID`
+        message: "ID not found"
       });
     } else {
       console.log("validation success");

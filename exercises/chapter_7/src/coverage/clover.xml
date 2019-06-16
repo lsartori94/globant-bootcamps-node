@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1560544258681" clover="3.2.0">
-  <project timestamp="1560544258681" name="All files">
+<coverage generated="1560715475015" clover="3.2.0">
+  <project timestamp="1560715475015" name="All files">
     <metrics statements="61" coveredstatements="60" conditionals="15" coveredconditionals="12" methods="24" coveredmethods="24" elements="100" coveredelements="96" complexity="0" loc="61" ncloc="61" packages="3" files="6" classes="6"/>
     <package name="api-server.models">
       <metrics statements="36" coveredstatements="35" conditionals="9" coveredconditionals="6" methods="9" coveredmethods="9"/>
@@ -59,9 +59,9 @@
         <metrics statements="23" coveredstatements="23" conditionals="6" coveredconditionals="6" methods="15" coveredmethods="15"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="26" count="3" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
         <line num="38" count="1" type="stmt"/>
-        <line num="41" count="2" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
         <line num="46" count="3" type="stmt"/>
         <line num="58" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="59" count="1" type="stmt"/>
@@ -76,10 +76,10 @@
         <line num="85" count="1" type="stmt"/>
         <line num="89" count="1" type="stmt"/>
         <line num="94" count="3" type="stmt"/>
-        <line num="96" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="97" count="1" type="stmt"/>
-        <line num="99" count="1" type="stmt"/>
-        <line num="103" count="1" type="stmt"/>
+        <line num="99" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="100" count="1" type="stmt"/>
+        <line num="102" count="1" type="stmt"/>
+        <line num="106" count="1" type="stmt"/>
       </file>
     </package>
     <package name="test-helpers">
