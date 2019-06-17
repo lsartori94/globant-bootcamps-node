@@ -8,7 +8,13 @@ const ALL_PROFILES = [
         id: 1,
         name: 'A name',
         description: 'A generic description',
-        createdAt: '2019-02-20T18:49:27'
+        createdAt: '2019-02-20T18:49:27',
+        update: function() {
+            return {};
+        },
+        destroy: function() {
+            return {};
+        }
     },
     {
         id: 2,
