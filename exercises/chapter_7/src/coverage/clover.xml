@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1560737005935" clover="3.2.0">
-  <project timestamp="1560737005935" name="All files">
+<coverage generated="1560764263077" clover="3.2.0">
+  <project timestamp="1560764263077" name="All files">
     <metrics statements="158" coveredstatements="157" conditionals="39" coveredconditionals="36" methods="69" coveredmethods="69" elements="266" coveredelements="262" complexity="0" loc="158" ncloc="158" packages="6" files="14" classes="14"/>
     <package name="api-server.models">
       <metrics statements="36" coveredstatements="35" conditionals="9" coveredconditionals="6" methods="9" coveredmethods="9"/>
@@ -34,7 +34,7 @@
         <line num="11" count="3" type="stmt"/>
         <line num="12" count="3" type="stmt"/>
         <line num="13" count="3" type="stmt"/>
-        <line num="21" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
       </file>
       <file name="role.js" path="E:\Back up\Bootcamps\globant-bootcamps-node\exercises\chapter_7\src\api-server\models\role.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
@@ -42,7 +42,7 @@
         <line num="3" count="3" type="stmt"/>
         <line num="10" count="3" type="stmt"/>
         <line num="11" count="3" type="stmt"/>
-        <line num="19" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
       </file>
       <file name="user.js" path="E:\Back up\Bootcamps\globant-bootcamps-node\exercises\chapter_7\src\api-server\models\user.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
@@ -50,7 +50,7 @@
         <line num="3" count="3" type="stmt"/>
         <line num="14" count="3" type="stmt"/>
         <line num="15" count="3" type="stmt"/>
-        <line num="20" count="3" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
       </file>
     </package>
     <package name="api-server.resources">

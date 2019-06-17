@@ -3,11 +3,11 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User",
     {
-      username: DataTypes.STRING,
-      password: DataTypes.STRING,
       name: DataTypes.STRING,
       lastname: DataTypes.STRING,
-      email: DataTypes.STRING
+      password: DataTypes.STRING,
+      email: DataTypes.STRING,
+      username: DataTypes.STRING
     },
     {}
   );
@@ -16,6 +16,5 @@ module.exports = (sequelize, DataTypes) => {
       foreingKey: { allowNull: false }
     });
   };
-
   return User;
 };

@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     "Profile",
     {
       name: DataTypes.STRING,
-      description: DataTypes.TEXT
+      description: DataTypes.STRING
     },
     {}
   );
@@ -17,6 +17,5 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: "profileId"
     });
   };
-
   return Profile;
 };

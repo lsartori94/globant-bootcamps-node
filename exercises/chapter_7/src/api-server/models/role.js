@@ -15,6 +15,5 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: "profile_id"
     });
   };
-
   return Role;
 };
