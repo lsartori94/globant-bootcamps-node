@@ -83,7 +83,7 @@ function deleteRole(req, res) {
   return models.Role.destroy({ where: { id: req.params.id } })
     .then(data => {
       if (!!data) {
-        res.status(204).send();
+        res.status(204).send({});
       } else {
         res.status(404).send({ msg: "role not found" });
       }

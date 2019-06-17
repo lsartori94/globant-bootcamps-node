@@ -50,11 +50,12 @@ describe("role controller happy path", () => {
   });
 
   test("modifyRole must 200", async () => {
+    mockReq.params.id = 1;
     models.Role.update.mockResolvedValue(1);
     await rolesController.v1.modifyRole(mockReq, mockRes);
 
     expect(mockRes.status).toBeCalledWith(200);
-    expect(mockRes.send).toBeCalled();
+    expect(mockRes.send).toBeCalledWith(mockReq.params.id);
   });
 
   test("deleteRole must response 204", async () => {  
@@ -62,7 +63,7 @@ describe("role controller happy path", () => {
     await rolesController.v1.deleteRole(mockReq,mockRes);
 
     expect(mockRes.status).toBeCalledWith(204);
-    expect(mockRes.send).toBeCalled();
+    expect(mockRes.send).toBeCalledWith({});
   })
 });
 
@@ -145,9 +146,9 @@ describe("role controller errors", () => {
   test("deleteRole must response 404 (role not found)", async () => {
     mockReq.params = { id: 0 };
     models.Role.destroy.mockResolvedValue(0);
-    await rolesController.v1.modifyRole(mockReq, mockRes);
+    await rolesController.v1.deleteRole(mockReq, mockRes);
 
     expect(mockRes.status).toBeCalledWith(404);
     expect(mockRes.send).toBeCalledWith({ msg: "role not found" });
-  });
+  }); 
 });

@@ -24,7 +24,7 @@ describe("user controller happy path", () => {
     models.User.update = jest.fn();
     models.User.destroy = jest.fn();
   });
-  
+
   test("getAll must response 200", async () => {
     models.User.findAll.mockResolvedValue(userMock.ALL_USERS);
     await userController.v1.getAll(mockReq, mockRes);
@@ -55,22 +55,20 @@ describe("user controller happy path", () => {
   });
 
   test("modifyUser must response 200", async () => {
-    mockReq.body.username = "anewone!";
     mockReq.params.id = 1;
-    models.User.update.mockResolvedValue([mockReq.params.id]);
+    models.User.update.mockResolvedValue(1);
     await userController.v1.modifyUser(mockReq, mockRes);
 
     expect(mockRes.send).toBeCalled();
     expect(mockRes.status).toHaveBeenCalledWith(200);
-    expect(mockRes.send).toHaveBeenCalledWith([mockReq.params.id]);
+    expect(mockRes.send).toHaveBeenCalledWith(mockReq.params.id);
   });
 
   test("deleteUser must response 204", async () => {
-    mockReq.params.id = 1;
     models.User.destroy.mockResolvedValue(1);
     await userController.v1.deleteUser(mockReq, mockRes);
 
-    expect(mockRes.send).toBeCalled();
+    expect(mockRes.send).toBeCalledWith({});
     expect(mockRes.status).toHaveBeenCalledWith(204);
   });
 });

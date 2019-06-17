@@ -23,7 +23,7 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-  models.Profile.findAll(
+  return models.Profile.findAll(
     {
       include: [
         {
@@ -38,12 +38,12 @@ function getAll(req, res) {
       res.status(200).send(data);
     })
     .catch(err => {
-      res.status(404).send();
+      res.status(500).send();
     });
 }
 
 function getProfileById(req, res) {
-  models.Profile.findByPk(
+  return models.Profile.findByPk(
     req.params.id,
     {
       include: [
@@ -63,21 +63,17 @@ function getProfileById(req, res) {
       }
     })
     .catch(err => {
-      res.status(400).send();
+      res.status(500).send();
     });
 }
 
 function createProfile(req, res) {
-  models.Profile.create({
+  return models.Profile.create({
     name: req.body.name,
     description: req.body.description
   })
     .then(data => {
-      if (!!data) {
-        res.status(201).send(data);
-      } else {
-        res.status(400).send();
-      }
+      res.status(201).send(data);
     })
     .catch(err => {
       res.status(400).send();
@@ -85,44 +81,41 @@ function createProfile(req, res) {
 }
 
 function modifyProfile(req, res) {
-  models.Profile.findByPk(req.params.id)
-    .then(profile => {
-      models.Profile.update(req.body, { where: { id: profile.dataValues.id } })
-        .then(data => {
-          res.status(200).send();
-        })
-        .catch(err => {
-          res.status(400).send();
-        });
+  return models.Profile.update(req.body, {
+    where: { id: req.params.id }
+  })
+    .then(idProfileModified => {
+      if (!!idProfileModified) {
+        res.status(200).send(idProfileModified);
+      } else {
+        res.status(404).send({ msg: "profile not found" });
+      }
     })
     .catch(err => {
-      res.status(404).send();
+      res.status(500).send();
     });
 }
 
 function deleteProfile(req, res) {
-  models.Profile.findByPk(req.params.id)
-    .then(profile => {
-      profile
-        .destroy()
-        .then(data => {
-          res.status(204).send();
-        })
-        .catch(err => {
-          res.status(400).send();
-        });
+  return models.Profile.destroy({ where: { id: req.params.id } })
+    .then(data => {
+      if (!!data) {
+        res.status(204).send({});
+      } else {
+        res.status(404).send({ msg: "profile not found" });
+      }
     })
     .catch(err => {
-      res.status(404).send();
+      res.status(500).send();
     });
 }
 
 function addUsers(req, res) {
-  models.Profile.update(req.body.Users, { where: { id: req.params.id } })
+  return models.Profile.update(req.body.Users, { where: { id: req.params.id } })
     .then(data => {
       res.status(200).send(data);
     })
     .catch(err => {
-      res.status(400).send(err);
+      res.status(500).send();
     });
 }
