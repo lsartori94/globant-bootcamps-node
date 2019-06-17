@@ -1,4 +1,4 @@
-const validate = require("../../../../resources/roles/validate");
+const validate = require("../../../resources/roles/validate");
 
 describe("validate role (success)", () => {
   let mockReq, mockRes, mockNext, mockJoi;

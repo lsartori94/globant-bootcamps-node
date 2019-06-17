@@ -1,5 +1,5 @@
-const validate = require("../../../../resources/profiles/validate");
-const mockProfiles = require("../../../../../test-helpers/profiles");
+const validate = require("../../../resources/profiles/validate");
+const mockProfiles = require("../../../../test-helpers/profiles");
 const _ = require("lodash");
 
 describe("profile validation success", () => {

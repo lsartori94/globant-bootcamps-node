@@ -1,5 +1,5 @@
-const validate = require("../../../../resources/users/validate");
-const mockUser = require("../../../../../test-helpers/users");
+const validate = require("../../../resources/users/validate");
+const mockUser = require("../../../../test-helpers/users");
 const _ = require("lodash");
 
 describe("validate user (success)", () => {

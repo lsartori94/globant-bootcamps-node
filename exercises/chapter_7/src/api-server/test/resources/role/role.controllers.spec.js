@@ -1,7 +1,7 @@
 "use strict";
-const models = require("../../../../models");
-const rolesController = require("../../../../resources/roles/controllers");
-const mockRoles = require("../../../../../test-helpers/roles");
+const models = require("../../../models");
+const rolesController = require("../../../resources/roles/controllers");
+const mockRoles = require("../../../../test-helpers/roles");
 
 describe("role controller happy path", () => {
   let mockReq, mockRes;

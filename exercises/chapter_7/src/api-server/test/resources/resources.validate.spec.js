@@ -1,4 +1,4 @@
-const validate = require("../../../resources/validate");
+const validate = require("../../resources/validate");
 
 describe("validate id from resources", () => {
   let mockReq, mockRes, mockNext, mockJoi;

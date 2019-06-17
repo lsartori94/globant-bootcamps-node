@@ -1,7 +1,7 @@
 "use strict";
-const models = require("../../../../models");
-const userController = require("../../../../resources/users/controllers");
-const userMock = require("../../../../../test-helpers/users");
+const models = require("../../../models");
+const userController = require("../../../resources/users/controllers");
+const userMock = require("../../../../test-helpers/users");
 
 describe("user controller happy path", () => {
   let mockReq, mockRes;
