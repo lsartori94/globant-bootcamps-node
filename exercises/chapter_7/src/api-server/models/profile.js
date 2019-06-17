@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Profile.associate = function(models) {
     // associations can be defined here
+    Profile.hasMany(models.User);
     Profile.belongsToMany(models.Role, {through: 'ProfileRole'});
   };
   return Profile;

@@ -9,7 +9,8 @@ module.exports = {
         getAll: getAll,
         getById: getById,
         postUser: postUser,
-        updateById: updateById
+        updateById: updateById,
+        deleteById: deleteById
     }
 };
 
@@ -69,5 +70,14 @@ function updateById(req, res) {
 
     userPromise.then(user => {
         return res.status(200).send(user);
+    });
+}
+
+function deleteById(req, res) {
+    const userId = parseInt(req.params.id);
+    const userPromise = actions.deleteById(userId);
+
+    userPromise.then(()=> {
+        return res.status(204).send();
     });
 }

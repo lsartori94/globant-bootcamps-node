@@ -18,4 +18,6 @@ module.exports = function initRoutes(app) {
     app.post(basePath, rolesMiddlewares.validateCreateUser, users.v1.postUser);
     //update a user by id
     app.put(basePath + '/:id', genericMiddlewares.validateId, users.v1.updateById);
+    //delete a user by id
+    app.delete(basePath + '/:id', genericMiddlewares.validateId, users.v1.deleteById);
 };

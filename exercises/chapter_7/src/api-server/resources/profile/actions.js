@@ -1,6 +1,10 @@
 'use strict';
 
+const Sequelize = require('sequelize');
 const models = require('../../models');
+
+
+const Op = Sequelize.Op;
 
 
 /**
@@ -52,10 +56,21 @@ function deleteById(profileId) {
     });
 }
 
+function assingUsersToProfile(profile, usersId) {
+    return models.User.update({ProfileId: profile.id}, {
+        where: {
+            id: {
+              [Op.in]: usersId
+            }
+        }
+    });
+}
+
 module.exports = {
     getAll: getAll,
     getById: getById,
     postProfile: postProfile,
     updateById: updateById,
     deleteById: deleteById,
+    assingUsersToProfile: assingUsersToProfile
 } 

@@ -11,7 +11,8 @@ module.exports = {
         getById: getById,
         postProfile: postProfile,
         updateById: updateById,
-        deleteById: deleteById
+        deleteById: deleteById,
+        assingUsers: assingUsers
     }
 };
 
@@ -91,4 +92,20 @@ function deleteById(req, res) {
     profilePromise.then(() => {
         return res.status(204).send();
     });
+}
+
+function assingUsers(req, res) {
+    const profileId = parseInt(req.params.id);
+    const usersId = req.body;
+    const profilePromise = actions.getById(profileId);
+    
+    const assignPromise = profilePromise.then(profile => {
+        // If profile no esta retorna 404
+        return actions.assingUsersToProfile(profile, usersId);
+    });
+
+    assignPromise.then(() => {
+        return res.status(200).send();
+    });
+
 }

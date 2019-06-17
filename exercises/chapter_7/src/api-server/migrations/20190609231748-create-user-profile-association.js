@@ -11,7 +11,7 @@ module.exports = {
     */
     return queryInterface.addColumn(
       'Users', 
-      'profileId', 
+      'ProfileId', 
       {
         type: Sequelize.INTEGER,
         references: {

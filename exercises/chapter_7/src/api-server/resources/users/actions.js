@@ -40,10 +40,22 @@ function updateById(userId, reqData) {
     }); 
 }
 
+/**
+ * Delete a user by id
+ * @param {Integer} userId 
+ */
+function deleteById(userId) {
+    const userPromise = getById(userId);
+
+    return userPromise.then(user => {
+        return user.destroy({force: true});
+    });
+}
+
 module.exports = {
     getAll: getAll,
     getById: getById,
     postUser: postUser,
     updateById: updateById,
-
+    deleteById: deleteById
 }

@@ -19,7 +19,7 @@ module.exports = function initRoutes(app) {
      //delete a profile
      app.delete(basePath + '/:id', genericMiddlewares.validateId, profiles.v1.deleteById);
      //assign a profile to a list of users
-     // app.post(basePath + '/:id' + )
+     app.post(basePath + '/:id/users', profiles.v1.assingUsers);
      //update a profile by id
      app.put(basePath + '/:id', genericMiddlewares.validateId, profiles.v1.updateById);
 };
