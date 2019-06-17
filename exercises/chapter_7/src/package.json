@@ -1,0 +1,27 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "find": "^0.3.0",
+    "joi": "^14.3.1",
+    "lodash": "^4.17.11",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.6.5",
+    "nodemon": "^1.19.1",
+    "sequelize": "^5.8.7",
+    "sequelize-cli": "^5.4.0"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0",
+    "jest-cli": "^24.8.0"
+  },
+  "scripts": {
+    "start": "nodemon ./api-server/server.js",
+    "test": "jest --coverage"
+  },
+  "author": "",
+  "license": "ISC"
+}
