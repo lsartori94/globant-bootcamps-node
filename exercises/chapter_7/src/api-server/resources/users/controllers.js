@@ -3,7 +3,6 @@
 
 const _ = require('lodash');
 const actions = require('./actions');
-const userMock = require('../../../test-helpers/users');
 
 module.exports = {
     v1: { // Initial version
