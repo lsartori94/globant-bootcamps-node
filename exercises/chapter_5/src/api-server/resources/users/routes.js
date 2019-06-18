@@ -10,4 +10,6 @@ module.exports = function initRoutes(app) {
 
     //console.log(basePath);
     app.get(basePath, users.v1.getAll);
+
+    app.get(basePath+'/:userid', users.v1.getById);
 };
