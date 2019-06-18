@@ -5,8 +5,8 @@ module.exports = {
     return queryInterface.bulkInsert("Profiles", [{
       name: 'name-demo!',
       description: 'description-demo',
-      createdAt: '2019-06-11 17:32:46',
-      updatedAt: '2019-06-11 17:32:46'  
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
   },
 
