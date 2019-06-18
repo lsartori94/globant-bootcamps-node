@@ -74,6 +74,7 @@ describe('User controller', () => {
  
 
 });
+
 describe('User controller errors', () => {
   let mockReq,
     mockRes;
@@ -146,4 +147,5 @@ describe('User controller errors', () => {
        expect(mockRes.status).toHaveBeenCalledWith(412);
        expect(mockRes.send).toBeCalled();
      });
+  
 });

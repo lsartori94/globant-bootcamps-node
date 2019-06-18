@@ -48,7 +48,7 @@ function createRole(req, res){
     models.Role.create({
         name: req.body.name
     })
-    .then(result => {res.status(200).send();
+    .then(result => {res.status(201).send();
     })
     .catch(error => {
         res.status(412).send({msg: error.message});
@@ -58,7 +58,7 @@ function createRole(req, res){
 
 function updateRole(req, res){
     models.Role.update(req.body, {where: req.params})
-    .then(result => {res.status(200).send();})
+    .then(result => {res.status(201).send();})
     .catch(error => {
         res.status(412).send({msg: error.message});
     })
@@ -66,7 +66,7 @@ function updateRole(req, res){
 
 function deleteRole(req, res){
     models.Role.destroy({where: req.params})
-    .then(result => {res.status(200).send();})
+    .then(result => {res.status(204).send();})
     .catch(error => {
         res.status(412).send({msg: error.message});
     })

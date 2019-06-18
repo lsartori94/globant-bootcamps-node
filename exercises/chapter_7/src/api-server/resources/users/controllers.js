@@ -24,7 +24,7 @@ function getAll(req, res){
    models.User.findAll({})
    .then(result => res.status(200).send(result))
    .catch(error => {
-    res.status(412).send({ message: error.message })
+    res.status(412).send(error)
 });
 }
 
@@ -39,7 +39,7 @@ function getById(req, res){
     }
 })  
     .catch(error => {
-        res.status(412).send({ message: error.message});
+        res.status(412).send(error);
     });
           
 }

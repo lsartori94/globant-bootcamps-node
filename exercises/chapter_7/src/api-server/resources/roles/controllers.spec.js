@@ -35,7 +35,7 @@ describe('User controller', () => {
     });
     
     test('getRoleByid must return 200', async() => {
-      models.role.findByPk.mockResolvedValueOnce(roleMock.ALL_ROLES[0]);
+      models.Role.findByPk.mockResolvedValueOnce(roleMock.ALL_ROLES[0]);
       await roleController.v1.getById(mockReq, mockRes);
       expect(mockRes.status).toHaveBeenCalledWith(200);
       expect(mockRes.send).toBeCalled();
