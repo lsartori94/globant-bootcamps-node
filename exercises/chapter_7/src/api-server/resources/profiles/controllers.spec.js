@@ -28,6 +28,8 @@ describe('Profile controller happy path', () => {
     model.Profile.findAll = jest.fn().mockReturnValue(Promise.resolve(profileMock.ALL_PROFILES));
     model.Profile.findByPk = jest.fn().mockReturnValue(Promise.resolve(profileMock.ALL_PROFILES[0].id));
     model.Profile.create = jest.fn().mockReturnValue(Promise.resolve(model.profile));
+    model.User.update = jest.fn().mockReturnValue(Promise.resolve(model.profile));
+
   });
 
   test('get Allprofiles must return 200', async () => {
@@ -48,6 +50,13 @@ describe('Profile controller happy path', () => {
     expect(mockRes.send).toBeCalled();
   });
 
+  test('setProfileToUsers must return 200', async()=>{
+    mockReq.params= {profileId: 1}
+    mockReq.body= {usersId: [1,2,3]}
+    await profileController.v1.setProfileToUsers(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(200);
+    expect(mockRes.send).toBeCalled();
+  })
 
 });
 
@@ -126,5 +135,18 @@ describe('Profile controller bad path', () => {
     expect(mockRes.status).toHaveBeenCalledWith(500);
     expect(mockRes.send).toBeCalled();
   });
+
+  test('setProfileToUsers must return 404', async()=>{
+    model.User.update = jest.fn().mockReturnValue(Promise.resolve(model.profile));
+    mockReq.body= {usersId: [1,2,3]}
+    await profileController.v1.setProfileToUsers(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(404);
+    expect(mockRes.send).toBeCalled();
+    model.Profile.findByPk = jest.fn().mockReturnValue(Promise.reject());
+    await profileController.v1.setProfileToUsers(mockReq, mockRes);
+    expect(mockRes.status).toHaveBeenCalledWith(500);
+    expect(mockRes.send).toBeCalled();
+
+  })
 
 });

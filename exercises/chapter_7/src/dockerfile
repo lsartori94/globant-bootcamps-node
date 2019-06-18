@@ -1,0 +1,8 @@
+FROM node:11
+WORKDIR /api-server
+RUN apt-get update && apt-get upgrade -y
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 9001
+RUN npm start

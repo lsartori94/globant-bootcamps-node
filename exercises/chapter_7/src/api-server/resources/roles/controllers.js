@@ -1,5 +1,4 @@
 /*! Copyright Globant. All rights reserved. */
-"use strict";
 
 const models = require("../../models");
 const _ = require("lodash");
@@ -70,8 +69,6 @@ function updateRole(req, res) {
 				name: req.body.name
 			}, { omitNull: true }).then(succes => {
 				res.status(200).send(role)
-			}).catch(err => {
-				res.status(500).send(err);
 			});
 		} else {
 			res.status(404).send("roleId does't exists");
@@ -88,9 +85,6 @@ function deleteRole(req, res) {
 				role.destroy()
 					.then(succes => {
 						res.status(200).send("Role destroyed");
-					})
-					.catch(err => {
-						res.status(500).send(err);
 					});
 			} else {
 				res.status(404).send("RoleId does't exists");

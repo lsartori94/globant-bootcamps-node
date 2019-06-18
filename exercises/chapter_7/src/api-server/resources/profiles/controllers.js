@@ -1,5 +1,4 @@
 /*! Copyright Globant. All rights reserved. */
-"use strict";
 
 const models = require("../../models");
 const _ = require("lodash");
@@ -71,14 +70,13 @@ function setProfileToUsers(req, res) {
 					.then(() => {
 						res.status(200).send("Users updated");
 					})
-					.catch(err => {
-						console.log(err);
-						res.status(500).send(err);
-					})
 			}
 			else {
 				res.status(404).send("profileId does't exists");
 			}
+		})
+		.catch(err=>{
+			res.status(500).send("profileId does't exists");
 		})
 }
 
@@ -91,8 +89,6 @@ function updateProfile(req, res) {
 					description: req.body.description
 				}, { omitNull: true }).then(() => {
 					res.status(200).send(profile)
-				}).catch(err => {
-					res.status(500).send(err);
 				});
 			} else {
 				res.status(404).send("profileId does't exists");
@@ -109,9 +105,6 @@ function deleteProfile(req, res) {
 				profile.destroy()
 					.then(succes => {
 						res.status(200).send("Profile destroyed");
-					})
-					.catch(err => {
-						res.status(500).send(err);
 					});
 			} else {
 				res.status(404).send("ProfileId does't exists");

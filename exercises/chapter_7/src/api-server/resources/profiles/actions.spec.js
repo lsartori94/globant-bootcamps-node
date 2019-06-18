@@ -49,6 +49,14 @@ describe('Profile actions happy path', () => {
     expect(mockNext).toBeCalled();
   });
 
+  test('validateUsersId must call next', ()=>{
+    mockReq.body = {
+      usersId: [1,2]
+    };
+    mockReq.params = { profileId: 1 };
+    profileActions.v1.validateUsersId(mockReq, mockRes, mockNext);
+    expect(mockNext).toBeCalled();
+  });
 
 });
 
@@ -104,7 +112,20 @@ describe('profile actions bad path', () => {
     mockReq.params = { profileId: 0 };    
     expect(mockRes.json).toBeCalled();
     expect(mockRes.status).toHaveBeenCalledWith(422);
+  });
 
+  test('validateUsersId must return 422', ()=>{
+    mockReq.params = { profileId: 1 };
+    profileActions.v1.validateUsersId(mockReq, mockRes, mockNext);
+    expect(mockRes.json).toBeCalled();
+    expect(mockRes.status).toHaveBeenCalledWith(422);
+    mockReq.body = {
+      usersId: [1,2]
+    };
+    mockReq.params ={};
+    profileActions.v1.validateUsersId(mockReq, mockRes, mockNext);
+    expect(mockNext).toBeCalled();
+    expect(mockRes.status).toHaveBeenCalledWith(422);
   });
 
 })
