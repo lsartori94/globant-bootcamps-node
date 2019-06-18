@@ -1,0 +1,28 @@
+{
+  "name": "chapter_7",
+  "version": "1.0.0",
+  "description": "_In this exercise, we will develop the features of the final exercise._",
+  "main": "src/api-server/server.js",
+  "scripts": {
+    "start": "nodemon node src/api-server/server",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^15.0.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-validator": "^5.3.1",
+    "find": "^0.3.0",
+    "joi": "^14.3.1",
+    "lodash": "^4.17.11",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.8.7",
+    "sequelize-cli": "^5.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
