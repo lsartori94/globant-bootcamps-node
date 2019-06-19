@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1560911838931" clover="3.2.0">
-  <project timestamp="1560911838932" name="All files">
+<coverage generated="1560913932603" clover="3.2.0">
+  <project timestamp="1560913932603" name="All files">
     <metrics statements="221" coveredstatements="208" conditionals="55" coveredconditionals="46" methods="99" coveredmethods="93" elements="375" coveredelements="347" complexity="0" loc="221" ncloc="221" packages="6" files="17" classes="17"/>
     <package name="api-server.config">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -66,15 +66,15 @@
         <metrics statements="11" coveredstatements="7" conditionals="2" coveredconditionals="0" methods="7" coveredmethods="5"/>
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="31" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="46" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
       </file>
       <file name="controllers.js" path="C:\Users\Alejo\Documents\Node\globant-bootcamps-node\exercises\chapter_7\src\api-server\resources\profiles\controllers.js">
         <metrics statements="31" coveredstatements="31" conditionals="8" coveredconditionals="8" methods="19" coveredmethods="19"/>
@@ -90,25 +90,25 @@
         <line num="41" count="1" type="stmt"/>
         <line num="43" count="1" type="stmt"/>
         <line num="47" count="1" type="stmt"/>
-        <line num="52" count="2" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
-        <line num="57" count="1" type="stmt"/>
-        <line num="62" count="3" type="stmt"/>
-        <line num="64" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="65" count="1" type="stmt"/>
-        <line num="67" count="1" type="stmt"/>
-        <line num="71" count="1" type="stmt"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="72" count="3" type="stmt"/>
+        <line num="74" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="75" count="1" type="stmt"/>
-        <line num="80" count="3" type="stmt"/>
-        <line num="82" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="83" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="81" count="1" type="stmt"/>
         <line num="85" count="1" type="stmt"/>
-        <line num="89" count="1" type="stmt"/>
-        <line num="94" count="3" type="stmt"/>
-        <line num="96" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="97" count="1" type="stmt"/>
-        <line num="99" count="1" type="stmt"/>
-        <line num="103" count="1" type="stmt"/>
+        <line num="95" count="3" type="stmt"/>
+        <line num="97" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="100" count="1" type="stmt"/>
+        <line num="104" count="1" type="stmt"/>
+        <line num="114" count="3" type="stmt"/>
+        <line num="116" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="119" count="1" type="stmt"/>
+        <line num="123" count="1" type="stmt"/>
       </file>
       <file name="validator.js" path="C:\Users\Alejo\Documents\Node\globant-bootcamps-node\exercises\chapter_7\src\api-server\resources\profiles\validator.js">
         <metrics statements="26" coveredstatements="26" conditionals="8" coveredconditionals="8" methods="8" coveredmethods="8"/>
@@ -146,15 +146,15 @@
         <metrics statements="11" coveredstatements="7" conditionals="2" coveredconditionals="0" methods="7" coveredmethods="5"/>
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="39" count="1" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="45" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
       </file>
       <file name="controllers.js" path="C:\Users\Alejo\Documents\Node\globant-bootcamps-node\exercises\chapter_7\src\api-server\resources\roles\controllers.js">
         <metrics statements="24" coveredstatements="24" conditionals="6" coveredconditionals="6" methods="15" coveredmethods="15"/>
@@ -169,19 +169,19 @@
         <line num="42" count="1" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
         <line num="48" count="1" type="stmt"/>
-        <line num="53" count="2" type="stmt"/>
-        <line num="55" count="1" type="stmt"/>
-        <line num="58" count="1" type="stmt"/>
-        <line num="63" count="3" type="stmt"/>
-        <line num="65" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="66" count="1" type="stmt"/>
-        <line num="68" count="1" type="stmt"/>
-        <line num="72" count="1" type="stmt"/>
-        <line num="78" count="3" type="stmt"/>
-        <line num="80" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="81" count="1" type="stmt"/>
-        <line num="83" count="1" type="stmt"/>
-        <line num="87" count="1" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="73" count="3" type="stmt"/>
+        <line num="75" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="93" count="3" type="stmt"/>
+        <line num="95" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="102" count="1" type="stmt"/>
       </file>
       <file name="validator.js" path="C:\Users\Alejo\Documents\Node\globant-bootcamps-node\exercises\chapter_7\src\api-server\resources\roles\validator.js">
         <metrics statements="20" coveredstatements="20" conditionals="6" coveredconditionals="6" methods="6" coveredmethods="6"/>
@@ -213,15 +213,15 @@
         <metrics statements="11" coveredstatements="7" conditionals="2" coveredconditionals="0" methods="7" coveredmethods="5"/>
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="43" count="1" type="stmt"/>
-        <line num="44" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="49" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
       </file>
       <file name="controllers.js" path="C:\Users\Alejo\Documents\Node\globant-bootcamps-node\exercises\chapter_7\src\api-server\resources\users\controllers.js">
         <metrics statements="24" coveredstatements="24" conditionals="6" coveredconditionals="6" methods="15" coveredmethods="15"/>
@@ -236,19 +236,19 @@
         <line num="42" count="1" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
         <line num="48" count="1" type="stmt"/>
-        <line num="53" count="2" type="stmt"/>
-        <line num="55" count="1" type="stmt"/>
-        <line num="58" count="1" type="stmt"/>
-        <line num="63" count="3" type="stmt"/>
-        <line num="65" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="66" count="1" type="stmt"/>
-        <line num="68" count="1" type="stmt"/>
-        <line num="72" count="1" type="stmt"/>
-        <line num="78" count="3" type="stmt"/>
-        <line num="80" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="81" count="1" type="stmt"/>
-        <line num="83" count="1" type="stmt"/>
-        <line num="87" count="1" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="73" count="3" type="stmt"/>
+        <line num="75" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="93" count="3" type="stmt"/>
+        <line num="95" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="102" count="1" type="stmt"/>
       </file>
       <file name="validator.js" path="C:\Users\Alejo\Documents\Node\globant-bootcamps-node\exercises\chapter_7\src\api-server\resources\users\validator.js">
         <metrics statements="20" coveredstatements="20" conditionals="6" coveredconditionals="6" methods="6" coveredmethods="6"/>

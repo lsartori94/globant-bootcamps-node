@@ -31,7 +31,7 @@ function getAll(req, res) {
 }
 
 /**
- * Returns a single role finded by his id
+ * Returns a single role found by its id
  * @param {Object} req
  * @param {Object} res
  */
@@ -49,6 +49,11 @@ function getRoleById(req, res) {
 		});
 }
 
+/**
+ * Creates a role with the data of the body
+ * @param {Object} req 
+ * @param {Object} res 
+ */
 function createRole(req, res) {
 	return actions.v1.createRole(req.body)
 		.then(() => {
@@ -59,6 +64,11 @@ function createRole(req, res) {
 		});
 }
 
+/**
+ * Update a role with the data of the body
+ * @param {Object} req 
+ * @param {Object} res 
+ */
 function updateRole(req, res) {
 	return actions.v1.updateRole(req.params.roleId, req.body)
 		.then(role => {
@@ -74,6 +84,11 @@ function updateRole(req, res) {
 
 }
 
+/**
+ * Delete a role by its Id
+ * @param {Object} req 
+ * @param {Object} res 
+ */
 function deleteRole(req, res) {
 	return actions.v1.deleteRole(req.params.roleId)
 		.then((role) => {

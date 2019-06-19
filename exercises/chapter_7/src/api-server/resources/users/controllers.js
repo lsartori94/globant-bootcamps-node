@@ -31,7 +31,7 @@ function getAll(req, res) {
 }
 
 /**
- * Returns a single user finded by his id
+ * Returns a single user found by its id
  * @param {Object} req
  * @param {Object} res
  */
@@ -49,6 +49,11 @@ function getUserById(req, res) {
 		});
 }
 
+/**
+ * Creates a user with the data of the body
+ * @param {Object} req 
+ * @param {Object} res 
+ */
 function createUser(req, res) {
 	return actions.v1.createUser(req.body)
 		.then(() => {
@@ -59,6 +64,11 @@ function createUser(req, res) {
 		});
 }
 
+/**
+ * Update a user with the data of the body
+ * @param {Object} req 
+ * @param {Object} res 
+ */
 function updateUser(req, res) {
 	return actions.v1.updateUser(req.params.userId, req.body)
 		.then(user => {
@@ -74,6 +84,11 @@ function updateUser(req, res) {
 
 }
 
+/**
+ * Deletes a user by its Id
+ * @param {Object} req 
+ * @param {Object} res 
+ */
 function deleteUser(req, res) {
 	return actions.v1.deleteUser(req.params.userId)
 		.then((user) => {

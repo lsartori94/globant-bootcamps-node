@@ -11,14 +11,25 @@ module.exports = {
     }
 };
 
+/**
+ * returns all the users
+ */
 function getAll() {
     return models.User.findAll();
 }
 
+/**
+ * returns a user by his id
+ * @param {int} userId 
+ */
 function getUserById(userId) {
     return models.User.findByPk(userId)
 }
 
+/**
+ * Creates a user by the data of the json param
+ * @param {json} user 
+ */
 function createUser(user) {
     return models.User.create({
         name: user.name,
@@ -29,6 +40,10 @@ function createUser(user) {
     })
 }
 
+/**
+ * Delete a user
+ * @param {int} userId 
+ */
 function deleteUser(userId) {
     return getUserById(userId).then(user => {
         if (!!user) {
@@ -39,6 +54,11 @@ function deleteUser(userId) {
 
 }
 
+/**
+ * Updates a user found by id
+ * @param {int} userId 
+ * @param {json} userBody 
+ */
 function updateUser(userId, userBody) {
     return getUserById(userId).then(user => {
         return user.update({

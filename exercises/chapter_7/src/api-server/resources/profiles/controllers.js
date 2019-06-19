@@ -30,7 +30,7 @@ function getAll(req, res) {
 }
 
 /**
- * Returns a single profile finded by his id
+ * Returns a single profile found by its id
  * @param {Object} req
  * @param {Object} res
  */
@@ -48,6 +48,11 @@ function getProfileById(req, res) {
 		});
 }
 
+/**
+ * Creates a profile with the data of the body
+ * @param {Object} req 
+ * @param {Object} res 
+ */
 function createProfile(req, res) {
 	return actions.v1.createProfile(req.body)
 		.then(() => {
@@ -58,6 +63,11 @@ function createProfile(req, res) {
 		});
 }
 
+/**
+ * Set a profile to a list of users
+ * @param {Object} req 
+ * @param {Object} res 
+ */
 function setProfileToUsers(req, res) {
 	return models.Profile.findByPk(req.params.profileId)
 		.then(profile => {
@@ -76,6 +86,11 @@ function setProfileToUsers(req, res) {
 		})
 }
 
+/**
+ * Updates a profile with the data of the body
+ * @param {Object} req 
+ * @param {Object} res 
+ */
 function updateProfile(req, res) {
 	return actions.v1.updateProfile(req.params.profileId, req.body)
 		.then(profile => {
@@ -90,6 +105,11 @@ function updateProfile(req, res) {
 		});
 }
 
+/**
+ * Delete a profile by its Id
+ * @param {Object} req 
+ * @param {Object} res 
+ */
 function deleteProfile(req, res) {
 	return actions.v1.deleteProfile(req.params.profileId)
 		.then((profile) => {
