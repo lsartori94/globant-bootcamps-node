@@ -1,7 +1,7 @@
 /*! Copyright Globant. All rights reserved. */
 "use strict";
 
-const models = require("../../models");
+const actions = require("./actions");
 
 module.exports = {
   v1: {
@@ -23,17 +23,8 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-  return models.Profile.findAll(
-    {
-      include: [
-        {
-          model: models.User,
-          attributes: { exclude: ["id"] }
-        }
-      ]
-    },
-    { attributes: { exclude: ["id"] } }
-  )
+  return actions
+    .getAllProfiles()
     .then(data => {
       res.status(200).send(data);
     })
@@ -43,18 +34,8 @@ function getAll(req, res) {
 }
 
 function getProfileById(req, res) {
-  return models.Profile.findByPk(
-    req.params.id,
-    {
-      include: [
-        {
-          model: models.User,
-          attributes: { exclude: ["id"] }
-        }
-      ]
-    },
-    { attributes: { exclude: ["id"] } }
-  )
+  return actions
+    .getProfileById(req.params)
     .then(data => {
       if (!!data) {
         res.status(200).send(data);
@@ -68,10 +49,8 @@ function getProfileById(req, res) {
 }
 
 function createProfile(req, res) {
-  return models.Profile.create({
-    name: req.body.name,
-    description: req.body.description
-  })
+  return actions
+    .createProfile(req)
     .then(data => {
       res.status(201).send(data);
     })
@@ -81,12 +60,11 @@ function createProfile(req, res) {
 }
 
 function modifyProfile(req, res) {
-  return models.Profile.update(req.body, {
-    where: { id: req.params.id }
-  })
-    .then(idProfileModified => {
-      if (!!idProfileModified) {
-        res.status(200).send(idProfileModified);
+  return actions
+    .modifyProfile(req)
+    .then(modified => {
+      if (!!modified) {
+        res.status(200).send(modified);
       } else {
         res.status(404).send({ msg: "profile not found" });
       }
@@ -97,10 +75,11 @@ function modifyProfile(req, res) {
 }
 
 function deleteProfile(req, res) {
-  return models.Profile.destroy({ where: { id: req.params.id } })
+  return actions
+    .deleteProfile(req.params)
     .then(data => {
       if (!!data) {
-        res.status(204).send({});
+        res.status(204).send();
       } else {
         res.status(404).send({ msg: "profile not found" });
       }
@@ -111,7 +90,8 @@ function deleteProfile(req, res) {
 }
 
 function addUsers(req, res) {
-  return models.Profile.update(req.body.Users, { where: { id: req.params.id } })
+  return actions
+    .addUsers(req)
     .then(data => {
       res.status(200).send(data);
     })

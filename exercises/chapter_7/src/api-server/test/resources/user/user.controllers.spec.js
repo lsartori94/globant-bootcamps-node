@@ -68,7 +68,7 @@ describe("user controller happy path", () => {
     models.User.destroy.mockResolvedValue(1);
     await userController.v1.deleteUser(mockReq, mockRes);
 
-    expect(mockRes.send).toBeCalledWith({});
+    expect(mockRes.send).toBeCalledWith();
     expect(mockRes.status).toHaveBeenCalledWith(204);
   });
 });

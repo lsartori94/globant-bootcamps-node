@@ -63,7 +63,7 @@ describe("role controller happy path", () => {
     await rolesController.v1.deleteRole(mockReq,mockRes);
 
     expect(mockRes.status).toBeCalledWith(204);
-    expect(mockRes.send).toBeCalledWith({});
+    expect(mockRes.send).toBeCalledWith();
   })
 });
 

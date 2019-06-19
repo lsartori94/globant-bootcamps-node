@@ -1,7 +1,7 @@
 /*! Copyright Globant. All rights reserved. */
 "use strict";
 
-const models = require("../../models");
+const actions = require("./actions");
 
 module.exports = {
   v1: {
@@ -23,17 +23,8 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-  return models.User.findAll({
-    include: [
-      {
-        model: models.Profile,
-        attributes: { exclude: ["id"] }
-      }
-    ],
-    attributes: {
-      exclude: ["password", "id", "ProfileId"]
-    }
-  })
+  return actions
+    .getAllUsers()
     .then(users => {
       res.status(200).send(users);
     })
@@ -43,17 +34,8 @@ function getAll(req, res) {
 }
 
 function getUserByID(req, res) {
-  return models.User.findByPk(req.params.id, {
-    include: [
-      {
-        model: models.Profile,
-        attributes: { exclude: ["id"] }
-      }
-    ],
-    attributes: {
-      exclude: ["password", "ProfileId", "id"]
-    }
-  })
+  return actions
+    .getUserById(req.params)
     .then(data => {
       if (!!data) {
         res.status(200).send(data);
@@ -67,7 +49,8 @@ function getUserByID(req, res) {
 }
 
 function createUser(req, res) {
-  return models.User.create(req.body)
+  return actions
+    .createUser(req)
     .then(data => {
       res.status(201).send(data);
     })
@@ -77,10 +60,11 @@ function createUser(req, res) {
 }
 
 function modifyUser(req, res) {
-  return models.User.update(req.body, { where: { id: req.params.id } })
-    .then(idUserModified => {
-      if (!!idUserModified) {
-        res.status(200).send(idUserModified);
+  return actions
+    .modifyUser(req)
+    .then(modified => {
+      if (!!modified) {
+        res.status(200).send(modified);
       } else {
         res.status(404).send({ msg: "user not found" });
       }
@@ -91,13 +75,11 @@ function modifyUser(req, res) {
 }
 
 function deleteUser(req, res) {
-  return models.User.destroy(
-    { where: { id: req.params.id } },
-    { logging: true }
-  )
+  return actions
+    .deleteUser(req.params)
     .then(user => {
       if (!!user) {
-        res.status(204).send({});
+        res.status(204).send();
       } else {
         res.status(404).send({ msg: "user not found" });
       }

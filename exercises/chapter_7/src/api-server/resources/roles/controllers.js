@@ -1,7 +1,7 @@
 /*! Copyright Globant. All rights reserved. */
 "use strict";
 
-const models = require("../../models");
+const actions = require("./actions");
 
 module.exports = {
   v1: {
@@ -22,11 +22,8 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-  return models.Role.findAll({
-    attributes: {
-      exclude: ["id"]
-    }
-  })
+  return actions
+    .getAllRoles()
     .then(data => {
       res.status(200).send(data);
     })
@@ -36,11 +33,8 @@ function getAll(req, res) {
 }
 
 function getRoleById(req, res) {
-  return models.Role.findByPk(req.params.id, {
-    attributes: {
-      exclude: ["id"]
-    }
-  })
+  return actions
+    .getRoleById(req.params)
     .then(data => {
       if (!!data) {
         res.status(200).send(data);
@@ -54,9 +48,8 @@ function getRoleById(req, res) {
 }
 
 function createRole(req, res) {
-  return models.Role.create({
-    name: req.body.name
-  })
+  return actions
+    .createRole(req)
     .then(data => {
       res.status(201).send(data);
     })
@@ -66,10 +59,11 @@ function createRole(req, res) {
 }
 
 function modifyRole(req, res) {
-  return models.Role.update(req.body, { where: { id: req.params.id } })
-    .then(idRoleModified => {
-      if (!!idRoleModified) {
-        res.status(200).send(idRoleModified);
+  return actions
+    .modifyRole(req)
+    .then(modified => {
+      if (!!modified) {
+        res.status(200).send(modified);
       } else {
         res.status(404).send({ msg: "role not found" });
       }
@@ -80,10 +74,11 @@ function modifyRole(req, res) {
 }
 
 function deleteRole(req, res) {
-  return models.Role.destroy({ where: { id: req.params.id } })
+  return actions
+    .deleteRole(req.params)
     .then(data => {
       if (!!data) {
-        res.status(204).send({});
+        res.status(204).send();
       } else {
         res.status(404).send({ msg: "role not found" });
       }

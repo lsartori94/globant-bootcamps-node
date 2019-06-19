@@ -64,7 +64,7 @@ describe("profile controller happy path", () => {
     await profilesController.v1.deleteProfile(mockReq, mockRes);
 
     expect(mockRes.status).toBeCalledWith(204);
-    expect(mockRes.send).toBeCalledWith({});
+    expect(mockRes.send).toBeCalledWith();
   });
 
   test("addUsers must response 200", async () => {
