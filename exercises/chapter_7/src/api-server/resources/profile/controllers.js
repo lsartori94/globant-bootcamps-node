@@ -100,12 +100,10 @@ function assingUsers(req, res) {
     const profilePromise = actions.getById(profileId);
     
     const assignPromise = profilePromise.then(profile => {
-        // If profile no esta retorna 404
         return actions.assingUsersToProfile(profile, usersId);
     });
 
-    assignPromise.then(() => {
+    return assignPromise.then(() => {
         return res.status(200).send();
     });
-
 }

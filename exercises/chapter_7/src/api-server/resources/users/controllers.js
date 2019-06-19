@@ -24,7 +24,11 @@ module.exports = {
 function getAll(req, res) {
     const usersPromise = actions.getAll();
     usersPromise.then(users => {
-        return res.status(200).send(users); 
+        if (users === undefined) {
+            return res.status(404).send();
+        } else {
+            return res.status(200).send(users); 
+        }
     });
 }
 

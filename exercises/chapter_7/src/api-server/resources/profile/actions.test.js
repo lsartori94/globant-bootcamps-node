@@ -12,6 +12,7 @@ describe('Profile actions', () => {
         model.Profile.create = jest.fn().mockReturnValue(Promise.resolve(model.Profile));
         model.Profile.update = jest.fn().mockReturnValue(Promise.resolve(model.Profile));
         model.Profile.delete = jest.fn().mockReturnValue(Promise.resolve(model.Profile));
+        model.User.update = jest.fn().mockReturnValue(Promise.resolve(model.User));
     });
 
     test('getAll, returns all profiles in the database', () => {
@@ -47,6 +48,13 @@ describe('Profile actions', () => {
             return actions.getById(2).then(profile => {
                 expect(profile).toBeTruthy();
             });    
+        });
+    });
+
+    test('assing users to Profile', () => {
+        const profile = profileData.ALL_PROFILES[0];
+        return actions.assingUsersToProfile(profile, [1, 2]).then(data => {
+            expect(data).toBeTruthy();
         });
     });
 });
