@@ -28,10 +28,18 @@ module.exports = {
  */
 async function getAll(req, res) {
     const users = await models.User.findAll({
-        attributes: ['id', 'name', 'lastname', 'email','ProfileId'],
+        include: [
+            {
+                model: models.Profile,
+                attributes:['name']
+            }
+
+        ],
+        attributes: ['id', 'name', 'lastname', 'email', 'ProfileId'],
         order: [
             ['id', 'DESC']
         ]
+
     });
     console.log(users[0]);
     res.json({ users });
@@ -44,7 +52,7 @@ async function getOneByid(req, res) {
     const { id } = req.params;
     const user = await models.User.findOne({
         where: { id },
-        attributes: ['id', 'name', 'lastname', 'email','ProfileId'],
+        attributes: ['id', 'name', 'lastname', 'email', 'ProfileId'],
     });
     // console.log(user,'lalalalla');
     // const a=1;
@@ -83,7 +91,7 @@ async function createUser(req, res) {
         lastname,
         email
     }, {
-            fields: ['name', 'password', 'lastname', 'email','ProfileId']// que fields voy a pasar cuando creo un nuevo dato
+            fields: ['name', 'password', 'lastname', 'email', 'ProfileId']// que fields voy a pasar cuando creo un nuevo dato
         });
 
 
@@ -134,7 +142,7 @@ async function updateUser(req, res) {
             message: 'User updated successfully',
 
         });
-    }else {
+    } else {
         res.status(400).json({
             message: 'Some error occurred',
 
