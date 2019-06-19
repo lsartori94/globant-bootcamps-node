@@ -1,20 +1,14 @@
 'use strict';
 
 /****************************
-*        PROFILE MOCK         *
+*        PROFILES MOCK         *
 ***************************/
 const ALL_PROFILES = [
     {
         id: 1,
         name: 'A name',
         description: 'A generic description',
-        createdAt: '2019-02-20T18:49:27',
-        update: function() {
-            return {};
-        },
-        destroy: function() {
-            return {};
-        }
+        createdAt: '2019-02-20T18:49:27'
     },
     {
         id: 2,

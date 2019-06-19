@@ -7,13 +7,7 @@ const ALL_ROLES = [
     {
         id: 1,
         name: 'A role',
-        createdAt: '2019-02-20T18:49:27',
-        update: function() {
-            return {};
-        },
-        destroy: function() {
-            return {};
-        }
+        createdAt: '2019-02-20T18:49:27'
     },
     {
         id: 2,

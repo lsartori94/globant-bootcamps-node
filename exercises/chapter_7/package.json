@@ -1,0 +1,30 @@
+{
+  "name": "bootcamp_final",
+  "version": "1.0.0",
+  "description": "Just a exercise",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/api-server/server",
+    "test": "NODE_ENV=test jest --coverage"
+  },
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules/", "/express-example/"]
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-validator": "^5.3.1",
+    "find": "^0.2.9",
+    "joi": "^14.3.1",
+    "lodash": "^4.17.11",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.8.7",
+    "sequelize-cli": "^5.4.0"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0"
+  }
+}

@@ -3,7 +3,7 @@
 
 const _ = require('lodash');
 const actions = require('./actions');
-const userMock = require('../../../test-helpers/users');
+const roleMock = require('../../../test-helpers/roles');
 
 module.exports = {
     v1: { // Initial version
@@ -15,26 +15,26 @@ module.exports = {
 /////////////////////////////////////////////////////////////
 
 /**
- * Retrieve all users
+ * Retrieve all roles
  * @param {Object} req - http.ServerRequest
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-    res.status(200).send(userMock.ALL_USERS);
+    res.status(200).send(roleMock.ALL_ROLES);
 }
 
 /**
- * Retrive an user by id. If the user is not found 404 will be returned
+ * Retrive a role by id. If the role is not found 404 will be returned
  * @param {Object} req - http.ServerRequest 
  * @param {Object} res - http.ServerResponse 
  */
 function getById(req, res) {
-    const userId = parseInt(req.params.id);
-    const user = actions.getById(userId);
+    const roleId = parseInt(req.params.id);
+    const role = actions.getById(roleId);
 
-    if (user === undefined) {
+    if (role === undefined) {
         return res.status(404).send();
     } else {
-        return res.status(200).send(user);
+        return res.status(200).send(role);
     }
 }

@@ -12,13 +12,7 @@ const ALL_USERS = [
         lastname: 'Márquez',
         email: 'gmarquez@globant.com',
         profile: 1,
-        createdAt: '2019-02-20T18:49:27',
-        update: function() {
-            return {};
-        },
-        destroy: function() {
-            return {};
-        }
+        createdAt: '2019-02-20T18:49:27'
     },
     {
         id: 2,

@@ -1,0 +1,418 @@
+{
+	"info": {
+		"_postman_id": "0780ca7a-3a23-4d0f-856b-27ac5f205918",
+		"name": "Bootcamp-globant",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /api/v1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/api/v1/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"gmarquez\",\n    \"pass\": \"aPassword8\",\n    \"name\": \"Germán\",\n    \"lastname\": \"Márquez\",\n    \"email\": \"gmarquez@globant.com\"\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:9001/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				},
+				"description": "Get all users."
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/users/2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/api/v1/users/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"2"
+					]
+				},
+				"description": "Get user by id"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/users/299",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/api/v1/users/299",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"299"
+					]
+				},
+				"description": "Get user by id 404"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/roles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/api/v1/roles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"roles"
+					]
+				},
+				"description": "Get all roles"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/roles/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/api/v1/roles/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"roles",
+						"1"
+					]
+				},
+				"description": "Get a role by id"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/roles/1999",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/api/v1/roles/1999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"roles",
+						"1999"
+					]
+				},
+				"description": "Get a role by id 404."
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/profiles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/api/v1/profiles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"profiles"
+					]
+				},
+				"description": "Get all profiles"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/profiles/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/api/v1/profiles/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"profiles",
+						"1"
+					]
+				},
+				"description": "Get a profile by id"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/profiles/10000",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/api/v1/profiles/10000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"profiles",
+						"10000"
+					]
+				},
+				"description": "Get a profile by id 404"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/profiles/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"A name\",\n    \"description\": \"A\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9001/api/v1/profiles/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"profiles",
+						""
+					]
+				},
+				"description": "Invalid post to create profile"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/profiles/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"A name\",\n    \"description\": \"A generic description\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9001/api/v1/profiles/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"profiles",
+						""
+					]
+				},
+				"description": "Create profile ok"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/roles/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"A role\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9001/api/v1/roles/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"roles",
+						""
+					]
+				},
+				"description": "Create role OK"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/profiles/1/users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[1,3]"
+				},
+				"url": {
+					"raw": "http://localhost:9001/api/v1/profiles/1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"profiles",
+						"1",
+						"users"
+					]
+				},
+				"description": "Set profile to users"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9001/api/v1/users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"gmarquez\",\n    \"pass\": \"aPassword8\",\n    \"name\": \"Germán\",\n    \"lastname\": \"Márquez\",\n    \"email\": \"gmarquez@globant.com\"\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:9001/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				},
+				"description": "Get all users"
+			},
+			"response": []
+		}
+	]
+}
