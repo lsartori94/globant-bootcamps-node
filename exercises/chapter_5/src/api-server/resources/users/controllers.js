@@ -1,14 +1,14 @@
 /*! Copyright Globant. All rights reserved. */
-'use strict';
+"use strict";
 
-const _ = require('lodash');
-const actions = require('./actions');
-const userMock = require('../../../test-helpers/users');
+const actions = require("./actions");
 
 module.exports = {
-    v1: { // Initial version
-        getAll: getAll
-    }
+  v1: {
+    // Initial version
+    getAllUsers,
+    getUser
+  }
 };
 
 /////////////////////////////////////////////////////////////
@@ -18,6 +18,11 @@ module.exports = {
  * @param {Object} req - http.ServerRequest
  * @param {Object} res - http.ServerResponse
  */
-function getAll(req, res) {
-    res.status(200).send(userMock.ALL_USERS);
+function getAllUsers(req, res) {
+  res.status(200).send(actions.v1.allUsers());
+}
+
+function getUser(req, res) {
+  console.log("processing user ID request");
+  res.status(200).send(actions.v1.searchUserByID(req.params.id));
 }

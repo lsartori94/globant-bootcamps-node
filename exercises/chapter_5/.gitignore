@@ -12,5 +12,6 @@
 
 /coverage/
 
+
 # Environment-specific configuration - NEVER commit to Git
 .env

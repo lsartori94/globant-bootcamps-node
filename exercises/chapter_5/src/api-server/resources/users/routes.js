@@ -1,13 +1,14 @@
 /*! Copyright Globant. All rights reserved. */
-'use strict';
+"use strict";
 
-const config = require('../../core/config');
-const users = require('./controllers');
+const config = require("../../core/config");
+const users = require("./controllers");
+const validate = require("./validate");
 
 module.exports = function initRoutes(app) {
-    // Users resource base route
-    const basePath = config.basePath + '/users';
+  // Users resource base route
+  const basePathUsers = config.basePath + "/user";
 
-    //console.log(basePath);
-    app.get(basePath, users.v1.getAll);
+  app.get(basePathUsers, users.v1.getAllUsers);
+  app.get(`${basePathUsers}/:id`, validate.v1.validateUserID, users.v1.getUser);
 };
