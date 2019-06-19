@@ -70,82 +70,79 @@ describe('User controller', () => {
        expect(mockRes.status).toHaveBeenCalledWith(204);
        expect(mockRes.send).toBeCalled();
      });
-
- 
-
-});
-
-describe('User controller errors', () => {
-  let mockReq,
-    mockRes;
-  
-    beforeEach(() => {
-      mockRes = {
-        status: jest.fn(),
-        send: jest.fn(),
-        json: jest.fn()
-      };
+     describe('User controller errors', () => {
+      let mockReq,
+        mockRes;
       
-      mockRes.status.mockReturnValue(mockRes);
-      mockReq = {
-        params: {},
-        body: {}
-      };
-      models.User.findByPk = jest.fn();
-      models.User.findAll = jest.fn();
-      models.User.create = jest.fn();
-      models.User.update = jest.fn();
-      models.User.destroy = jest.fn();
-      
-    });
-
-
-    test("getAll must return 412 ", async () => {
-      models.User.findAll.mockRejectedValue();
-      await userController.v1.getAll(mockReq, mockRes);
-      expect(mockRes.status).toHaveBeenCalledWith(412);
-      expect(mockRes.send).toBeCalled();
-    });
-
-    test('getUserByid must return 404', async() => {
-      models.User.findByPk.mockResolvedValue();
-      await userController.v1.getById(mockReq, mockRes);
-      expect(mockRes.send).toBeCalled();
-      expect(mockRes.status).toHaveBeenCalledWith(404);
-     
-    });
-    test('getUserByid must return 412', async() => {
-      models.User.findByPk.mockRejectedValue();
-      await userController.v1.getById(mockReq, mockRes);
-      expect(mockRes.send).toBeCalled();
-      expect(mockRes.status).toHaveBeenCalledWith(412);
-     
-    });
-
+        beforeEach(() => {
+          mockRes = {
+            status: jest.fn(),
+            send: jest.fn(),
+            json: jest.fn()
+          };
+          
+          mockRes.status.mockReturnValue(mockRes);
+          mockReq = {
+            params: {},
+            body: {}
+          };
+          models.User.findByPk = jest.fn();
+          models.User.findAll = jest.fn();
+          models.User.create = jest.fn();
+          models.User.update = jest.fn();
+          models.User.destroy = jest.fn();
+          
+        });
     
-    test('createUser must return 412', async() => {
-      models.User.create.mockRejectedValue();
-      await userController.v1.createUser(mockReq, mockRes);
-      expect(mockRes.status).toHaveBeenCalledWith(412);
-      expect(mockRes.send).toBeCalled();
-    });
-
-
-     test('updateUser must return 412', async() => {
-       mockReq.params = 1 ;
-       models.User.update.mockRejectedValue(mockReq.params);
-       await userController.v1.updateUser(mockReq, mockRes);
-       expect(mockRes.status).toHaveBeenCalledWith(412);
-       expect(mockRes.send).toBeCalled();
-     });
-
-
-     test('deleteUser must return 412', async() => {
-       mockReq.params = 1 ;
-       models.User.destroy.mockRejectedValue(mockReq.params);
-       await userController.v1.deleteUser(mockReq, mockRes);
-       expect(mockRes.status).toHaveBeenCalledWith(412);
-       expect(mockRes.send).toBeCalled();
-     });
-  
+    
+        test("getAll must return 500 ", async () => {
+          models.User.findAll.mockRejectedValue();
+          await userController.v1.getAll(mockReq, mockRes);
+          expect(mockRes.status).toHaveBeenCalledWith(500);
+          expect(mockRes.send).toBeCalled();
+        });
+    
+        test('getUserByid must return 404', async() => {
+          models.User.findByPk.mockResolvedValue();
+          await userController.v1.getById(mockReq, mockRes);
+          expect(mockRes.send).toBeCalled();
+          expect(mockRes.status).toHaveBeenCalledWith(404);
+         
+        });
+        test('getUserByid must return 500', async() => {
+          models.User.findByPk.mockRejectedValue();
+          await userController.v1.getById(mockReq, mockRes);
+          expect(mockRes.send).toBeCalled();
+          expect(mockRes.status).toHaveBeenCalledWith(500);
+         
+        });
+    
+        
+        test('createUser must return 500', async() => {
+          models.User.create.mockRejectedValue();
+          await userController.v1.createUser(mockReq, mockRes);
+          expect(mockRes.status).toHaveBeenCalledWith(500);
+          expect(mockRes.send).toBeCalled();
+        });
+    
+    
+         test('updateUser must return 500', async() => {
+           mockReq.params = 1 ;
+           models.User.update.mockRejectedValue(mockReq.params);
+           await userController.v1.updateUser(mockReq, mockRes);
+           expect(mockRes.status).toHaveBeenCalledWith(500);
+           expect(mockRes.send).toBeCalled();
+         });
+    
+    
+         test('deleteUser must return 500', async() => {
+           mockReq.params = 1 ;
+           models.User.destroy.mockRejectedValue(mockReq.params);
+           await userController.v1.deleteUser(mockReq, mockRes);
+           expect(mockRes.status).toHaveBeenCalledWith(500);
+           expect(mockRes.send).toBeCalled();
+         });
+ 
+      });
 });
+

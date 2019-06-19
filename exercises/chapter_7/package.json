@@ -5,7 +5,7 @@
   "main": "src/api-server/server.js",
   "scripts": {
     "start": "nodemon node src/api-server/server",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "author": "",
   "license": "ISC",

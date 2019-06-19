@@ -1,6 +1,3 @@
-//const _ =require('lodash');
-const actions=require('./actions');
-const joi= require('joi');
 const models = require('../../models');
 
 
@@ -21,16 +18,15 @@ module.exports={
  */
 
 function getAll(req,res){
-   models.Role.findAll({})
+  return models.Role.findAll({})
    .then(result => res.status(200).send(result))
    .catch(error => {
-    res.status(412).send({ message: error.message })
+    res.status(500).send({ message: "error" })
 });
 }
 
 function getById(req,res){
-    console.log(req.params);
-    models.Role.findByPk(req.params.id)
+    return models.Role.findByPk(req.params.id)
     .then(result => {
     if (result){
         res.status(200).send(result)
@@ -39,36 +35,36 @@ function getById(req,res){
     }
 })  
     .catch(error => {
-        res.status(412).send({ message: "Not found" });
+        res.status(500).send({ message: "error" });
     });
           
 }
 
 function createRole(req, res){
-    models.Role.create({
+   return models.Role.create({
         name: req.body.name
     })
     .then(result => {res.status(201).send();
     })
     .catch(error => {
-        res.status(412).send({msg: error.message});
+        res.status(500).send({msg: "error"});
     })
    
 }
 
 function updateRole(req, res){
-    models.Role.update(req.body, {where: req.params})
+   return models.Role.update(req.body, {where: req.params})
     .then(result => {res.status(201).send();})
     .catch(error => {
-        res.status(412).send({msg: error.message});
+        res.status(500).send({msg: error.message});
     })
 }
 
 function deleteRole(req, res){
-    models.Role.destroy({where: req.params})
+    return models.Role.destroy({where: req.params})
     .then(result => {res.status(204).send();})
     .catch(error => {
-        res.status(412).send({msg: error.message});
+        res.status(500).send({msg: error.message});
     })
 }
 
