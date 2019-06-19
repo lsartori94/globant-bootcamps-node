@@ -1,93 +1,52 @@
-
-const Joi = require('joi');
+const models = require("../../models");
 
 module.exports = {
     v1: {
-        validateId: validateId,
-        validateBodyPost: validateBodyPost,
-        validateBodyPut: validateBodyPut
+        // Initial version
+        getAll: getAll,
+        getUserById: getUserById,
+        createUser: createUser,
+        deleteUser: deleteUser,
+        updateUser: updateUser
     }
-}
- 
+};
 
-/**
- * Validates the params received from the body of the post request
- * @param {Object} req
- * @param {Object} res
- * @param {*} next
- */
-function validateBodyPost(req, res, next) {
-	const schema = Joi.object().keys({
-		name: Joi.string().required().min(4),
-        password: Joi.string().required().min(6),
-        lastname: Joi.string().required(),
-        email: Joi.string().required().email(),
-        ProfileId: Joi.number().positive().integer().required() 
-	});
-	const data = req.body;
-	Joi.validate(data, schema, (err, value) => {
-		if (err) {
-			res.status(422).json({
-				status: "error",
-				message: "Invalid format of params",
-				data: data
-			});
-		} else {
-			next();
-		}
-	});
+function getAll() {
+    return models.User.findAll();
 }
 
-
-/**
- * Validates the params received from the body of the put request
- * @param {Object} req
- * @param {Object} res
- * @param {*} next
- */
-function validateBodyPut(req, res, next) {
-	const schema = Joi.object().keys({
-		name: Joi.string().min(4),
-        password: Joi.string().min(6),
-        lastname: Joi.string(),
-        email: Joi.string().email(),
-        ProfileId: Joi.number().positive().integer()
-	});
-	const data = req.body;
-	Joi.validate(data, schema, (err, value) => {
-		if (err) {
-			res.status(422).json({
-				status: "error",
-				message: "Invalid format of params",
-				data: data
-			});
-		} else {
-			next();
-		}
-	});
+function getUserById(userId) {
+    return models.User.findByPk(userId)
 }
 
-/**
- * Validates the id received from the params
- * @param {Object} req 
- * @param {Object} res 
- * @param {*} next 
- */
-function validateId(req, res, next) {
-    const schema = Joi.object().keys({
-        userId: Joi.number().positive().integer().required()
-    });
-    const data = req.params;
-    Joi.validate(data, schema, (err) => {
-        if (err) {
-            res.status(422).json({
-                status: 'error',
-                message: 'Invalid ID',
-                data: data
-            })
-        } else {
-            next();
-        }
-	})
+function createUser(user) {
+    return models.User.create({
+        name: user.name,
+        lastname: user.lastname,
+        password: user.password,
+        email: user.email,
+        ProfileId: user.ProfileId
+    })
+}
 
+function deleteUser(userId) {
+    return getUserById(userId).then(user => {
+        if (!!user) {
+            user.destroy();
+            return "User destroyed"
+         }
+    })
+
+}
+
+function updateUser(userId, userBody) {
+    return getUserById(userId).then(user => {
+        return user.update({
+            name: user.name,
+            lastname: user.lastname,
+            password: user.password,
+            email: user.email,
+            ProfileId: user.ProfileId
+        }, { omitNull: true })
+    })
 }

@@ -1,131 +1,45 @@
-const profileActions = require('./actions');
-
-describe('Profile actions happy path', () => {
-  let mockReq,
-    mockNext,
-    mockRes;
-
-  beforeEach(() => {
-    mockRes = {
-      status: jest.fn(),
-      send: jest.fn(),
-      json: jest.fn()
-    };
-    mockNext = jest.fn();
-    mockRes.status.mockReturnValue(mockRes);
-    mockReq = {
-      params: {},
-      body: {
-        name: "",
-        description: ""
-      }
-    };
-    mockJoi = jest.fn();
-    mockJoi.validate = jest.fn().mockImplementation((value, err) => { });
-  });
-
-  test('ValidateId must call next', () => {
-    mockReq.params = { profileId: 1 };
-    profileActions.v1.validateId(mockReq, mockRes, mockNext);
-    expect(mockNext).toBeCalled();
-  });
-
-  test('ValidateBodyPost must call next', () => {
-    mockReq.body = {
-      name: "Un nombre",
-      description: "Una descripcion"
-    }
-    profileActions.v1.validateBodyPost(mockReq, mockRes, mockNext);
-    expect(mockNext).toBeCalled();
-  });
-
-  test('ValidateBodyPut must call next', () => {
-    mockReq.body = {
-      name: "Un nombre",
-      description: "Una descripcion"
-    };
-    mockReq.params = { profileId: 1 };
-    profileActions.v1.validateBodyPut(mockReq, mockRes, mockNext);
-    expect(mockNext).toBeCalled();
-  });
-
-  test('validateUsersId must call next', ()=>{
-    mockReq.body = {
-      usersId: [1,2]
-    };
-    mockReq.params = { profileId: 1 };
-    profileActions.v1.validateUsersId(mockReq, mockRes, mockNext);
-    expect(mockNext).toBeCalled();
-  });
-
-});
+const model = require("../../models");
+const profileMock = require('../../../test-helpers/profiles');
+const actions = require("./actions");
 
 
+describe('profile actions happy path', () => { 
+    beforeEach(() => {
+        model.Profile.findAll = jest.fn().mockReturnValue(Promise.resolve(profileMock.ALL_PROFILES));
+        model.Profile.findByPk = jest.fn().mockReturnValue(Promise.resolve(profileMock.ALL_PROFILES[0]));
+        model.Profile.create = jest.fn().mockReturnValue(Promise.resolve(model.Profile));
+        model.Profile.update = jest.fn().mockReturnValue(Promise.resolve(model.Profile));
+        model.Profile.delete = jest.fn().mockReturnValue(Promise.resolve(model.Profile));
+    });
 
-describe('profile actions bad path', () => {
-  let mockReq,
-    mockNext,
-    mockRes;
+    test('getAll must return all profileMock',async () => {
+       let profiles = await actions.v1.getAll();
+       expect(profiles).toBe(profileMock.ALL_PROFILES);
+    });
+    
+    test('getProfileById must return one profile',async () => {
+        let profileId=1;
+        let profile = await actions.v1.getProfileById(profileId);
+        expect(profile).toBe(profileMock.ALL_PROFILES[0]);
+     });
 
-  beforeEach(() => {
-    mockRes = {
-      status: jest.fn(),
-      send: jest.fn(),
-      json: jest.fn()
-    };
-    mockNext = jest.fn();
-    mockRes.status.mockReturnValue(mockRes);
-    mockReq = {
-      params: {},
-      body: {
-        name: "",
-        description: ""
-      }
-    };
-    mockJoi = jest.fn();
-    mockJoi.validate = jest.fn().mockImplementation((value, err) => { });
-  });
+         
+    test('createprofile must return a profile',async () => {
+        let profile={
+            name: "nombre"
+        };
+        let newProfile = await actions.v1.createProfile(profile);
+        expect(newProfile).toBe(model.Profile);
+     });
+         
+     test('updateProfile must return a profile',async () => {
+        let profile={
+            name: "nombre nuevo"
+        };
+        model.Profile.findByPk = jest.fn().mockReturnValue(Promise.resolve(model.Profile));
+        let newProfile = await actions.v1.updateProfile(1, profile);
+        expect(newProfile).toBe(model.Profile);
+     });
 
-
-  test('ValidateId must return 422', () => {
-    profileActions.v1.validateId(mockReq, mockRes, mockNext);
-    expect(mockRes.json).toBeCalled();
-    expect(mockRes.status).toHaveBeenCalledWith(422);
-  });
-
-
-  test('ValidateBodyPost must call next', () => {
-    profileActions.v1.validateBodyPost(mockReq, mockRes, mockNext);
-    expect(mockRes.json).toBeCalled();
-    expect(mockRes.status).toHaveBeenCalledWith(422);
-  });
-
-  test('ValidateBodyPut must return 422', () => {
-    mockReq.params = { profileId: 1 };
-    profileActions.v1.validateBodyPut(mockReq, mockRes, mockNext);
-    expect(mockRes.json).toBeCalled();
-    expect(mockRes.status).toHaveBeenCalledWith(422); 
-    mockReq.body = {
-      name: "Un nombre",
-      description: "Una descripcion"
-    };
-    mockReq.params = { profileId: 0 };    
-    expect(mockRes.json).toBeCalled();
-    expect(mockRes.status).toHaveBeenCalledWith(422);
-  });
-
-  test('validateUsersId must return 422', ()=>{
-    mockReq.params = { profileId: 1 };
-    profileActions.v1.validateUsersId(mockReq, mockRes, mockNext);
-    expect(mockRes.json).toBeCalled();
-    expect(mockRes.status).toHaveBeenCalledWith(422);
-    mockReq.body = {
-      usersId: [1,2]
-    };
-    mockReq.params ={};
-    profileActions.v1.validateUsersId(mockReq, mockRes, mockNext);
-    expect(mockNext).toBeCalled();
-    expect(mockRes.status).toHaveBeenCalledWith(422);
-  });
 
 })

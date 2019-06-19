@@ -3,7 +3,7 @@
 
 const config = require("../../core/config");
 const roles = require("./controllers");
-const validator = require("./actions");
+const validator = require("./validator");
 
 module.exports = function initRoutes(app) {
 	// Roles resource base route

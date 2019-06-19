@@ -1,105 +1,45 @@
-const roleActions = require('./actions');
-
-describe('Role actions happy path', () => {
-  let mockReq,
-    mockNext,
-    mockRes;
-
-  beforeEach(() => {
-    mockRes = {
-      status: jest.fn(),
-      send: jest.fn(),
-      json: jest.fn()
-    };
-    mockNext = jest.fn();
-    mockRes.status.mockReturnValue(mockRes);
-    mockReq = {
-      params: {},
-      body: {
-        name: ""
-      }
-    };
-    mockJoi = jest.fn();
-    mockJoi.validate = jest.fn().mockImplementation((value, err) => { });
-  });
-
-  test('ValidateId must call next', () => {
-    mockReq.params = { roleId: 1 };
-    roleActions.v1.validateId(mockReq, mockRes, mockNext);
-    expect(mockNext).toBeCalled();
-  });
-
-  test('ValidateBodyPost must call next', () => {
-    mockReq.body = {
-      name: "Un nombre"
-    }
-    roleActions.v1.validateBodyPost(mockReq, mockRes, mockNext);
-    expect(mockNext).toBeCalled();
-  });
-
-  test('ValidateBodyPut must call next', () => {
-    mockReq.body = {
-      name: "Un nombre"
-    };
-    mockReq.params = { roleId: 1 };
-    roleActions.v1.validateBodyPut(mockReq, mockRes, mockNext);
-    expect(mockNext).toBeCalled();
-  });
+const model = require("../../models");
+const roleMock = require('../../../test-helpers/roles');
+const actions = require("./actions");
 
 
-});
+describe('role actions happy path', () => { 
+    beforeEach(() => {
+        model.Role.findAll = jest.fn().mockReturnValue(Promise.resolve(roleMock.ALL_ROLES));
+        model.Role.findByPk = jest.fn().mockReturnValue(Promise.resolve(roleMock.ALL_ROLES[0]));
+        model.Role.create = jest.fn().mockReturnValue(Promise.resolve(model.Role));
+        model.Role.update = jest.fn().mockReturnValue(Promise.resolve(model.Role));
+        model.Role.delete = jest.fn().mockReturnValue(Promise.resolve(model.Role));
+    });
 
+    test('getAll must return all roleMock',async () => {
+       let roles = await actions.v1.getAll();
+       expect(roles).toBe(roleMock.ALL_ROLES);
+    });
+    
+    test('getRoleById must return one role',async () => {
+        let roleId=1;
+        let role = await actions.v1.getRoleById(roleId);
+        expect(role).toBe(roleMock.ALL_ROLES[0]);
+     });
 
+         
+    test('createRole must return a role',async () => {
+        let role={
+            name: "nombre"
+        };
+        let newRole = await actions.v1.createRole(role);
+        expect(newRole).toBe(model.Role);
+     });
+         
+     test('updateRole must return a role',async () => {
+        let role={
+            name: "nombre nuevo"
+        };
+        model.Role.findByPk = jest.fn().mockReturnValue(Promise.resolve(model.Role));
+        let newRole = await actions.v1.updateRole(1, role);
+        expect(newRole).toBe(model.Role);
+     });
 
-describe('role actions bad path', () => {
-  let mockReq,
-    mockNext,
-    mockRes;
-
-  beforeEach(() => {
-    mockRes = {
-      status: jest.fn(),
-      send: jest.fn(),
-      json: jest.fn()
-    };
-    mockNext = jest.fn();
-    mockRes.status.mockReturnValue(mockRes);
-    mockReq = {
-      params: {},
-      body: {
-        name: ""
-      }
-    };
-    mockJoi = jest.fn();
-    mockJoi.validate = jest.fn().mockImplementation((value, err) => { });
-  });
-
-
-  test('ValidateId must return 422', () => {
-    roleActions.v1.validateId(mockReq, mockRes, mockNext);
-    expect(mockRes.json).toBeCalled();
-    expect(mockRes.status).toHaveBeenCalledWith(422);
-  });
-
-
-  test('ValidateBodyPost must call next', () => {
-    roleActions.v1.validateBodyPost(mockReq, mockRes, mockNext);
-    expect(mockRes.json).toBeCalled();
-    expect(mockRes.status).toHaveBeenCalledWith(422);
-  });
-
-  test('ValidateBodyPut must return 422', () => {
-    mockReq.params = { roleId: 1 };
-    roleActions.v1.validateBodyPut(mockReq, mockRes, mockNext);
-    expect(mockRes.json).toBeCalled();
-    expect(mockRes.status).toHaveBeenCalledWith(422); 
-    mockReq.body = {
-      name: "Un nombre"
-    };
-    mockReq.params = { roleId: 0 };    
-    expect(mockRes.json).toBeCalled();
-    expect(mockRes.status).toHaveBeenCalledWith(422);
-
-  });
 
 })

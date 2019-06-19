@@ -1,7 +1,7 @@
 /*! Copyright Globant. All rights reserved. */
 
-const models = require("../../models");
 const _ = require("lodash");
+const actions = require("./actions");
 
 module.exports = {
 	v1: {
@@ -22,13 +22,12 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-	return models.Role.findAll({})
+	return actions.v1.getAll()
 		.then(roles => {
-			res.status(200).send(roles);
+			 res.status(200).send(roles);
+		}).catch(err => {
+			res.status(500).send(err);
 		})
-		.catch(err => {
-			res.status(404).send(err);
-		});
 }
 
 /**
@@ -37,9 +36,9 @@ function getAll(req, res) {
  * @param {Object} res
  */
 function getRoleById(req, res) {
-	return models.Role.findByPk(req.params.roleId)
+	return actions.v1.getRoleById(req.params.roleId)
 		.then(role => {
-			if (role) {
+			if (!!role) {
 				res.status(200).send(role);
 			} else {
 				res.status(404).send({ msg: "Role doesn't exists" });
@@ -51,9 +50,7 @@ function getRoleById(req, res) {
 }
 
 function createRole(req, res) {
-	return models.Role.create({
-		name: req.body.name
-	})
+	return actions.v1.createRole(req.body)
 		.then(() => {
 			res.status(200).send("Role created");
 		})
@@ -63,31 +60,27 @@ function createRole(req, res) {
 }
 
 function updateRole(req, res) {
-	return models.Role.findByPk(req.params.roleId).then(role => {
-		if (role) {
-			role.update({
-				name: req.body.name
-			}, { omitNull: true }).then(succes => {
-				res.status(200).send(role)
-			});
-		} else {
-			res.status(404).send("roleId does't exists");
-		}
-	}).catch(err => {
-		res.status(500).send(err);
-	})
+	return actions.v1.updateRole(req.params.roleId, req.body)
+		.then(role => {
+			if (!!role) {
+				res.status(200).send(role);
+			} else {
+				res.status(404).send("Role doesnt exists")
+			}
+		})
+		.catch(err => {
+			res.status(500).send(err);
+		});
+
 }
 
 function deleteRole(req, res) {
-	return models.Role.findByPk(req.params.roleId)
-		.then(role => {
-			if (role) {
-				role.destroy()
-					.then(succes => {
-						res.status(200).send("Role destroyed");
-					});
+	return actions.v1.deleteRole(req.params.roleId)
+		.then((role) => {
+			if (!!role) {
+				res.status(200).send("Role destroy");
 			} else {
-				res.status(404).send("RoleId does't exists");
+				res.status(404).send("Role doesnt exists")
 			}
 		})
 		.catch(err => {

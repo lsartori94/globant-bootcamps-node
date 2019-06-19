@@ -1,113 +1,47 @@
-const Joi = require("joi");
+const models = require("../../models");
 
 module.exports = {
 	v1: {
-		validateId: validateId,
-		validateBodyPost: validateBodyPost,
-		validateBodyPut: validateBodyPut,
-		validateUsersId: validateUsersId
+		// Initial version
+		getAll: getAll,
+		getProfileById: getProfileById,
+		createProfile: createProfile,
+		deleteProfile: deleteProfile,
+		updateProfile: updateProfile
 	}
 };
 
-/**
- * Validates the params received from the body of the post request
- * @param {Object} req
- * @param {Object} res
- * @param {*} next
- */
-function validateBodyPost(req, res, next) {
-	const schema = Joi.object().keys({
-		name: Joi.string()
-			.required()
-			.min(4),
-		description: Joi.string().required()
-	});
-	const data = req.body;
-	Joi.validate(data, schema, (err, value) => {
-		if (err) {
-			res.status(422).json({
-				status: "error",
-				message: "Invalid format of params",
-				data: data
-			});
-		} else {
-			next();
-		}
-	});
+function getAll(){
+	return models.Profile.findAll();
 }
 
-/**
- * Validates the params received from the body of the put request
- * @param {Object} req
- * @param {Object} res
- * @param {*} next
- */
-function validateBodyPut(req, res, next) {
-	const schema = Joi.object().keys({
-		name: Joi.string()
-			.min(4),
-		description: Joi.string()
-	});
-	const data = req.body;
-	Joi.validate(data, schema, (err, value) => {
-		if (err) {
-			res.status(422).json({
-				status: "error",
-				message: "Invalid format of params",
-				data: data
-			});
-		} else {
-			next();
-		}
-	});
+function getProfileById(profileId){
+    return models.Profile.findByPk(profileId)
 }
 
-/**
- * Validates the id received from the params
- * @param {Object} req
- * @param {Object} res
- * @param {*} next
- */
-function validateId(req, res, next) {
-	const schema = Joi.object().keys({
-		profileId: Joi.number().positive().integer().required()
-	});
-	const data = req.params;
-	Joi.validate(data, schema, (err, value) => {
-		if (err) {
-			res.status(422).json({
-				status: "error",
-				message: "Invalid ID",
-				data: data
-			});
-		} else {
-			next();
-		}
-    });
+function createProfile(profile){
+    return models.Profile.create({
+        name: profile.name,
+        description: profile.description
+	})
 }
 
-/**
- * Validates the id received from the params
- * @param {Object} req
- * @param {Object} res
- * @param {*} next
- */
-function validateUsersId(req, res, next) {
-	const schema = Joi.object().keys({
-		usersId: Joi.array().items(Joi.number().positive().integer().required())
-	});
-	const data = req.body;
-	Joi.validate(data, schema, (err, value) => {
-		if (err) {
-			res.status(422).json({
-				status: "error",
-				message: "Invalid usersId",
-				data: data
-			});
-		} else {
-			next();
-		}
-    });
-    
+function deleteProfile(profileId){
+    return getProfileById(profileId).then(profile => {
+        if (!!profile) {
+            profile.destroy();
+            return "User destroyed"
+         }
+    })
+
 }
 
+function updateProfile(profileId, profileBody){
+    return getProfileById(profileId).then(profile => {
+        return profile.update({
+            name: profileBody.name,
+            description: profileBody.description
+        }, { omitNull: true })
+    })
+
+}

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for api-server/resources/users/controllers.js</title>
+    <title>Code coverage report for api-server/resources/users/validator.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="..\..\..\prettify.css" />
     <link rel="stylesheet" href="..\..\..\base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="..\..\..\index.html">All files</a> / <a href="index.html">api-server/resources/users</a> controllers.js
+      <a href="..\..\..\index.html">All files</a> / <a href="index.html">api-server/resources/users</a> validator.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>24/24</span>
+        <span class='fraction'>20/20</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>15/15</span>
+        <span class='fraction'>6/6</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>24/24</span>
+        <span class='fraction'>20/20</span>
       </div>
     </div>
     <p class="quiet">
@@ -140,14 +140,9 @@
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -165,166 +160,171 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*! Copyright Globant. All rights reserved. */
-&nbsp;
-const _ = require("lodash");
-const actions = require("./actions");
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+const Joi = require('joi');
 &nbsp;
 module.exports = {
-	v1: {
-		// Initial version
-		getAll: getAll,
-		getUserById: getUserById,
-		createUser: createUser,
-		deleteUser: deleteUser,
-		updateUser: updateUser
-	}
-};
-&nbsp;
-/////////////////////////////////////////////////////////////
-&nbsp;
-/**
- * Retrieve all users
- * @param {Object} req - http.ServerRequest
- * @param {Object} res - http.ServerResponse
- */
-function getAll(req, res) {
-	return actions.v1.getAll()
-		.then(users =&gt; {
-			 res.status(200).send(users);
-		}).catch(err =&gt; {
-			res.status(500).send(err);
-		})
+    v1: {
+        validateId: validateId,
+        validateBodyPost: validateBodyPost,
+        validateBodyPut: validateBodyPut
+    }
 }
+ 
 &nbsp;
 /**
- * Returns a single user finded by his id
+ * Validates the params received from the body of the post request
  * @param {Object} req
  * @param {Object} res
+ * @param {*} next
  */
-function getUserById(req, res) {
-	return actions.v1.getUserById(req.params.userId)
-		.then(user =&gt; {
-			if (!!user) {
-				res.status(200).send(user);
-			} else {
-				res.status(404).send({ msg: "User doesn't exists" });
-			}
-		})
-		.catch(err =&gt; {
-			res.status(500).send(err);
-		});
-}
-&nbsp;
-function createUser(req, res) {
-	return actions.v1.createUser(req.body)
-		.then(() =&gt; {
-			res.status(200).send("User created");
-		})
-		.catch(err =&gt; {
-			res.status(500).send(err);
-		});
-}
-&nbsp;
-function updateUser(req, res) {
-	return actions.v1.updateUser(req.params.userId, req.body)
-		.then(user =&gt; {
-			if (!!user) {
-				res.status(200).send(user);
-			} else {
-				res.status(404).send("User doesnt exists")
-			}
-		})
-		.catch(err =&gt; {
-			res.status(500).send(err);
-		});
-&nbsp;
-}
-&nbsp;
-function deleteUser(req, res) {
-	return actions.v1.deleteUser(req.params.userId)
-		.then((user) =&gt; {
-			if (!!user) {
-				res.status(200).send("User destroy");
-			} else {
-				res.status(404).send("User doesnt exists")
-			}
-		})
-		.catch(err =&gt; {
-			res.status(500).send(err);
-		});
-&nbsp;
+function validateBodyPost(req, res, next) {
+	const schema = Joi.object().keys({
+		name: Joi.string().required().min(4),
+        password: Joi.string().required().min(6),
+        lastname: Joi.string().required(),
+        email: Joi.string().required().email(),
+        ProfileId: Joi.number().positive().integer().required() 
+	});
+	const data = req.body;
+	Joi.validate(data, schema, (err, value) =&gt; {
+		if (err) {
+			res.status(422).json({
+				status: "error",
+				message: "Invalid format of params",
+				data: data
+			});
+		} else {
+			next();
+		}
+	});
 }
 &nbsp;
 &nbsp;
+/**
+ * Validates the params received from the body of the put request
+ * @param {Object} req
+ * @param {Object} res
+ * @param {*} next
+ */
+function validateBodyPut(req, res, next) {
+	const schema = Joi.object().keys({
+		name: Joi.string().min(4),
+        password: Joi.string().min(6),
+        lastname: Joi.string(),
+        email: Joi.string().email(),
+        ProfileId: Joi.number().positive().integer()
+	});
+	const data = req.body;
+	Joi.validate(data, schema, (err, value) =&gt; {
+		if (err) {
+			res.status(422).json({
+				status: "error",
+				message: "Invalid format of params",
+				data: data
+			});
+		} else {
+			next();
+		}
+	});
+}
 &nbsp;
+/**
+ * Validates the id received from the params
+ * @param {Object} req 
+ * @param {Object} res 
+ * @param {*} next 
+ */
+function validateId(req, res, next) {
+    const schema = Joi.object().keys({
+        userId: Joi.number().positive().integer().required()
+    });
+    const data = req.params;
+    Joi.validate(data, schema, (err) =&gt; {
+        if (err) {
+            res.status(422).json({
+                status: 'error',
+                message: 'Invalid ID',
+                data: data
+            })
+        } else {
+            next();
+        }
+	})
+&nbsp;
+}
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->

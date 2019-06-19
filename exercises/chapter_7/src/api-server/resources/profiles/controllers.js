@@ -1,7 +1,7 @@
 /*! Copyright Globant. All rights reserved. */
-
-const models = require("../../models");
+const models = require('../../models');
 const _ = require("lodash");
+const actions = require("./actions");
 
 module.exports = {
 	v1: {
@@ -21,13 +21,12 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAll(req, res) {
-	return models.Profile.findAll({})
-		.then(profiles => {
-			res.status(200).send(profiles);
+	return actions.v1.getAll()
+		.then(users => {
+			 res.status(200).send(users);
+		}).catch(err => {
+			res.status(500).send(err);
 		})
-		.catch(err => {
-			res.status(404).send(err);
-		});
 }
 
 /**
@@ -36,9 +35,9 @@ function getAll(req, res) {
  * @param {Object} res
  */
 function getProfileById(req, res) {
-	return models.Profile.findByPk(req.params.profileId)
+	return actions.v1.getProfileById(req.params.profileId)
 		.then(profile => {
-			if (profile) {
+			if (!!profile) {
 				res.status(200).send(profile);
 			} else {
 				res.status(404).send({ msg: "Profile doesn't exists" });
@@ -50,11 +49,8 @@ function getProfileById(req, res) {
 }
 
 function createProfile(req, res) {
-	return models.Profile.create({
-		name: req.body.name,
-		description: req.body.description
-	})
-		.then(succes => {
+	return actions.v1.createProfile(req.body)
+		.then(() => {
 			res.status(200).send("Profile created");
 		})
 		.catch(err => {
@@ -66,7 +62,7 @@ function setProfileToUsers(req, res) {
 	return models.Profile.findByPk(req.params.profileId)
 		.then(profile => {
 			if (profile) {
-				models.User.update({ ProfileId: req.params.profileId }, { omitNull: true, where: { id: req.body.usersId } })
+				return models.User.update({ ProfileId: req.params.profileId }, { omitNull: true, where: { id: req.body.usersId } })
 					.then(() => {
 						res.status(200).send("Users updated");
 					})
@@ -81,33 +77,26 @@ function setProfileToUsers(req, res) {
 }
 
 function updateProfile(req, res) {
-	return models.Profile.findByPk(req.params.profileId)
+	return actions.v1.updateProfile(req.params.profileId, req.body)
 		.then(profile => {
-			if (profile) {
-				profile.update({
-					name: req.body.name,
-					description: req.body.description
-				}, { omitNull: true }).then(() => {
-					res.status(200).send(profile)
-				});
+			if (!!profile) {
+				res.status(200).send(profile);
 			} else {
-				res.status(404).send("profileId does't exists");
+				res.status(404).send("Profile doesnt exists")
 			}
-		}).catch(err => {
-			res.status(500).send(err);
 		})
+		.catch(err => {
+			res.status(500).send(err);
+		});
 }
 
 function deleteProfile(req, res) {
-	return models.Profile.findByPk(req.params.profileId)
-		.then(profile => {
-			if (profile) {
-				profile.destroy()
-					.then(succes => {
-						res.status(200).send("Profile destroyed");
-					});
+	return actions.v1.deleteProfile(req.params.profileId)
+		.then((profile) => {
+			if (!!profile) {
+				res.status(200).send("Profile destroy");
 			} else {
-				res.status(404).send("ProfileId does't exists");
+				res.status(404).send("Profile doesnt exists")
 			}
 		})
 		.catch(err => {
