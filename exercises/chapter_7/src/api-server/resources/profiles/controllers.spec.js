@@ -20,25 +20,22 @@ describe('Profile controller', () => {
         body: {}
       };
       mockNext = jest.fn();
-      model.Profile.getAll = jest.fn().mockReturnValue(Promise.resolve(profileMock.ALL_PROFILES));
-      model.Profile.getOneByid = jest.fn().mockReturnValue(Promise.resolve(profileMock.ALL_PROFILES[0]));
-      model.Profile.createProfile = jest.fn().mockReturnValue(Promise.resolve( profileMock));
-      model.Profile.deleteProfile = jest.fn().mockReturnValue(Promise.resolve( profileMock));
-      model.Profile.assignprofile = jest.fn().mockReturnValue(Promise.resolve( profileMock));
-
+  
 
 
      
       model.Profile.findAll= jest.fn();
-      model.Profile.findOne= jest.fn();
-      model.Profile.destroy= jest.fn();
-      model.Profile.create= jest.fn();
-      model.Profile.update= jest.fn();
+      model.Profile.findOne= jest.fn().mockReturnValue(Promise.resolve(profileMock.ALL_PROFILES[0]));
+      model.Profile.destroy= jest.fn().mockReturnValue(Promise.resolve(profileMock));
+      model.Profile.create= jest.fn().mockReturnValue(Promise.resolve(profileMock.ALL_PROFILES[0]));
+      model.Profile.update= jest.fn().mockReturnValue(1);
+      model.User.update=jest.fn().mockReturnValue(1);
            
 
     });
 
     test('get allProfiles must return 200', async () => {
+      
       await profileController.v1.getAll(mockReq, mockRes, mockNext);
       
       expect(mockRes.status).toHaveBeenCalledWith(200);
@@ -47,7 +44,7 @@ describe('Profile controller', () => {
 
     test('get a profile by Id  must return 200', async () => {
 
-        await profileController.v1.getOneByid(mockReq, mockRes);
+        await profileController.v1.getOneByid(mockReq, mockRes,mockNext);
         
         expect(mockRes.status).toHaveBeenCalledWith(200);
         expect(mockRes.json).toBeCalled();

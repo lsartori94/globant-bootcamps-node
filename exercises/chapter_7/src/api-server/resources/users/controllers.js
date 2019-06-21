@@ -42,7 +42,7 @@ async function getAll(req, res) {
 
     });
     console.log(users[0]);
-    res.json({ users });
+    res.status(200).json({ users });
 
 }
 
@@ -61,7 +61,7 @@ async function getOneByid(req, res) {
         res.status(404).send('No se encuentra el id buscado');
 
     } else {
-        res.json(user);
+        res.status(200).json(user);
 
     }
 
@@ -95,7 +95,7 @@ async function createUser(req, res) {
         });
 
 
-    res.json(({ message: "new user created" }))
+    res.status(200).json(({ message: "new user created" }))
 
 }
 // ojo delete tira user deleted si no encuentra id
@@ -109,9 +109,9 @@ async function deleteUser(req, res) {
     })
     //console.log(deleted,'a');
     if (deleted != 0) {
-        res.json({ message: `User with id: ${id}, was deleted` })
+        res.status(200).json({ message: `User with id: ${id}, was deleted` })
     } else {
-        res.json({ message: `User with id: ${id} no exists` })
+        res.status(404).json({ message: `User with id: ${id} no exists` })
     }
 }
 
@@ -138,7 +138,7 @@ async function updateUser(req, res) {
             where: { id }
         })
     if (updatedUser == 1) {
-        res.json({
+        res.status(200).json({
             message: 'User updated successfully',
 
         });

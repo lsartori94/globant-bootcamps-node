@@ -44,9 +44,13 @@ async function getOneByid(req, res) {
         attributes: ['id', 'name', 'description'],
     });
 
+    if (profile == null) {
+        res.status(404).send('No se encuentra el id buscado');
 
-    res.status(200).json(profile);
+    } else {
+        res.status(200).json(profile);
 
+    }
 
 
 }
@@ -79,7 +83,7 @@ async function deleteProfile(req, res) {
     if (deleted != 0) {
         res.status(200).json({ message: `profile with id: ${id}, was deleted` })
     } else {
-        res.json({ message: `profile with id: ${id} no exists` })
+        res.status(404).json({ message: `profile with id: ${id} no exists` })
     }
 }
 
@@ -104,11 +108,18 @@ async function updateProfile(req, res) {
             where: { id }
         })
 
-    res.status(200).json({
-        message: 'Profile updated successfully',
+    if (updatedProfile == 1) {
+        res.status(200).json({
+            message: 'Profile updated successfully',
 
-    });
+        });
+    } else {
+        res.status(400).json({
+            message: 'Some error occurred',
 
+        });
+
+    }
 }
 
 async function assignprofile(req, res) {
@@ -119,20 +130,20 @@ async function assignprofile(req, res) {
     })
     const updatedUsers = await models.User.update({ ProfileId: id }, { omitNull: true, where: { id: req.body.listUsers } })
 
-   // if (updatedUsers != 0) {
+    if (updatedUsers != 0) {
         res.status(200).json({
             message: 'updated Users successfully'
 
         });
-/*
+
     } else {
         res.status(404).json({
             message: 'updated Users unsuccessfully'
 
         });
     }
-*/
-
-
-
 }
+
+
+
+

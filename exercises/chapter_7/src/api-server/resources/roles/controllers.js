@@ -25,21 +25,21 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 async function getAll(req, res) {
-    const roles = await models.Rol.findAll({
+    const roles = await models.Role.findAll({
         attributes: ['id', 'name'],
         order: [
             ['id', 'DESC']
         ]
     });
     console.log(roles[0]);
-    res.json({ roles });
+    res.status(200).json({ roles });
 
 };
 
 
 async function getOneById(req,res) {
     const {id} = req.params;
-    const rol = await models.Rol.findOne({
+    const rol = await models.Role.findOne({
         where: { id },
         attributes: ['id', 'name'],
     });
@@ -48,7 +48,7 @@ async function getOneById(req,res) {
         res.status(404).send('No se encuentra el id buscado');
 
     } else {
-        res.json(rol);
+        res.status(200).json(rol);
 
     }
 
@@ -59,28 +59,28 @@ async function getOneById(req,res) {
 async function createRol(req,res){
     const {name} = req.body;
 
-    const newRol = await models.Rol.create({
+    const newRol = await models.Role.create({
         name
     },{
         fields:['name']
     });
-    res.json(({message:"new Rol created"}))
+    res.status(200).json(({message:"new Rol created"}))
 
 }
 
 async function deleteRol(req,res){
     const {id} = req.params;
 
-    const deleted = await models.Rol.destroy({
+    const deleted = await models.Role.destroy({
         where:{
             id
         }
     })
 
     if (deleted != 0) {
-        res.json({ message: `Rol with id: ${id}, was deleted` })
+        res.status(200).json({ message: `Rol with id: ${id}, was deleted` })
     } else {
-        res.json({ message: `Rol with id: ${id} no exists` })
+        res.status(404).json({ message: `Rol with id: ${id} no exists` })
     } 
 
 
@@ -92,21 +92,21 @@ async function updateRol(req, res) {
     const { id } = req.params;
     const { name } = req.body;
 // NO SE PQ LO BUSCO DPS PROBAR SI ANDA SIN BUSCAR
-    const rol = await models.Rol.findOne({
+    const rol = await models.Role.findOne({
         attributes: ['id', 'name'],
         where: { id }
     })
     // aca tendria que ver que es lo que se actualiza y que es lo que pasan 
     // preguntar diferencia entre put y patch no me acuerdo, o actualizo todo
     // se podria hacer un patch solo para password 
-    const updatedRol = await models.Rol.update({
+    const updatedRol = await models.Role.update({
         name,
     },
         {
             where: { id }
         })
     if (updatedRol == 1) {
-        res.json({
+        res.status(200).json({
             message: 'Rol updated successfully',
 
         });
