@@ -18,7 +18,7 @@ module.exports = {
 
     // Server hostname
     hostname: hostname,
-    
+
     // The base path of all routes for this server
     basePath: basePath
 };

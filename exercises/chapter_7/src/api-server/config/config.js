@@ -5,7 +5,7 @@ module.exports = {
     database: "testbd",
     host: "localhost",
     dialect: "mysql",
-    
+
   },
   test: {
     username: "root",

@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Profile = sequelize.define('Profile', {
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
-    
+
   }, {
 
     });
@@ -16,9 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       through: "profileRole",
       foreignKey: "roleId",
       otherKey: "profileId"
-});
+    });
     // associations can be defined here
   };
   sequelize.Sync;
+
   return Profile;
 };

@@ -37,8 +37,8 @@ async function getAll(req, res) {
 };
 
 
-async function getOneById(req,res) {
-    const {id} = req.params;
+async function getOneById(req, res) {
+    const { id } = req.params;
     const rol = await models.Role.findOne({
         where: { id },
         attributes: ['id', 'name'],
@@ -56,23 +56,23 @@ async function getOneById(req,res) {
 
 
 
-async function createRol(req,res){
-    const {name} = req.body;
+async function createRol(req, res) {
+    const { name } = req.body;
 
     const newRol = await models.Role.create({
         name
-    },{
-        fields:['name']
-    });
-    res.status(200).json(({message:"new Rol created"}))
+    }, {
+            fields: ['name']
+        });
+    res.status(200).json(({ message: "new Rol created" }))
 
 }
 
-async function deleteRol(req,res){
-    const {id} = req.params;
+async function deleteRol(req, res) {
+    const { id } = req.params;
 
     const deleted = await models.Role.destroy({
-        where:{
+        where: {
             id
         }
     })
@@ -81,7 +81,7 @@ async function deleteRol(req,res){
         res.status(200).json({ message: `Rol with id: ${id}, was deleted` })
     } else {
         res.status(404).json({ message: `Rol with id: ${id} no exists` })
-    } 
+    }
 
 
 }
@@ -91,7 +91,7 @@ async function updateRol(req, res) {
 
     const { id } = req.params;
     const { name } = req.body;
-// NO SE PQ LO BUSCO DPS PROBAR SI ANDA SIN BUSCAR
+    // NO SE PQ LO BUSCO DPS PROBAR SI ANDA SIN BUSCAR
     const rol = await models.Role.findOne({
         attributes: ['id', 'name'],
         where: { id }
@@ -110,7 +110,7 @@ async function updateRol(req, res) {
             message: 'Rol updated successfully',
 
         });
-    }else {
+    } else {
         res.status(400).json({
             message: 'Some error occurred',
 

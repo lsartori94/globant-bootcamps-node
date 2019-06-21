@@ -20,14 +20,14 @@ describe('Role controller', () => {
       body: {}
     };
     mockNext = jest.fn();
-  
+
 
 
 
     model.Role.findAll = jest.fn().mockReturnValue(Promise.resolve(roleMock.ALL_ROLES));
-    model.Role.findOne =jest.fn().mockReturnValue(Promise.resolve(roleMock.ALL_ROLES[0]));
-    model.Role.destroy =jest.fn().mockReturnValue(1);
- //   model.Role.create = jest.fn().mockReturnValue(Promise.resolve(roleMock));
+    model.Role.findOne = jest.fn().mockReturnValue(Promise.resolve(roleMock.ALL_ROLES[0]));
+    model.Role.destroy = jest.fn().mockReturnValue(1);
+    //   model.Role.create = jest.fn().mockReturnValue(Promise.resolve(roleMock));
     model.Role.update = jest.fn().mockReturnValue(1);
 
 

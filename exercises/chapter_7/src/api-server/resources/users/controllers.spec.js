@@ -20,14 +20,14 @@ describe('User controller', () => {
       body: {}
     };
     mockNext = jest.fn();
-  
+
 
 
 
     model.User.findAll = jest.fn().mockReturnValue(Promise.resolve(userMock.ALL_USERS));
-    model.User.findOne =jest.fn().mockReturnValue(Promise.resolve(userMock.ALL_USERS[0]));
-    model.User.destroy =jest.fn().mockReturnValue(1);
- //   model.User.create = jest.fn().mockReturnValue(Promise.resolve(userMock));
+    model.User.findOne = jest.fn().mockReturnValue(Promise.resolve(userMock.ALL_USERS[0]));
+    model.User.destroy = jest.fn().mockReturnValue(1);
+    //   model.User.create = jest.fn().mockReturnValue(Promise.resolve(userMock));
     model.User.update = jest.fn().mockReturnValue(1);
 
 

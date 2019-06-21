@@ -31,7 +31,7 @@ async function getAll(req, res) {
         include: [
             {
                 model: models.Profile,
-                attributes:['name']
+                attributes: ['name']
             }
 
         ],
