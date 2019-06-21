@@ -32,7 +32,7 @@ async function getAll(req, res) {
         ]
     });
     //console.log(profiles[0]);
-    res.json({ profiles });
+    res.status(200).json({ profiles });
 
 }
 
@@ -44,13 +44,9 @@ async function getOneByid(req, res) {
         attributes: ['id', 'name', 'description'],
     });
 
-    if (profile == null) {
-        res.status(404).send('No se encuentra el id buscado');
 
-    } else {
-        res.json(profile);
+    res.status(200).json(profile);
 
-    }
 
 
 }
@@ -67,7 +63,7 @@ async function createProfile(req, res) {
         });
 
 
-    res.json(({ message: "new profile created" }))
+    res.status(200).json(({ message: "new profile created" }))
 
 }
 
@@ -81,7 +77,7 @@ async function deleteProfile(req, res) {
     })
     //console.log(deleted,'a');
     if (deleted != 0) {
-        res.json({ message: `profile with id: ${id}, was deleted` })
+        res.status(200).json({ message: `profile with id: ${id}, was deleted` })
     } else {
         res.json({ message: `profile with id: ${id} no exists` })
     }
@@ -107,35 +103,35 @@ async function updateProfile(req, res) {
         {
             where: { id }
         })
-    if (updatedProfile == 1) {
-        res.json({
-            message: 'Profile updated successfully',
 
-        });
-    } else {
-        res.status(400).json({
-            message: 'Some error occurred',
+    res.status(200).json({
+        message: 'Profile updated successfully',
 
-        });
-    }
+    });
 
 }
 
-async function assignprofile(req,res){
-    const {id} = req.params;  
+async function assignprofile(req, res) {
+    const { id } = req.params;
     const profile = await models.Profile.findOne({
         attributes: ['id', 'name', 'description'],
         where: { id }
     })
-    const updatedUsers= await models.User.update({ProfileId: id } ,  { omitNull: true, where: { id: req.body.listUsers }})
-    
-    if (updatedUsers != 0 ){res.json({
-        message: 'updatedUsers successfully'
+    const updatedUsers = await models.User.update({ ProfileId: id }, { omitNull: true, where: { id: req.body.listUsers } })
 
-    });
-        
-}
-      
+   // if (updatedUsers != 0) {
+        res.status(200).json({
+            message: 'updated Users successfully'
+
+        });
+/*
+    } else {
+        res.status(404).json({
+            message: 'updated Users unsuccessfully'
+
+        });
+    }
+*/
 
 
 
