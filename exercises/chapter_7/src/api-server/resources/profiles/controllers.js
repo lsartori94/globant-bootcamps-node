@@ -31,7 +31,6 @@ async function getAll(req, res) {
             ['id', 'DESC']
         ]
     });
-    //console.log(profiles[0]);
     res.status(200).json({ profiles });
 
 }
@@ -79,7 +78,6 @@ async function deleteProfile(req, res) {
             id
         }
     })
-    //console.log(deleted,'a');
     if (deleted != 0) {
         res.status(200).json({ message: `profile with id: ${id}, was deleted` })
     } else {
