@@ -11,5 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       foreingKey: { allowNull: false }
     });
   };
+  sequelize.Sync;
+
   return User;
 };

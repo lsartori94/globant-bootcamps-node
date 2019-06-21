@@ -19,5 +19,6 @@ module.exports = (sequelize, DataTypes) => {
 });
     // associations can be defined here
   };
+  sequelize.Sync;
   return Profile;
 };
