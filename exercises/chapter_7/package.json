@@ -4,7 +4,7 @@
   "description": "_In this exercise, we will develop the features of the final exercise._",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "start": "node src/api-server/server"
   },
   "author": "",
