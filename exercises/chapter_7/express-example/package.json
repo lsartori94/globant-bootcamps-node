@@ -18,7 +18,7 @@
     "mariadb": "^2.0.5",
     "morgan": "^1.7.0",
     "mysql2": "^1.6.5",
-    "pug": "^2.0.0-rc.4",
+    "pug": "^3.0.1",
     "sequelize": "^5.8.7",
     "serve-favicon": "~2.3.0"
   },
